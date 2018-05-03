@@ -7,10 +7,10 @@
 \documentclass[thesis=B,czech,hidelinks]{template/FITthesisXE}
 
 \usepackage{xcolor} 
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{[[#1]]}}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[[ #1 ]]}}}
 
 \usepackage{blindtext}
-\newcommand{\blind}[1][1]{}%\textcolor{gray}{\Blindtext[#1][1]}}
+\newcommand{\blind}[1][1]{\textcolor{gray}{\Blindtext[#1][1]}}
 
 \acknowledgements{\input{acknowledgements.tex}}
 
