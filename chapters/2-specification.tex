@@ -24,17 +24,51 @@
 
 \section{Funkcionalita}
 
-\subsection{Assembler}
+Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokumentů popisující kompletní proces vývoje a parametry spouštění kódu na virtuálním procesoru.
 
-\blind[2]
+\subsection{Mikroprocesor a strojový kód}
+
+První částí práce bude popis podoby virtuálního procesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD \todo{Citace}, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino \todo{Citace}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
+
+Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód...
+
+Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
+
+\begin{itemize}
+	\item Grafický výstup podobou displeje namapovaného do paměti
+	\item Komunikaci po seriálové lince
+	\item Omezená sada tlačítek
+\end{itemize}
 
 \subsection{Emulátor}
 
-\blind[3]
+Jelikož námi navržený procesor bude pouze virtuální, nebude existovat fyzický integrovaný obvod, který by byl schopný spouštět náš strojový kód. Proto, abychom mohli strojový kód spouštět, vytvoříme emulátor \todo{vysvětlivka}, který bude emulovat běh procesoru na jiné, hostující platformě.
+
+Emulátor bude koncipován formou knihovny, kterou bude možné použít při vývoji dalšího softwaru. Tím se zajistí konzistentní chování napříč více programy.
+
+Emulátor zprostředkuje snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny a poskytne možnost rozšířit rozhraní procesoru o vlastní funkcionalitu.
+
+Součástí projektu bude také rozsáhlá testovací sada, která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v kódu. \todo{víc}
+
+\subsection{Jazyk}
+
+Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím, pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný a gramatiku, dle které se bude textový program číst.
+
+\subsection{Překladač}
+
+Překlad z jazyka symbolických adres do strojového kódu čitelného pro emulovaný procesor bude zprostředkován konzolovou aplikací.
+
+Výstupem aplikace bude samotný binární soubor se strojovým kódem. Volitelně potom soubor obsahující mapu mezi návěstími a pozicemi v kódu.
+
+\blind[1]
 
 \subsection{Ladicí program}
 
 \blind[2]
+
+\subsection{Přehrávač}
+
+Konečnou součástí práce bude aplikace
 
 \section{Závěr}
 
