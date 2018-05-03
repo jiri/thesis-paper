@@ -1,6 +1,6 @@
 \chapter{Specifikace a cíle práce}
 
-\blind[2]
+\blind[1]
 
 \section{Využití}
 
@@ -8,19 +8,11 @@
 
 \subsection{Začátečníci}
 
-\blind[3]
-
-\subsection{Mírně pokročilí}
-
 \blind[2]
 
 \subsection{Pokročilí}
 
 \blind[1]
-
-\subsection{Vyučující}
-
-\blind[2]
 
 \section{Funkcionalita}
 
@@ -28,11 +20,11 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 
 \subsection{Mikroprocesor a strojový kód}
 
-První částí práce bude popis podoby virtuálního procesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD \todo{Citace}, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino \todo{Citace}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
+První částí práce bude popis podoby virtuálního mikroprocesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD \todo{Citace}, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino \todo{Citace}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
 
 Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. \todo{Kapitalizace a citace} Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR \todo{Citace}, nebo například rodina jednočipů Intel 8051. \todo{Citace}
 
-Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód...
+Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací zakódovaných instrukcí. Instrukce pro náš procesor se budou skládat z jednoho a více bytů. První byte enkóduje vždy pouze opcode \todo{Přeložit}. \todo{Víc o binárce}
 
 Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
 
@@ -40,6 +32,7 @@ Mikroprocesor by měl také podporovat několik vstupních a výstupních operac
 	\item Grafický výstup podobou displeje namapovaného do paměti
 	\item Komunikaci po seriálové lince
 	\item Omezená sada tlačítek
+	\item Nastavitelný časovač
 \end{itemize}
 
 \subsection{Emulátor}
@@ -54,19 +47,21 @@ Součástí projektu bude také rozsáhlá testovací sada, která pomůže zaji
 
 \subsection{Jazyk}
 
-Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní misto v adrese programu.
+Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní adresu v programu.
+
+Jazyk bude definován pomocí gramatiky, podle které se bude číst ze zdrojového souboru.
 
 \subsection{Překladač}
 
 Překlad z jazyka symbolických adres do strojového kódu čitelného pro emulovaný procesor bude zprostředkován konzolovou aplikací.
 
-Výstupem aplikace bude samotný binární soubor se strojovým kódem. Volitelně potom soubor obsahující mapu mezi návěstími a pozicemi v kódu.
+Výstupem aplikace bude samotný binární soubor se strojovým kódem. Volitelně potom soubor obsahující mapu mezi návěstími a pozicemi v kódu, která pomůže zpřehlednit dekompilovanou verzi kódu v ladících nástrojích.
 
-\blind[1]
+Dále překladač bude umožňovat povolit pouze některé instrukce. To může být nápomocné u jednoduchých úloh, které v začátečnících často podněcují použití příliš komplikovaného řešení, nebo u úloh, kde chceme demonstrovat nějakou vlastnost programování pro mikroprocesory omezením instrukční sady, která by jinak pomohla problém vyřešit příliš jednodušše.
 
 \subsection{Ladicí program}
 
-\blind[2]
+Abychom usnadnili uživatelům naší platformy lazení programů a odstraňování chyb, bude součástí práce i grafická aplikace, která umožní krokovat chod programu, sledovat za běhu obsah registrů a paměti.
 
 \subsection{Přehrávač}
 
