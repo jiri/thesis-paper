@@ -30,6 +30,8 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 
 První částí práce bude popis podoby virtuálního procesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD \todo{Citace}, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino \todo{Citace}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
 
+Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. \todo{Kapitalizace a citace} Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR \todo{Citace}, nebo například rodina jednočipů Intel 8051. \todo{Citace}
+
 Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód...
 
 Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
@@ -52,7 +54,7 @@ Součástí projektu bude také rozsáhlá testovací sada, která pomůže zaji
 
 \subsection{Jazyk}
 
-Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím, pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný a gramatiku, dle které se bude textový program číst.
+Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní misto v adrese programu.
 
 \subsection{Překladač}
 
