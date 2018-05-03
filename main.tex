@@ -1,0 +1,39 @@
+% arara: xelatex: { shell: yes }
+% arara: makeglossaries
+% arara: biber
+% arara: xelatex: { shell: yes }
+% arara: xelatex: { shell: yes }
+
+\documentclass[thesis=B,czech,hidelinks]{template/FITthesisXE}
+
+\usepackage{xcolor} 
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[[#1]]}}}
+
+\usepackage{blindtext}
+\newcommand{\blind}[1][1]{}%\textcolor{gray}{\Blindtext[#1][1]}}
+
+\acknowledgements{\input{acknowledgements.tex}}
+
+\abstractEN{\input{abstract_en.tex}}
+\abstractCS{\input{abstract_cs.tex}}
+
+\input{meta.tex}
+
+\begin{document}
+
+\begin{introduction}
+    \input{chapters/0-introduction.tex}
+\end{introduction}
+
+\input{chapters/1-analysis.tex}
+\input{chapters/2-specification.tex}
+\input{chapters/3-assembler.tex}
+\input{chapters/4-emulator.tex}
+\input{chapters/5-debugger.tex}
+\input{chapters/6-testing.tex}
+
+\begin{conclusion}
+    \input{chapters/7-conclusion.tex}
+\end{conclusion}
+
+\end{document}
