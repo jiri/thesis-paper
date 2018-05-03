@@ -1,10 +1,15 @@
-% arara: xelatex: { shell: yes }
+% arara: pdflatex
 % arara: makeglossaries
 % arara: biber
-% arara: xelatex: { shell: yes }
-% arara: xelatex: { shell: yes }
+% arara: pdflatex
+% arara: pdflatex
 
-\documentclass[thesis=B,czech,hidelinks]{template/FITthesisXE}
+\documentclass[thesis=B,czech,hidelinks]{template/FITthesis}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{dirtree}
 
 \usepackage{xcolor} 
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[[ #1 ]]}}}
