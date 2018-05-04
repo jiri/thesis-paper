@@ -7,7 +7,7 @@
 \documentclass[thesis=B,czech,hidelinks]{template/FITthesis}
 
 \usepackage[utf8]{inputenc}
-
+\usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{dirtree}
 
@@ -53,5 +53,11 @@
 \begin{conclusion}
     \input{chapters/8-conclusion.tex}
 \end{conclusion}
+
+\appendix
+
+\chapter{Úlohy k testování}
+\label{chap:excercises}
+\includepdf[pages={1}]{excercises}
 
 \end{document}
