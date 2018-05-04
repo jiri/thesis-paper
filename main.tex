@@ -17,6 +17,18 @@
 \usepackage{blindtext}
 \newcommand{\blind}[1][1]{\textcolor{gray}{\Blindtext[#1][1]}}
 
+\setlength{\fboxsep}{0.005pt}
+\newcommand{\tmpframe}[1]{\fbox{#1}}
+%\renewcommand{\tmpframe}[1]{#1}
+
+\newcommand{\todoimage}[1]{%
+\begin{figure}%
+  \tmpframe{\includegraphics[width=\linewidth]{pdfs/TODO-image}}%
+  \caption{#1 \todo{Doplnit obrázek}}%
+  \label{fig:TODO}%
+\end{figure}%
+}
+
 \acknowledgements{\input{acknowledgements.tex}}
 
 \abstractEN{\input{abstract_en.tex}}
