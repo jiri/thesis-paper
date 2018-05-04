@@ -1,0 +1,64 @@
+\documentclass[a4,12pt]{exam}
+
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{titling}
+\usepackage{nopageno}
+
+\title{Úlohy pro testování}
+
+\preauthor{}
+\author{}
+\postauthor{}
+
+\predate{}
+\date{}
+\postdate{}
+
+\qformat{\textbf{Úloha \thequestion:} \thequestiontitle\hfill\thepoints}
+
+\begin{document}
+
+\maketitle
+
+\begin{questions}
+	
+	\titledquestion{Rovnice}
+	
+	Napište program, který řeší následující rovnici a oveřte správnost fungování programu na hodnotách \( R1 := 20, R2 := 11 \).
+	
+	\[ R0 = R1 + 2 \times R2 \]
+	
+	\titledquestion{Ahoj, světe!}
+	
+	Nastudujte z dokumentace procesoru, jak funguje seriálový vstup a výstup. Napište program, který na seriálový výstup vypíše řetězec ``Ahoj, světě!''. Řetězec by měl být uložen v programové paměti procesoru.
+	
+	\titledquestion{Zásobník}
+	
+	Použijte zásobník k prohození obsahu registrů \(R0\) a \(R1\).
+	
+	\textit{Povolené instrukce:} \textbf{ldi}, \textbf{push}, \textbf{pop}
+	
+	\titledquestion{Podprogramy}
+	
+	Napište podprogram, který ze zásobníku přečte postupně vyšší byte a nižší byte adresy řetězce v operační paměti programu. Tento řetězec poté převeďte tak, aby na konci subrutiny byl psán pouze velkými písmeny. Nepísmenné znaky by měly zůstat nezměněny.
+	
+	\textit{Rada:} Ke změně malého písmena na velké stačí odsnatavit 6. bit v jeho reprezentaci.
+	
+	\titledquestion{Vstup a výstup}
+	
+	Nastudujte z dokumentace procesoru, jak funguje seriálový vstup a výstup.
+	
+	\begin{parts}
+		\part Napište program, který do adresy pro seriálový vstup a výstup zapíše hodnotu \( 42 \) a ihned ji zase přečte do registru \( R0 \). Zkuste předpovědět obsah registru \( R0 \) a porovnejte své očekávání se skutečným výsledkem.
+		
+		\part Napište program, který každou příchozí zprávu po seriálové lince přepošle ihned zpět. Procesor by v odbobí nečinnosti neměl provádět žádnou práci.
+	\end{parts}
+
+	\titledquestion{Grafický výstup}
+	
+	Nastudujte z dokumentace procesoru, jak funguje grafický výstup procesoru. Napište program s co nejzajímavějším grafickým výstupem -- fantazii se meze nekladou. Změna grafického výstupu by měla být synchronizována s obnovovací frekvencí displeje.
+	
+\end{questions}
+
+\end{document}
