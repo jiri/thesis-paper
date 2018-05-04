@@ -39,9 +39,9 @@ Mikroprocesor by měl také podporovat několik vstupních a výstupních operac
 
 Jelikož námi navržený procesor bude pouze virtuální, nebude existovat fyzický integrovaný obvod, který by byl schopný spouštět náš strojový kód. Proto, abychom mohli strojový kód spouštět, vytvoříme emulátor \todo{vysvětlivka}, který bude emulovat běh procesoru na jiné, hostující platformě.
 
-Emulátor bude koncipován formou knihovny, kterou bude možné použít při vývoji dalšího softwaru. Tím se zajistí konzistentní chování napříč více programy.
+Emulátor bude koncipován formou knihovny, kterou bude možné použít při vývoji dalšího softwaru. Tím se zajistí konzistentní chování napříč více programy, ve kterých bude knihovna použita. Zároveň tak bude velmi snadné naimplementovat novou aplikaci, která je schopna spouštět strojový kód naší virtuální platformy.
 
-Emulátor zprostředkuje snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny a poskytne možnost rozšířit rozhraní procesoru o vlastní funkcionalitu.
+Z toho důvodu však musí emulátor také zprostředkovat snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny. Požadavky na formu vstupu a výstupu se mohou výrazně lišit dle užití. Například terminálová aplikace bude nejspíše mít seriálovou komunikaci zprostředkovanou pomocí standardního vstupu a výstupu. Grafická aplikace naopak bude nejspíše poskytovat vlastní seriálovou konzoli. Emulátor by také měl poskytovat možnost snadno rozšířit rozhraní procesoru o vlastní funkcionalitu.
 
 Součástí projektu bude také rozsáhlá testovací sada, která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v kódu. \todo{víc}
 
