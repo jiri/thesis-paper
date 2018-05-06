@@ -1,15 +1,53 @@
 \chapter{Mikroprocesor}
 
-První částí práce je návrh samotného mikroprocesoru. Ten je inspirován mikroprocesorem ATmega328P\todo{Odkaz}, který se pohání jednu z nejpoužívanějších\todo{Citace} elektronických prototypových platforem Arduino Uno\todo{Citace} a příbuzné produkty\todo{Citace}.
+První částí práce je návrh samotného mikroprocesoru. Ten je inspirován mikroprocesorem ATmega328P\todo{Odkaz}, který se pohání jednu z nejpoužívanějších\todo{Citace} elektronických prototypových platforem Arduino Uno\todo{Citace} a příbuzné produkty\todo{Citace}. Většina rozhodnutí učiněných při návrhu platformy je převzata z návrhu platformy AVR.
 
 \section{Instrukční sada}
 
-Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu.
+Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu. Byla odstraněna většina instrukcí, které nejsou kritické pro řešení problémů, nebo jejichž funkcionalita se dá nahradit vícero jinými instrukcemi, jako například většina variant instrukcí s okamžitou hodnotou místo druhého parametru, jako \texttt{addi}, \texttt{andi} nebo \texttt{subi}. Zároveň každá instrukce má pouze jedinou mnemoniku a naopak -- nedochází ke změně instrukce podle parametrů, se kterými je daná mnemonika zkombinována. Tím se předejde zbytečným chybám způsobeným překlepy nebo přehlédnutím se při čtení instrukčního manuálu.
+
+Dalším z hlavních rozdílů je odstranění instrukcí provádějících skoky podle výsledku srovnávacích operací. Instrukce \texttt{cmp} je často vnitřně implementována jako aritmetické odčítání bez zápisu zpět\todocite, je proto užitečné chápat, jak porovnání dvou čísel ovlivní příznaky v procesoru. V naší instrukční sadě jsou proto podmíněné skoky možné jen podle příznaků. Díky tomu jsou uživatelé nuceni pochopit jak funguje porovnávací instrukce interně a zároveň je díky tomu instrukční sada jednodušší.
+
+Naše platforma též neklade důraz na znaménka čísel uložených v paměti nebo v registru. Význam bitů v registrech je ponechán plně na uživateli platformy. Chybí proto příznak pro znaménko a další vlastnosti procesorů pracujících se zápornými čísly v dvojkovém doplňku.
+
+Kompletní instrukční sada je popsána v příloze \ref{appendix:mcu-manual}.
 
 \section{Pamět}
 
-\blind[2]
+Podobně jako platforma AVR\todocite, i náš mikroprocesor disponuje hned třemi druhy paměti: programovou, operační a pamětí pro obsluhu vstupu a výstupu.
+
+Narozdíl od AVR jsou však tyto 3 paměti modelovány jako 3 separátní paměťové bloky, pokrývající jejich adresní prostory (16, 16 a 8 bitů respektive). V nižších částech paměti nejsou namapované registry, tak jak je tomu u AVR\todocite a paměť zodpovídající za obsluhu vstupu a výstupu má separátní prostor adres, nezávislý na programové a operační paměti.
+
+Mikroprocesor začíná spouštět program od adresy \texttt{0x0000}, na které je umístěný reset vektor. Každý vektor má 16 bytů a jsou pro ně vyhrazeny adresy \texttt{0x0000} -- \texttt{0x0100}. Přerušení jsou při startu spouštění vypnuty a musí se ručně povolit instrukcí \texttt{ei}. Díky tomu je na možné začátku výuky psát kód přímo od počáteční adresy a nestrachovat se, že přepisujeme vektory přerušení.
+
+Paměť pro obsluhu vstupu a výstupu není paměť jako taková, pouze jsou na jejich pozicích namapované obsluhy jednotlivých rozhraní. To je odraženo i v samotném emulátoru, který ukládá pro každou pozici dvě obslužné funkce. Ty potom obsluhují chování instrukcí \texttt{in} a \texttt{out} pro patřičnou adresu. V nevyužitém stavu pak zápis do této paměti hodnotu zahazuje a čtení vždy vrací nulovou hodnotu.
+
+Poslední části paměti je zásobník, který se nachází v operační paměti a roste dolů -- tj. začíná na adrese \texttt{0xFFFF} a roste směrem k nižším adresám.
 
 \section{Rozhraní}
 
-\blind[3]
+Rozhraní jsou na naší platformě obsluhovány pomocí instrukcí \texttt{in} a \texttt{out}. Změna v jejich stavu je indikována přerušeními, které provedou před načtením instrukce skok na patřičný vektor, kde můžeme rozhraní obsloužit a vrátit se ke spouštění zbytku programu tak kde jsme přestali pomocí instrukce \texttt{reti}.
+
+Tato část mikroprocesoru se od platformy AVR liší nejvíce. Mikroprocesor nedisponuje žádnými víceúčelovými porty (v anglické literatuře též známy jako ``GPIO pins''). Rozhraní mikroprocesoru jsou dané fixně a rozšiřitelné pouze úpravou programu implementujícího chování pomocí knihovny s emulátorem.
+
+Mezi podporované rozhraní patří sériový port, který umožňuje textovou komunikaci s vnějším světem. Dále pak 7 tlačítek, rozložené do pozicových šipek, centrálního potvrzovacího tlačítka a dvou uživatelských tlačítek, jejichž funkce není blíže specifikována. Mikroprocesor podporuje také klávesnicový vstup, který má simulovat přítomnost portu PS/2.
+
+Konečně potom platforma disponuje malým displejem s osmibitovou paletou a rozměry 160 pixelů na šířku a 144 pixelů na výšku. Displej má obnovovací frekvenci 60Hz a jeho obsah odpovídá jednomu bytu na pixel, počínajíc adresou \texttt{0x8000} v operační paměti.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{| r | l | l |}
+\hline
+0x0000 & Reset    & Počáteční bod spouštění \\ \hline
+0x0010 & VBlank	  & Indikuje obnovovací frekvenci displeje \\ \hline
+0x0020 & Button   & Indikuje, že bylo stisknuto tlačítko \\ \hline
+0x0030 & Keyboard & Indikuje, že byl přijat znak z klávesnice \\ \hline
+0x0040 & Serial   & Indikuje, že na sériový port přišla nová data \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Vektory přerušení \todo{move to appendix}}
+\label{tbl:vector-positions}
+\end{table}
+
+Adresy obslužné paměti pro jednotlivá rozhraní a pozice vektorů přerušení lze nalézt v příloze \ref{appendix:mcu-manual}.
