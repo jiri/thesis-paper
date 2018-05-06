@@ -10,12 +10,15 @@
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{dirtree}
+\usepackage{biblatex}
+\usepackage{minted}
 
 \usepackage{xcolor} 
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[[ #1 ]]}}}
 
 \usepackage{blindtext}
 \newcommand{\blind}[1][1]{\textcolor{gray}{\Blindtext[#1][1]}}
+%\renewcommand{\blind}[1][1]{#1}
 
 \setlength{\fboxsep}{0.005pt}
 \newcommand{\tmpframe}[1]{\fbox{#1}}
@@ -28,6 +31,13 @@
   \label{fig:TODO}%
 \end{figure}%
 }
+
+\newcommand{\todocite}[0]{\todo{Citace}}
+
+%\renewcommand{\lstlistingname}{Ukázka}
+%\renewcommand{\lstlistlistingname}{Seznam ukázek}
+
+\bibliography{bibliography.bib}
 
 \acknowledgements{\input{acknowledgements.tex}}
 
@@ -53,6 +63,8 @@
 \begin{conclusion}
     \input{chapters/8-conclusion.tex}
 \end{conclusion}
+
+\printbibliography
 
 \appendix
 
