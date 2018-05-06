@@ -1,14 +1,16 @@
 \chapter{Specifikace a cíle práce}
 
-\blind[1]
+Po dokončení analýzy současných řešení jsme připraveni definovat, které problémy budeme v práci řešit a které problémy spadají mimo rámec práce.
 
 \section{Využití}
 
-\blind[1]
+Reálných platforem existuje na trhu hned několik a většina z nich s sebou nese i programovou podporu orientovanou na danou platformu. Každá z platforem je však omezena svým fyzickým návrhem a programová podpora je orientována primárně na profesionální vývoj, nikoliv na výuku a začátečníky. Programová podpora často není multiplatformní, postrádá simulátor nebo není simulátor orientovaný na uživatele, ale strojové testování. Velká část z nich potom spoléhá na fyzické vývojové sady, které může být pro začátečníky často obtížné vybrat nebo zakoupit.
+
+Cílem práce bude proto navrhnout sadu nástrojů, která není omezena reálnými problémy fyzických platforem a jejíž charakteristiky jsou optimalizovány pro použití začátečníky a výuku, nikoliv profesionální užití v reálném světě. Cílem platformy je poté naučit začátečníky naprosté základy, s nimiž se jim poté bude pracovat o něco lépe. Platforma se také bude podobat reálné platformě AVR, která je v současné době velmi rozšířená v amatérské sféře, hlavně díky projektu Arduino\todocite.
 
 \subsection{Začátečníci}
 
-\blind[2]
+Naprostí začátečníci jsou hlavní cílovou skupinou projektu. Instrukční sada je navržena co nejmenší, aby ji začátečníci mohli obsáhnout co nejrychleji a mohli znát všechny nástroje, které mají k dispozici při řešení problémů. Pro začátečníka bude důležitá multiplatformnost ladící aplikace a překladače, spolu s faktem, že k vývoji není potřeba fyzická vývojová sada. Začátečníci by při používání naší platformy měli získat zevrubnou představu, co programování pro mikrokontroler obnáší, v čem se liší od systémového programování a jak se přistupuje k řešení problémů v nízkoúrovňovém jazyce.
 
 \subsection{Pokročilí}
 
@@ -24,7 +26,7 @@ První částí práce bude popis podoby virtuálního mikroprocesoru, který na
 
 Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. \todo{Kapitalizace a citace} Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR \todo{Citace}, nebo například rodina jednočipů Intel 8051. \todo{Citace}
 
-Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací zakódovaných instrukcí. Instrukce pro náš procesor se budou skládat z jednoho a více bytů. První byte enkóduje vždy pouze opcode \todo{Přeložit}. \todo{Víc o binárce}
+Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací zakódovaných instrukcí. Instrukce pro náš procesor se budou skládat z jednoho a více bytů. První byte enkóduje vždy pouze typ instrukce, o který se jedná. Následující byty enkódují parametry dané instrukce. V samotném strojovém kódu se nijak neodrážejí návěstí definované v jazyce symbolických adres.
 
 Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
 
@@ -43,13 +45,19 @@ Emulátor bude koncipován formou knihovny, kterou bude možné použít při v�
 
 Z toho důvodu však musí emulátor také zprostředkovat snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny. Požadavky na formu vstupu a výstupu se mohou výrazně lišit dle užití. Například terminálová aplikace bude nejspíše mít seriálovou komunikaci zprostředkovanou pomocí standardního vstupu a výstupu. Grafická aplikace naopak bude nejspíše poskytovat vlastní seriálovou konzoli. Emulátor by také měl poskytovat možnost snadno rozšířit rozhraní procesoru o vlastní funkcionalitu.
 
-Součástí projektu bude také rozsáhlá testovací sada, která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v kódu. \todo{víc}
+Součástí projektu bude také rozsáhlá testovací sada , která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v kódu. Bude testovat chování každé instrukce samostatně a poté interakce instrukcí mezi sebou.
 
 \subsection{Jazyk}
 
-Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní adresu v programu.
+Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní adresu v programu. Jazyk bude definován pomocí gramatiky, podle které se bude číst ze zdrojového souboru.
 
-Jazyk bude definován pomocí gramatiky, podle které se bude číst ze zdrojového souboru.
+Mezi pseudoinstrukce podporované jazykem by měli patřit alespoň následující:
+
+\begin{itemize}
+	\item Ukládání řetězců a uživatelských dat do programové paměti
+	\item Nastavování pozice v binárním souboru
+	\item Vložení obsahu z jiného souboru
+\end{itemize}
 
 \subsection{Překladač}
 
@@ -65,4 +73,4 @@ Abychom usnadnili uživatelům naší platformy lazení programů a odstraňová
 
 \section{Závěr}
 
-\blind[1]
+Projekt bude sestávat celkem ze čtyř částí, z nichž jedna bude spočívat pouze v návrhu samotné platformy a zbývající tři části budou tvořit programovou podporu pro vývoj programů na námi definované platformě. Části programové podpory budou navrženy do jisté míry nezávisle, aby se v budoucnu daly snáze upravovat a integrovat s jinými projekty.
