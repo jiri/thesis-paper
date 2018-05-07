@@ -6,5 +6,26 @@ V dobách, kdy nejsofistikovanější domácí počítače jako EXAMPLE 1 nebo E
 
 Přesto však existuje zjevný zájem o nízkoúrovňové programování. Populární platforma Arduino se rapidně blíží milionu aktivních uživatelů a díky dobré programové podpoře je nahrávání programů do mikroprocesorů jednodušší, než kdy dřív. Přesto však existuje bariéra, kterou představuje nutnost vlastnit fyzické zařízení schopné daný kód spouštět.
 
+\section{Cíle práce}
+
 V naší práci se pokusíme navrhnout virtuální platformu, která se pokusí být ještě jednodušší, než nejjednodušší z existujících mikroprocesorů a bude možné ji použít na kterémkoliv moderním domácím počítači.
+
+\todo{more}
+
+\section{Struktura práce}
+
+Tato práce je rozdělena do \todo{COUNT} kapitol. V první kapitole se budeme zabývat analýzou rodiny mikrokontrolerů AVR\todo{cite} a její programové podpory. Dále potom prozkoumáme možnosti emulace běhu mikrokontrolerů z rodiny AVR na platformě x86\todo{cite}. Na konci této kapitoly stanovíme požadavky na aplikaci, kterou budeme vyvíjet.
+
+V druhé kapitole rozveme návrh aplikačního software, který v rámci práce budeme vytvářet. Návrh je rozdělen vícero částí:
+
+\begin{itemize}
+	\item Architektura mikrokontroleru a instrukční sada.
+	\item Assembler, tj. aplikace, kterou budeme překládat symbolický zápis na strojový kód.
+	\item Emulátor a ladící aplikace, kterou budeme emulovat běh na platformě x86.
+\end{itemize}
+
+Třetí kapitola potom popisuje realizaci práce. To zahrnuje implementační rozhodnutí, popis a řešení problémů na které během implementace narazíme a ukázky kódu, který řeší zajímavé části práce.
+
+Ve čtvrté a poslední kapitole námi navržený aplikační software otestujeme s několika uživateli. Kapitola obsahuje popis metodiky testování, jeho průběh a zhodnocení výsledků.
+
 \end{introduction}
