@@ -1,65 +1,31 @@
 \chapter{Analýza problému}
 
-\blind[1]
+V této kapitole nejdříve zjistíme základní návrhové prvky použité v architektuře AVR. Poté se obeznámíme s existující programovou podporou vývoje programů a kapitolu uzavřeme shrnutím funkcionality, kterou by námi navržené řešení mělo poskytovat.
 
-\section{Programování pro mikroprocesory}
+\section{Analýza architektury AVR}
 
-\blind[1]
+\todo{TODO}
 
-\subsection{Optimalizace}
+\section{Současný stav řešení}
 
-\blind[1]
+Nejpřímočařejším řešením vývoje pro platformu AVR je manuální překlad a nahrávání programu do zařízení. Z našeho oblíbeného jazyka vyprodukujeme patřičným překladačem binární soubor, který poté slinkujeme a nahrajeme do zařízení pomocí programátoru a aplikace. Toto řešení je pro zkušené uživatele často nejjednoduší, avšak obzvlášť pro začátečníky pracující v operačním systému, ve kterém není užití konzolových aplikací možné nebo jednoduché, je tato cesta takřka nemožná.
 
-\subsection{Hardwarové omezení}
+Naštěstí pro platformu AVR existuje hned několik aplikací, které usnadňují vývoj a nahrávání programu. Ukážeme si z nich pouze tři -- AVR studio\todocite, simavr\todocite a Arduino IDE\todocite.
 
-\blind[1]
+AVR studio (konkrétně verze 4) je aplikací, která se v současné době na FIT ČVUT používá při výuce předmětu BI-SAP\todocite. Jedná se o kompletní vývojovou sadu přímo od společnosti Atmel\todocite. Aplikace je však kompatibilní pouze se systémem Microsoft Windows\todocite, je ji proto těžké nebo nemožné zprovoznit na alternativních operačních systémech. To je pro některé uživatele zásadní problém a aplikace proto není kompletním řešením.
 
-\section{Výuka}
+\todoimage{AVR Studio}
 
-\blind[2]
+Zajímavým projektem je simavr\todocite. Jedná se o konzolovou aplikaci, která umožňuje emulovat běh různých mikrokontrolerů z rodiny AVR. Poskytuje výbornou integraci s ladícím programem gdb, zpětnou logickou analýzu pomocí souborů ve formátu VCD (Value change dump) a snadnou rozšiřitelnost pomocí externích vizualizačních nástrojů. Díky tomu se jedná o výborný nástroj pro lazení složitějších programů. Kvůli tomu je však aplikace nepřívětivá k uživatelům, kteří nejsou již zkušenými programátory, nebo nemají detailní přehled o platformě AVR. Zároveň není aplikací nijak zprostředkován překlad zdrojového kódu do strojového. Uživatel je tudíž nucen řešit tento problém externím překladačem, jako například AVRA\todocite, nebo Avr-GCC\todocite.
 
-\subsection{Složitost mikroprocesoru}
+Jednou z aplikací cílené na naprosté začátečníky je Arduino IDE\todocite. Jedná se o aplikaci usnadňující vývoj pro prototypovací platformu Arduino\todocite. Aplikace vyčnívá mezi konkurencí svým simplistickým vzhledem a jednoduchostí používání. V aplikaci se programuje v jazyce C, obohaceném o knihovnu funkcí unsadňující ovládání mikrokontroleru. Překlad a nahrání programu do mikrokontroleru proběhne stiskem tlačítka ``Play''. Aplikace také usnadňuje komunikaci s externím zařízením po sériové lince pomocí zabudované konzole. Nikterak však uživateli neusnazuje lazení běžícího programu a uživatel je tak ponechán napospas chybám, které jako začátečník nevyhnutelně udělá.
 
-\blind[2]
+Mezi její nevýhody však patří, že se pokouší odstínit své uživatele od příliš mnoha aspektů programování pro mikrokontrolery. Nahrávání i překlad programu probíhá automaticky. Aplikace za uživatele doplní i hlavičkové soubory pro danou platformu. Knihovna funkcí poskytnuta uživateli, ačkoliv usnadňuje vývoj, nereprezentuje dobře operace probíhající ``pod kapotou''. Jedná se proto o znalosti, které jsou nepřenositelné na platformy s Arduinem nekompatibilní.
 
-\subsection{Potřeby reálných nástrojů}
+\imagefigurefull{arduino-ide.png}{Arduino IDE}
 
-\blind[1]
+Z uvedených aplikací žádná není ideálním řešením pro naprosté začátečníky, pokusíme se proto navrhnout vlastní.
 
-\section{Existující řešení}
+\section{Požadavky na řešení}
 
-\subsection{Kompilace}
-
-\subsubsection{AVR32.exe}
-
-\subsubsection{Avra}
-
-\subsubsection{GCC}
-
-\subsection{Spouštění}
-
-\subsubsection{Simavr}
-
-\subsubsection{AVR Simulator IDE}
-
-\subsection{Integrované vývojové prostředí}
-
-\subsubsection{Arduino IDE}
-
-\subsubsection{Arduino IDE}
-
-\section{Odůvodnění nového řešení}
-
-\blind[1]
-
-\subsection{Assembly jako jeden z prvních jazyků}
-
-\blind[1]
-
-\subsection{Assembly jako druhý jazyk}
-
-\blind[2]
-
-\subsection{Odstínění reálných HW problémů}
-
-\blind[1]
+\todo{TODO}
