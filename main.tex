@@ -34,6 +34,14 @@
 \end{figure}%
 }
 
+\newcommand{\imagefigurefull}[3]{
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{media/#1}
+  \caption{#2 \label{pic:#1}}
+\end{figure}
+}
+
 \newcommand{\todocite}[0]{\todo{Citace}}
 
 %\renewcommand{\lstlistingname}{Ukázka}
@@ -69,5 +77,11 @@
 \chapter{Úlohy k testování}
 \label{chap:excercises}
 \includepdf[pages={1}]{excercises}
+
+\chapter{Seznam použitých zkratek}
+\todo{TODO}
+
+\chapter{Obsah přiložené SD karty}
+\todo{TODO}
 
 \end{document}
