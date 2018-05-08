@@ -90,8 +90,8 @@ fn main() {
 \begin{listing}
 \begin{minted}{console}
 $ assembler --help
-assembler 0.0.1
-Jiří Š.
+assembler 1.0.0
+Jiří Š. <sebelji1@fit.cvut.cz>
 Simple educational assembler
 
 USAGE:
@@ -109,11 +109,29 @@ FLAGS:
 
 Pro samotnou implementaci programu byl nakonec zvolen jazyk Rust a knihovny rust-peg a Clap zmíněné v sekci \ref{assembler:rust}. Rust byl zvolen primárně kvůli komfortu a bezpečí, které poskytuje, dobré programové podpoře a kvalitní knihovně pro práci s konzolovými argumenty. Nedílnou součástí rozhodnutí pak byly autorovy existující zkušenosti s jazykem.
 
-\section{Technické problémy}
+\todo{krajní případy}
 
-\todo{File including}
+\section{Realizace}
 
-\blind[3]
+struktura Compiler
+
+Prvním problémem, který bylo při realizaci potřeba vyřešit, bylo nahrazování návěstí za jejich skutečné adresy. Vzhledem k faktu, že u některých návěstí v době jejich použití v kódu ještě neznáme jejich pozici, musíme provádět překlad ve dvou průchodech.
+
+V prvním průchodu přeložíme veškeré instrukce a u instrukcí, které vyžadují adresu definovanou návěstím zapíšeme pouze nulovou adresu a uložíme si pozici v programu spolu s adresou, kterou na ni budeme doplňovat. Zároveň si v prvním průchodu zapamatujeme pozici každého návěstí, které potkáme.
+
+V druhém průchodu potom pouze projdeme seznam míst, na které je potřeba doplnit adresu a nahradíme dříve zapsanou nulovou adresu za skutečnou hodnotu. Pokud se narazíme na místo, které potřebuje adresu návěstí, které v programu nebylo definováno, ukončíme překlad chybou.
+
+\todoimage{code sample}
+
+Implementace lokálních návěstí byla vcelku přímočará. Při překladu si pouze pamatujeme poslední návěstí, které začínalo velkým písmenem. Pokud potom narazíme na definici nebo užití návěstí začínajícího tečkou, přidáme na jeho začátek poslední ``velké'' návěstí. Zbytek problému už za nás pak vyřeší existující kód na doplňování adres. Lokální návěstí definované dříve, než jakékoliv ``velké'' návěstí se umístí do mapy bez zvláštní úpravy.
+
+Kompilační direktiva \texttt{include} byla o něco těžší oříšek na rozlousknutí. První návrh aplikace s ní nepočítal, četl proto celý program najednou pomocí gramatického pravidla \texttt{program}. Bylo tedy třeba přeorganizovat aplikaci, aby dělila zdrojový kód na řádky ručně a syntaktickou analýzu prováděla řádku po řádce.
+
+Poté stačí ukládat čtené soubory na zásobník, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
+
+\todoimage{code sample}
+
+\todo{immediate výrazy}
 
 \section{Testování}
 
