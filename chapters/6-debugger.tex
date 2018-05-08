@@ -1,41 +1,64 @@
 \chapter{Ladící program}
 
-\blind[2]
+Poslední částí práce je ladicí program, který umožní uživatelům naší platformy spouštět, krokovat a ladit programy, které napíšou.
 
-\section{Možnosti řešení}
-
-\blind[1]
-
-\subsection{GTK+}
+\section{Návrh}
 
 \blind[1]
+
+\subsection{BGB}
+
+Primární inspirací pro 
+
+\todoimage{BGB Screenshot}
 
 \subsection{Qt}
 
 \blind[2]
+
+\todoimage{Platformová nezávislot Qt}
 
 \subsection{ImGui}
 
-\blind[3]
+Jednou ze zajímavějších voleb je knihovna Dear ImGui\todocite (dále jen ``ImGui''). Jedná se jednoduchou knihovnu na tvorbu uživateského rozhraní napsanou v jazyce C++. Narozdíl od knihovny Qt, která zachovává stav a rozložení rozhraní mezi snímky, knihovna ImGui skládá rozhraní v každém snímku znova. To činí výsledný kód značně jednoduchým, jak je patrné z ukázky \todo{REF}.
 
-\section{Zvolená technologie}
+Jméno knihovny ImGui vychází z anglického sousloví ``Immediate GUI'', které naznačuje, že knihovna operuje v bezprostředním řežimu -- souslovím zapůjčeném z obdobného konceptu běžného při grafickém programování. Ačkoliv se mi původního autora myšlenky bezprostředního uživatelského rozhraní nepodařilo dohledat, jedním z prvních zdrojů popularizující tuto myšlenku je video, které Casey Muratori zveřejnil v roce 2005\todocite.
 
-\subsection{Qt}
+\imagefigurefull{imgui-screenshot.png}{Ukázka knihovny ImGui}
 
-\blind[2]
+Výhodou i nevýhodou knihovny ImGui je její nezávislost na vykreslovacím kódu. Samotná knihovna vykreslovací logiky obsahuje jen nezbytné minimum a dodat kód, který bude rozhraní vykreslovat, je povinností uživatele knihovny. To dělá z ImGui skvělého kandidáta jak pro komplexní grafické aplikace, tak prostředí, kde je k dispozici pouze omezená grafická funkcionalita. Dělá to však ImGui těžkopádnou volbou pro grafickou aplikaci na běžné osobní počítače. Mimo nutnost vykreslovat rozhraní ručně poté rozhraní nekopíruje vzhledově hostující systém, jako například knihovna Qt. Uživatelé potom nemohou spoléhat na idiomy, které se naučili ve svém operačním systému používat.
 
-\subsection{C++}
+Ačkoliv se tedy jedná o velice zajímavou volbu, nevyhrává nad knihovnou Qt, která poskytne uživateli aplikace daleko větší komfort.
 
-Vzhledem k tomu, že knihovna pro emulaci je napsána v C++ a primárním jazykem používaným pro vývoj aplikací používajících knihovnu Qt je také C++\todo{Citace}, byl jazyk C++ jasnou volbou pro vývoj ladícího programu.
+\section{Zvolené technologie}
 
-\blind[1]
+Pro realizaci grafického rozhraní byla tedy zvolena knihovna Qt. Vzhledem k tomu, že knihovna pro emulaci je napsána v C++ a primárním jazykem používaným pro vývoj aplikací používajících knihovnu Qt je také C++\todo{Citace}, byl jazyk C++ jasnou volbou pro vývoj ladícího programu. 
 
-\section{Technické problémy}
+Namísto standardního nástroje QMake bude ke správě projektu bude použit nástroj CMake. Díky komplexitě knihovny Qt není překlad projektů, které ji využívají tak přímočarý, jako jiné projekty v jazyce C++. CMake však nabízí přímou integraci s Qt a udělá za nás nezbytné kroky které by jinak prováděl QMake. CMake byl zvolen primárně kvůli zachování konzistence s emulátorem\todo{REF}, který jej také používá.
 
-\blind[4]
+\section{Realizace}
+
+UI soubory
+
+QTableView + QTableModel
+
+kanonické zkratky, ikony
+
+QTimer
+
+Displej
+
+sériová konzole
+
+McuState
+
+memoryviewer, hexdump
+
+\todoimage{SCREENSHOT}
+\todoimage{SCREENSHOT}
+\todoimage{SCREENSHOT}
+\todoimage{SCREENSHOT}
 
 \section{Závěr}
-
-\todoimage{Screenshot emulátoru}
 
 \blind[1]
