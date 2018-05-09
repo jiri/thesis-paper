@@ -16,11 +16,13 @@ Zároveň by bylo možné při testování využít překladače, který je té�
 
 \subsection{C++}
 
-Druhou variantou je jazyk C++, který je na implementaci této části práce vhodnější. Hlavním důvodem je kompatibilita s grafickou ladící aplikací navržené v sekci \todo{REF}.
+Druhou variantou je jazyk C++, který je na implementaci této části práce vhodnější. Hlavním důvodem je kompatibilita s aplikacemi, které budou naši knihovnu využívat. Například s grafickou ladící aplikací navrženou v sekci \todo{REF}.
 
-K implementaci emulátoru nejsou zapotřebí téměř žádné knihovny, stávají se proto některé nevýhody jazyka C++ popsané v sekci \todo{REF} irelevantními.
+K implementaci emulátoru nejsou zapotřebí téměř žádné knihovny, stávají se proto některé nevýhody jazyka C++ popsané v sekci \todo{REF} irelevantními. Vhod pak přijde extenzivní podpora jazyka C++ pro práci s bitovými poli a binárními soubory. Pro čtení souboru byla použita standardní knihovna \texttt{filesystem}, která je v jazyce dostupná od verze C++17. Náš kód tudíž není možné ve starší verzi jazyka přeložit, avšak v případě potřeby lze použít knihovnu Boost.Filesystem, jejíž rozhraní odpovídá velice blízce knihovně \texttt{filesystem}.
 
-K testování v jazyce C++ můžeme použít například knihovnu Catch\todocite. Jedná se o jedinný hlavičkový soubor, který pomocí maker v jazyce C++ implementuje doménově specifický jazyk, ve kterém se testy definují.
+K testování v jazyce C++ můžeme použít například knihovnu Catch\todocite. Jedná se o jedinný hlavičkový soubor, který pomocí maker v jazyce C++ implementuje doménově specifický jazyk, ve kterém se testy definují. Knihovna se za nás poté postará o implementaci funkce \texttt{main}, která spustí všechny definované testy. Knihovna také podporuje výbornou integraci s vývojovým prostředím CLion\todo{cite} a výsledky testování jsou potom podrobně dostupné přímo v něm.
+
+\todoimage{screenshot testů}
 
 K samotné správě projektu a překladu poté můžeme použít nástroj CMake, popsaný v sekci\todo{REF}.
 
@@ -51,7 +53,9 @@ struct IoHandler {
 \label{fig:io-handler}
 \end{listing}
 
-Posledním problémem byla potom samotná krokovací funkce emulátoru. Ta je řešena jako velký blok \mintinline{c++}{switch}, jehož větve odpovídají jednotlivým instrukcím. Načítání argumentů ze strojového kódu je implementováno pomocnými funkcemi, které automaticky inkrementují registr \texttt{PC}.
+Posledním problémem byla potom samotná krokovací funkce emulátoru. V prvotním návrhu byla logika spouštění jednotlivých instrukcí řešena pomocí kolekce lambda funkcí, indexované pomocí operačního kódu instrukce. Díky využití pokročilých metaprogramovacích technik které jazyk C++ umožňuje bylo pak možné detekovat automaticky o jaký druh instrukce se jedná, přečíst automaticky její operandy a předat je přímo lambda funkci, jak je znázorněno v ukázce \todo{REF}.
+
+Ačkoliv se jednalo o elegantní řešení, byl kód nakonec přepsán aby používal dlouhý blok \mintinline{c++}{switch}, jehož větve odpovídají jednotlivým instrukcím. Načítání argumentů ze strojového kódu je implementováno pomocnými funkcemi, které automaticky inkrementují registr \texttt{PC}. Toto řešení je sice méně elegantní, ale oproti originálnímu řešení produkuje podstatně jednodušší binární soubor a je tudíž rychlejší.
 
 \section{Závěr}
 
