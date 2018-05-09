@@ -113,7 +113,9 @@ Pro samotnou implementaci programu byl nakonec zvolen jazyk Rust a knihovny rust
 
 \section{Realizace}
 
-struktura Compiler
+Základním stavebním blokem programu je struktura \texttt{Compiler} popsaná v ukázce \todo{REF}. 
+
+\todoimage{code sample}
 
 Prvním problémem, který bylo při realizaci potřeba vyřešit, bylo nahrazování návěstí za jejich skutečné adresy. Vzhledem k faktu, že u některých návěstí v době jejich použití v kódu ještě neznáme jejich pozici, musíme provádět překlad ve dvou průchodech.
 

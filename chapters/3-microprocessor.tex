@@ -1,10 +1,10 @@
 \chapter{Mikroprocesor}
 
-První částí práce je návrh samotného mikroprocesoru. Ten je inspirován mikroprocesorem ATmega328P\todo{Odkaz}, který se pohání jednu z nejpoužívanějších\todo{Citace} elektronických prototypových platforem Arduino Uno\todo{Citace} a příbuzné produkty\todo{Citace}. Většina rozhodnutí učiněných při návrhu platformy je převzata z návrhu platformy AVR.
+První částí práce je návrh samotného mikroprocesoru. Ten je inspirován mikroprocesorem ATmega328P\todo{Odkaz}, který se pohání elektronickou prototypovací platformu Arduino Uno\todo{Citace} a příbuzné produkty\todo{Citace}. Většina rozhodnutí učiněných při návrhu platformy je převzata z návrhu platformy AVR.
 
 \section{Instrukční sada}
 
-Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu. Byla odstraněna většina instrukcí, které nejsou kritické pro řešení problémů, nebo jejichž funkcionalita se dá nahradit vícero jinými instrukcemi, jako například většina variant instrukcí s okamžitou hodnotou místo druhého parametru, jako \texttt{addi}, \texttt{andi} nebo \texttt{subi}. Zároveň každá instrukce má pouze jedinou mnemoniku a naopak -- nedochází ke změně instrukce podle parametrů, se kterými je daná mnemonika zkombinována. Tím se předejde zbytečným chybám způsobeným překlepy nebo přehlédnutím se při čtení instrukčního manuálu.
+Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu. Byla odstraněna většina instrukcí, které nejsou kritické pro řešení problémů, nebo jejichž funkcionalita se dá nahradit vícero jinými instrukcemi. Tedy například většina variant instrukcí s okamžitou hodnotou místo druhého parametru, jako \texttt{addi}, \texttt{andi} nebo \texttt{subi}. Zároveň každá instrukce má pouze jedinou mnemoniku a naopak -- nedochází ke změně instrukce podle parametrů, se kterými je daná mnemonika zkombinována. Tím se předejde zbytečným chybám způsobeným překlepy nebo přehlédnutím se při čtení instrukčního manuálu.
 
 Dalším z hlavních rozdílů je odstranění instrukcí provádějících skoky podle výsledku srovnávacích operací. Instrukce \texttt{cmp} je často vnitřně implementována jako aritmetické odčítání bez zápisu zpět\todocite, je proto užitečné chápat, jak porovnání dvou čísel ovlivní příznaky v procesoru. V naší instrukční sadě jsou proto podmíněné skoky možné jen podle příznaků. Díky tomu jsou uživatelé nuceni pochopit jak funguje porovnávací instrukce interně a zároveň je díky tomu instrukční sada jednodušší.
 
