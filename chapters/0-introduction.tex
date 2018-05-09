@@ -2,7 +2,7 @@
 
 S postupujícím technologickým vývojem je elektronika se kterou se běžně setkáváme čím dál složitější. Instrukční sada procesorů od firmy Intel\todo{Cite} nyní obsahuje tisíce instrukcí\cite{x86-instructions}, oproti původnímu procesoru 8086\cite{8086-instructions}. Tento vývoj je ve světle čím dál větší potřeby pro výpočetní výkon nevyhnutelný, ale rostoucí komplexita hardwaru vytváří nepřátelské prostředí pro naprosté začáteníky.
 
-V dobách, kdy nejsofistikovanější domácí počítače jako EXAMPLE 1 nebo EXAMPLE 2 byly poháněny osmibitovými procesory s jednoduchou instrukční sadou\todo{cite} bylo začít s programováním pro danou platformu často pouze otázkou přečtení manuálu, nebo pomoci od učitele ve škole. Dnes je však spouštění aplikací pod kontrolou operačního systému, zavaděč systému je zamčený\todo{ref} a instrukční sada tak složitá, že obsáhnout ji je pro začátečníka takřka nemožný úkol.
+V dobách, kdy nejsofistikovanější domácí počítače jako \todo{příklad 1} nebo \todo{příklad 2} byly poháněny osmibitovými procesory s jednoduchou instrukční sadou\todo{cite} bylo začít s programováním pro danou platformu často pouze otázkou přečtení manuálu, nebo pomoci od učitele ve škole. Dnes je však spouštění aplikací pod kontrolou operačního systému, zavaděč systému je zamčený\todo{ref} a instrukční sada tak složitá, že obsáhnout ji je pro začátečníka takřka nemožný úkol.
 
 Přesto však existuje zjevný zájem o nízkoúrovňové programování. Populární platforma Arduino se rapidně blíží milionu aktivních uživatelů a díky dobré programové podpoře je nahrávání programů do mikroprocesorů jednodušší, než kdy dřív. Přesto však existuje bariéra, kterou představuje nutnost vlastnit fyzické zařízení schopné daný kód spouštět.
 
@@ -10,7 +10,7 @@ Přesto však existuje zjevný zájem o nízkoúrovňové programování. Popul�
 
 V naší práci se pokusíme navrhnout virtuální platformu, která se pokusí být ještě jednodušší, než nejjednodušší z existujících mikroprocesorů a bude možné ji použít na kterémkoliv moderním domácím počítači.
 
-\todo{more}
+\todo{víc}
 
 \section{Struktura práce}
 
@@ -21,11 +21,12 @@ V druhé kapitole rozvedeme návrh aplikačního software, který v rámci prác
 \begin{itemize}
 	\item Architektura mikrokontroleru a instrukční sada.
 	\item Assembler, tj. aplikace, kterou budeme překládat symbolický zápis na strojový kód.
-	\item Emulátor a ladící aplikace, kterou budeme emulovat běh na platformě x86.
+	\item Emulátor, realizovaný formou knihovny.
+	\item Ladící aplikace, kterou budeme emulovat běh na platformě x86.
 \end{itemize}
 
-Třetí kapitola potom popisuje realizaci práce. To zahrnuje implementační rozhodnutí, popis a řešení problémů na které během implementace narazíme a ukázky kódu, který řeší zajímavé části práce.
+V následujících čtyřech kapitolách se budeme každé části věnovat detailněji. Nejdříve zvážíme dílčí technologie, které bychom při realizaci mohli použít a každou z nich detailněji prozkoumáme. Poté si přiblížíme detaily samotné realizace a popíšeme, jak byly řešeny problémy, na které jsme při práci narazili. Na konci zhodnotíme výsledné řešení a jak se použité technologie osvědčily.
 
-Ve čtvrté a poslední kapitole námi navržený aplikační software otestujeme s několika uživateli. Kapitola obsahuje popis metodiky testování, jeho průběh a zhodnocení výsledků.
+Ve sedmé a poslední kapitole námi navržený aplikační software otestujeme s několika uživateli. Kapitola obsahuje popis metodiky testování, jeho průběh a zhodnocení výsledků. Součástí je také návrh úloh, které při testování použijeme.
 
 \end{introduction}
