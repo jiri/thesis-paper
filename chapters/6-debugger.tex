@@ -4,13 +4,17 @@ Poslední částí práce je ladicí program, který umožní uživatelům naš�
 
 \section{Návrh}
 
-\blind[1]
+Žádná z aplikací které jsme analyzovali v první kapitole neměla grafické rozhraní, které by splňovalo naše očekávání pro lazení běžících programů. Poohlédneme se proto po inspiraci jinde.
 
 \subsection{BGB}
 
-Primární inspirací pro 
+Primární inspirací pro podobu grafického rozhraní ladícího programu byl projekt BGB\todo{cite}. Jedná se o velice přesný emulátor platformy Nintendo Gameboy\todo{cite}, který však také disponuje ladící aplikací. Její rozhraní, byť trochu hutné, je velice funkcionální a plné užitečných informací.
 
-\todoimage{BGB Screenshot}
+\imagefigurefull{bgb-screenshot.png}{Ladící rozhraní emulátoru BGB}{1.0}
+
+Jak můžeme vidět na ukázce \todo{REF}, disponuje aplikace oblastí s čitelnou interpretací strojového kódu. Dále potom oblastí umožňující čtení a úpravu paměti, spolu s textovou reprezentací. Další oblastí je pak monitor registrů a příznaků procesoru. Aplikace obsahuje mnoho další funkcionality, ale pro nás bude dostačující, pokud se omezíme na zmíněné tři.
+
+Rozhraní ladící aplikace BGB je jednoduché a přehledné, pokusíme se ho proto replikovat v naší ladící aplikaci.
 
 \subsection{Qt}
 
@@ -22,9 +26,9 @@ Primární inspirací pro
 
 Jednou ze zajímavějších voleb je knihovna Dear ImGui\todocite (dále jen ``ImGui''). Jedná se jednoduchou knihovnu na tvorbu uživateského rozhraní napsanou v jazyce C++. Narozdíl od knihovny Qt, která zachovává stav a rozložení rozhraní mezi snímky, knihovna ImGui skládá rozhraní v každém snímku znova. To činí výsledný kód značně jednoduchým, jak je patrné z ukázky \todo{REF}.
 
-Jméno knihovny ImGui vychází z anglického sousloví ``Immediate GUI'', které naznačuje, že knihovna operuje v bezprostředním řežimu -- souslovím zapůjčeném z obdobného konceptu běžného při grafickém programování. Ačkoliv se mi původního autora myšlenky bezprostředního uživatelského rozhraní nepodařilo dohledat, jedním z prvních zdrojů popularizující tuto myšlenku je video, které Casey Muratori zveřejnil v roce 2005\todocite.
+Jméno knihovny ImGui vychází z anglického sousloví ``Immediate GUI'', které naznačuje, že knihovna operuje v bezprostředním řežimu -- souslovím zapůjčeném z obdobného konceptu běžného při grafickém programování. Ačkoliv původního autora myšlenky bezprostředního uživatelského rozhraní není snadné dohledat, jedním z prvních zdrojů popularizující tuto myšlenku je video, které Casey Muratori zveřejnil v roce 2005\todocite.
 
-\imagefigurefull{imgui-screenshot.png}{Ukázka knihovny ImGui}
+\imagefigurefull{imgui-screenshot.png}{Ukázka knihovny ImGui}{1.0}
 
 Výhodou i nevýhodou knihovny ImGui je její nezávislost na vykreslovacím kódu. Samotná knihovna vykreslovací logiky obsahuje jen nezbytné minimum a dodat kód, který bude rozhraní vykreslovat, je povinností uživatele knihovny. To dělá z ImGui skvělého kandidáta jak pro komplexní grafické aplikace, tak prostředí, kde je k dispozici pouze omezená grafická funkcionalita. Dělá to však ImGui těžkopádnou volbou pro grafickou aplikaci na běžné osobní počítače. Mimo nutnost vykreslovat rozhraní ručně poté rozhraní nekopíruje vzhledově hostující systém, jako například knihovna Qt. Uživatelé potom nemohou spoléhat na idiomy, které se naučili ve svém operačním systému používat.
 
@@ -38,27 +42,43 @@ Namísto standardního nástroje QMake bude ke správě projektu bude použit n�
 
 \section{Realizace}
 
-UI soubory
+Ačkoliv Qt poskytuje způsob, jak navrhovat grafické rozhraní vizuálně pomocí aplikace Qt Designer\todocite, jedná se o poměrně těžkopádný způsob návrhu. Proto je v projektu použit manuální návrh pomocí manipulace rozložení (v angličtině známých jako ``layouts'') přímo v kódu.
 
-QTableView + QTableModel
+Pro samotné zobrazení většiny dat použijeme třídu \texttt{QTableView}, která poskytuje tabulkové rozhraní nad námi definovaným modelem s rozhraním \texttt{QTableModel}. Implementace samotného modelu je poté přímočará -- vydědíme třídu \texttt{QTableModel} a reimplementujeme následující metody:
 
-kanonické zkratky, ikony
+\begin{description}
+	\item[rowCount] Počet řádek v tabulce
+	\item[columnCount] Počet sloupců v tabulce
+	\item[data] Přístup k datům jednotlivých buněk
+	\item[setData] Nastavování dat jednotlivých buněk
+	\item[headerData] Přístup k datům v hlavičkách řádků a sloupců
+	\item[flags] Příznaky ovlivňující chování buněk
+\end{description}
 
-QTimer
+Metody přistupující k datům berou parametr popisující roli metody, tj. na jaká data o buňce se ptáme. To je trochu nešťastný přístup, neboť v první úrovni každé z funkcí musíme podle role diferencovat a implementujeme vlastně vícero funkcí zároveň. Kvůli tomu je pak kód méně čitelný.
 
-Displej
+\imagefigurefull{debugger-main.png}{Hlavní okno aplikace}{1.0}
 
-sériová konzole
+Komunikaci mezi aplikací a emulátorem zajišťuje třída \texttt{McuState}, využívající navrhový vzor Singleton\todo{cite}. Kromě udržování instance emulátoru vystavuje ještě několik signálů a slotů\todo{ref} pro knihovnu Qt a udržuje ostatní data potřebná ke správnému běhu aplikace.
 
-McuState
+Nejdůležitější funkcí třídy \texttt{McuState} je však reinterpretace strojového kódu zpět do textové podoby. Vzhledem k tomu, že překlad je ztrátová operace, nebude reinterpretovaný kód stejný jako kód před překladem. Samotný překlad zpět poté není o nic těžší než čtení strojového kódu. Zásadní slabinou je instrukce \texttt{db}, kterou není možné při zpětném překladu rozpoznat a celý proces většinou znemožní. Z podobného důvodu pak ladící aplikace není připravena na manuální skok doprostřed instrukce.
 
-memoryviewer, hexdump
+Pokud jsme si při překladu nechali vyprodukovat soubor s adresami, použijeme ho při zpětném překladu k doplnění návěstí do instrukcí obsahující adresy. Doplníme je také přímo do tabulky obsahující reinterpretované instrukce.
 
-\todoimage{SCREENSHOT}
-\todoimage{SCREENSHOT}
-\todoimage{SCREENSHOT}
-\todoimage{SCREENSHOT}
+Při automatickém běhu programu uměle omezujeme rychlost spouštění instrukcí na \todo{FREQUENCY}. K tomu nám napomáhá třída \texttt{QTimer}, která spouští námi definovanou funkci v intervalu odpovídajícím třiceti snímkům za sekundu. Abychom si ušetřili práci s časováním na každé instrukci, spouštíme je proto v dávkách odpovídajícím jednomu snímku displeje, který je součástí emulace.
+
+Nedílnou součástí grafického rozhraní je pak grafická reprezentace displeje a tlačítek, pro která máme připravené rozhraní. Ta je realizována pomocí separátního okna, které se rozložením podobá klasické herní konzoli Nintendo Gameboy. Tato podoba byla zvolena primárně pro svou univerzální rozpoznatelnost mezi potenciálními uživateli našeho programu.
+
+\imagefigurefull{debugger-player.png}{Okno obsahující displej a tlačítka}{0.75}
+
+Poslední součástí grafického rozhraní je potom sériová konzole. Je tvořena dvěma grafickými prvky: editovatelným textovým polem na zadávání zpráv k odeslání po sériové lince a needitovatelným textovým polem, které zobrazuje zprávy příchozí. Odeslání zprávy je možné klávesou Enter, což také textové pole vyprázdní. Reset mikroprocesoru potom vyprázdní obě textová pole a uvede je tak do stavu, ve kterém se nacházeli původně.
+
+\imagefigurefull{debugger-serial.png}{Okno se sériovou konzolí}{0.66}
+
+Stav obou oken je zachován i po jejich zavření a obnoven při jejich opakovaném otevření.
 
 \section{Závěr}
 
-\blind[1]
+V této kapitole jsme prozkoumali existující ladící aplikaci BGB a zreplikovali část jejího rozhraní v knihovně Qt. Implementovali jsme emulační funkcionalitu pomocí knihovny navržené v sekci \todo{REF} a přidali k ní možnost reinterpretovat strojový kód zpět do čitelné podoby.
+
+Tím je aplikační část této práce hotova a v následující kapitole ji otestujeme na několika uživatelích, abychom ověřili kvalitu našeho návrhu.
