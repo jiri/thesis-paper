@@ -48,15 +48,17 @@ Z odpovědí je nejenom patrné, že je problematické samotné programování v
 
 \section{Současný stav řešení}
 
-Aplikací, která se v současné době na FIT ČVUT používá při výuce předmětu BI-SAP\todocite, je AVR studio (konkrétně verze 4). Jedná se o kompletní vývojovou sadu přímo od společnosti Atmel\todocite. Aplikace je však kompatibilní pouze se systémem Microsoft Windows\todocite, je ji proto těžké nebo nemožné zprovoznit na alternativních operačních systémech. To je pro některé uživatele zásadní problém a aplikace proto není kompletním řešením.
+Aplikací, která se v současné době na FIT ČVUT používá při výuce předmětu BI-SAP je AVR studio (konkrétně verze 4)\cite{sap-avr-studio}. Jedná se o kompletní vývojovou sadu přímo od společnosti Atmel\footnotemark. Aplikace je však kompatibilní pouze se systémem Microsoft Windows\cite{avr-studio-requirements}, je ji proto těžké nebo nemožné zprovoznit na alternativních operačních systémech. To je pro některé uživatele zásadní problém a aplikace proto není kompletním řešením.
+
+\footnotetext{V roce 2016 došlo k odkoupení společnosti Atmel konkurenční společností Microchip. Od té doby došlo k přejmenování aplikace \textbf{AVR studio} na \textbf{Atmel studio}, avšak některé verze si stále zachovávají původní jméno.}
 
 Nejpřímočařejším řešením vývoje pro platformu AVR je manuální překlad a nahrávání programu do zařízení. Z našeho oblíbeného jazyka vyprodukujeme patřičným překladačem binární soubor, který poté slinkujeme a nahrajeme do zařízení pomocí programátoru a aplikace. Toto řešení je pro zkušené uživatele často nejjednoduší, avšak obzvlášť pro začátečníky pracující v operačním systému, ve kterém není užití konzolových aplikací možné nebo jednoduché, je tato cesta takřka nemožná.
 
-Pro platformu AVR existuje několik dalších aplikací, které usnadňují vývoj a nahrávání programu. Ukážeme si z nich dvě -- simavr\todocite a Arduino IDE\todocite.
+Pro platformu AVR existuje několik dalších aplikací, které usnadňují vývoj a nahrávání programu. Ukážeme si z nich dvě -- simavr\cite{github-simavr} a Arduino IDE\cite{arduino-ide}.
 
 \todoimage{AVR Studio}
 
-Zajímavým projektem je simavr\todocite. Jedná se o konzolovou aplikaci, která umožňuje emulovat běh různých mikrokontrolerů z rodiny AVR. Poskytuje výbornou integraci s ladícím programem gdb, zpětnou logickou analýzu pomocí souborů ve formátu VCD (Value change dump) a snadnou rozšiřitelnost pomocí externích vizualizačních nástrojů. Díky tomu se jedná o výborný nástroj pro lazení složitějších programů. Kvůli tomu je však aplikace nepřívětivá k uživatelům, kteří nejsou již zkušenými programátory, nebo nemají detailní přehled o platformě AVR. Zároveň není aplikací nijak zprostředkován překlad zdrojového kódu do strojového. Uživatel je tudíž nucen řešit tento problém externím překladačem, jako například AVRA\todocite, nebo Avr-GCC\todocite.
+Zajímavým projektem je simavr\cite{github-simavr}. Jedná se o konzolovou aplikaci, která umožňuje emulovat běh různých mikrokontrolerů z rodiny AVR. Poskytuje výbornou integraci s ladícím programem gdb, zpětnou logickou analýzu pomocí souborů ve formátu VCD (Value change dump) a snadnou rozšiřitelnost pomocí externích vizualizačních nástrojů. Díky tomu se jedná o výborný nástroj pro lazení složitějších programů. Kvůli tomu je však aplikace nepřívětivá k uživatelům, kteří nejsou již zkušenými programátory, nebo nemají detailní přehled o platformě AVR. Zároveň není aplikací nijak zprostředkován překlad zdrojového kódu do strojového. Uživatel je tudíž nucen řešit tento problém externím překladačem, jako například AVRA\cite{avra}, nebo Avr-GCC\cite{avr-gcc}.
 
 Jednou z aplikací cílené na naprosté začátečníky je Arduino IDE\cite{arduino-ide}. Jedná se o aplikaci usnadňující vývoj pro prototypovací platformu Arduino. Aplikace vyčnívá mezi konkurencí svým simplistickým vzhledem a jednoduchostí používání. V aplikaci se programuje v jazyce C, obohaceném o knihovnu funkcí unsadňující ovládání mikrokontroleru. Překlad a nahrání programu do mikrokontroleru proběhne stiskem tlačítka ``Play''. Aplikace také usnadňuje komunikaci s externím zařízením po sériové lince pomocí zabudované konzole. Nikterak však uživateli neusnazuje lazení běžícího programu a uživatel je tak ponechán napospas chybám, které jako začátečník nevyhnutelně udělá.
 
@@ -64,6 +66,6 @@ Mezi její nevýhody však patří, že se pokouší odstínit své uživatele o
 
 \imagefigurefull{arduino-ide.png}{Arduino IDE}{1.0}
 
-\section{Požadavky na řešení}
+\section{Shrnutí}
 
 Z uvedených aplikací žádná není ideálním řešením pro naprosté začátečníky, pokusíme se proto navrhnout vlastní. Pokusíme se naši platformu navrhnout co uživatelksy nejpřívětivější, aby s ní mohl pracovat i naprostý začátečník. Zároveň se však pokusíme aby byla dostatečně realistická na to, aby následný přechod k platformě AVR byl co nejjednodušší.

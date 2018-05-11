@@ -1,4 +1,5 @@
 \chapter{Ladící program}
+\label{chap:debugger}
 
 Poslední částí práce je ladicí program, který umožní uživatelům naší platformy spouštět, krokovat a ladit programy, které napíšou.
 
@@ -12,7 +13,7 @@ Primární inspirací pro podobu grafického rozhraní ladícího programu byl p
 
 \imagefigurefull{bgb-screenshot.png}{Ladící rozhraní emulátoru BGB}{1.0}
 
-Jak můžeme vidět na ukázce \todo{REF}, disponuje aplikace oblastí s čitelnou interpretací strojového kódu. Dále potom oblastí umožňující čtení a úpravu paměti, spolu s textovou reprezentací. Další oblastí je pak monitor registrů a příznaků procesoru. Aplikace obsahuje mnoho další funkcionality, ale pro nás bude dostačující, pokud se omezíme na zmíněné tři.
+Jak můžeme vidět na ukázce \ref{pic:bgb-screenshot.png}, disponuje aplikace oblastí s čitelnou interpretací strojového kódu. Dále potom oblastí umožňující čtení a úpravu paměti, spolu s textovou reprezentací. Další oblastí je pak monitor registrů a příznaků procesoru. Aplikace obsahuje mnoho další funkcionality, ale pro nás bude dostačující, pokud se omezíme na zmíněné tři.
 
 Rozhraní ladící aplikace BGB je jednoduché a přehledné, pokusíme se ho proto replikovat v naší ladící aplikaci.
 
@@ -36,13 +37,13 @@ Ačkoliv se tedy jedná o velice zajímavou volbu, nevyhrává nad knihovnou Qt,
 
 \section{Zvolené technologie}
 
-Pro realizaci grafického rozhraní byla tedy zvolena knihovna Qt. Vzhledem k tomu, že knihovna pro emulaci je napsána v C++ a primárním jazykem používaným pro vývoj aplikací používajících knihovnu Qt je také C++\todo{Citace}, byl jazyk C++ jasnou volbou pro vývoj ladícího programu. 
+Pro realizaci grafického rozhraní byla tedy zvolena knihovna Qt. Vzhledem k tomu, že knihovna pro emulaci je napsána v C++ a knihovna Qt také, byl jazyk C++ jasnou volbou pro vývoj ladícího programu.
 
 Namísto standardního nástroje QMake bude ke správě projektu bude použit nástroj CMake. Díky komplexitě knihovny Qt není překlad projektů, které ji využívají tak přímočarý, jako jiné projekty v jazyce C++. CMake však nabízí přímou integraci s Qt a udělá za nás nezbytné kroky které by jinak prováděl QMake. CMake byl zvolen primárně kvůli zachování konzistence s emulátorem\todo{REF}, který jej také používá.
 
 \section{Realizace}
 
-Ačkoliv Qt poskytuje způsob, jak navrhovat grafické rozhraní vizuálně pomocí aplikace Qt Designer\todocite, jedná se o poměrně těžkopádný způsob návrhu. Proto je v projektu použit manuální návrh pomocí manipulace rozložení (v angličtině známých jako ``layouts'') přímo v kódu.
+Ačkoliv Qt poskytuje způsob, jak navrhovat grafické rozhraní vizuálně pomocí aplikace Qt Designer\cite{qt-designer}, jedná se o poměrně těžkopádný způsob návrhu. Proto je v projektu použit manuální návrh pomocí manipulace rozložení (v angličtině známých jako ``layouts'') přímo v kódu.
 
 Pro samotné zobrazení většiny dat použijeme třídu \texttt{QTableView}, která poskytuje tabulkové rozhraní nad námi definovaným modelem s rozhraním \texttt{QTableModel}. Implementace samotného modelu je poté přímočará -- vydědíme třídu \texttt{QTableModel} a reimplementujeme následující metody:
 
@@ -59,13 +60,13 @@ Metody přistupující k datům berou parametr popisující roli metody, tj. na 
 
 \imagefigurefull{debugger-main.png}{Hlavní okno aplikace}{1.0}
 
-Komunikaci mezi aplikací a emulátorem zajišťuje třída \texttt{McuState}, využívající navrhový vzor Singleton\todo{cite}. Kromě udržování instance emulátoru vystavuje ještě několik signálů a slotů\todo{ref} pro knihovnu Qt a udržuje ostatní data potřebná ke správnému běhu aplikace.
+Komunikaci mezi aplikací a emulátorem zajišťuje třída \texttt{McuState}, využívající navrhový vzor Singleton\cite{gof}. Kromě udržování instance emulátoru vystavuje ještě několik signálů a slotů\todo{ref} pro knihovnu Qt a udržuje ostatní data potřebná ke správnému běhu aplikace.
 
 Nejdůležitější funkcí třídy \texttt{McuState} je však reinterpretace strojového kódu zpět do textové podoby. Vzhledem k tomu, že překlad je ztrátová operace, nebude reinterpretovaný kód stejný jako kód před překladem. Samotný překlad zpět poté není o nic těžší než čtení strojového kódu. Zásadní slabinou je instrukce \texttt{db}, kterou není možné při zpětném překladu rozpoznat a celý proces většinou znemožní. Z podobného důvodu pak ladící aplikace není připravena na manuální skok doprostřed instrukce.
 
 Pokud jsme si při překladu nechali vyprodukovat soubor s adresami, použijeme ho při zpětném překladu k doplnění návěstí do instrukcí obsahující adresy. Doplníme je také přímo do tabulky obsahující reinterpretované instrukce.
 
-Při automatickém běhu programu uměle omezujeme rychlost spouštění instrukcí na \todo{FREQUENCY}. K tomu nám napomáhá třída \texttt{QTimer}, která spouští námi definovanou funkci v intervalu odpovídajícím třiceti snímkům za sekundu. Abychom si ušetřili práci s časováním na každé instrukci, spouštíme je proto v dávkách odpovídajícím jednomu snímku displeje, který je součástí emulace.
+Při automatickém běhu programu uměle omezujeme rychlost spouštění instrukcí na 16Mhz. K tomu nám napomáhá třída \texttt{QTimer}, která spouští námi definovanou funkci v intervalu odpovídajícím třiceti snímkům za sekundu. Abychom si ušetřili práci s časováním na každé instrukci, spouštíme je proto v dávkách odpovídajícím jednomu snímku displeje, který je součástí emulace.
 
 Nedílnou součástí grafického rozhraní je pak grafická reprezentace displeje a tlačítek, pro která máme připravené rozhraní. Ta je realizována pomocí separátního okna, které se rozložením podobá klasické herní konzoli Nintendo Gameboy. Tato podoba byla zvolena primárně pro svou univerzální rozpoznatelnost mezi potenciálními uživateli našeho programu.
 

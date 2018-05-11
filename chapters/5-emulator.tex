@@ -1,6 +1,6 @@
 \chapter{Emulátor}
 
-Druhou částí práce je emulátor, který umožní spouštět strojový kód vyprodukovaný překladačem jehož implementace je popsána v sekci \todo{REF}. Návrh emulátoru je blíže popsaný v sekci \todo{REF}.
+Druhou částí práce je emulátor, který umožní spouštět strojový kód vyprodukovaný překladačem jehož implementace je popsána v sekci \ref{chap:assembler}. Návrh emulátoru je blíže popsaný v sekci \ref{sec:asm-spec}.
 
 \section{Možnosti řešení}
 
@@ -16,7 +16,7 @@ Zároveň by bylo možné při testování využít překladače, který je té�
 
 \subsection{C++}
 
-Druhou variantou je jazyk C++, který je na implementaci této části práce vhodnější. Hlavním důvodem je kompatibilita s aplikacemi, které budou naši knihovnu využívat. Například s grafickou ladící aplikací navrženou v sekci \todo{REF}.
+Druhou variantou je jazyk C++, který je na implementaci této části práce vhodnější. Hlavním důvodem je kompatibilita s aplikacemi, které budou naši knihovnu využívat. Například s grafickou ladící aplikací navrženou v kapitole \ref{chap:debugger}.
 
 K implementaci emulátoru nejsou zapotřebí téměř žádné knihovny, stávají se proto některé nevýhody jazyka C++ popsané v sekci \todo{REF} irelevantními. Vhod pak přijde extenzivní podpora jazyka C++ pro práci s bitovými poli a binárními soubory. Pro čtení souboru byla použita standardní knihovna \texttt{filesystem}, která je v jazyce dostupná od verze C++17. Náš kód tudíž není možné ve starší verzi jazyka přeložit, avšak v případě potřeby lze použít knihovnu Boost.Filesystem, jejíž rozhraní odpovídá velice blízce knihovně \texttt{filesystem}.
 

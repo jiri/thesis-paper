@@ -1,4 +1,5 @@
 \chapter{Překladač}
+\label{chap:assembler}
 
 První samostatnou programovou částí práce je překladač z jazyka symbolických adres do strojového kódu našeho mikroprocesoru. Nemá přímou závislost na ostatních částech práce, pouze na návrhu samotné platformy. Je proto ideálním kandidátem na první část práce.
 
@@ -20,17 +21,27 @@ První volbou jazyka pro implementaci překladače je jazyk C++ -- jazyk s dlouh
 
 Mezi zásadní nevýhody C++ však patří absence balíčkovacího systému. Kvůli tomu se musíme buď spolehnout, že patřičné hlavičkové soubory a statické knihovny budou poskytnuty uživatelem (nejčastěji pomocí systémového balíčkovače), nebo je musíme přiložit k práci jako součást našeho kódu. Dále pak C++ postrádá standardní nástrojovou sadu pro kompilaci větších projektů, musíme proto používat externí nástroje.
 
-Jedním takovým nástrojem je CMake\cite{cmake}, používaný pro automatizaci překladu programu. Nejenom, že nám umožní snadno měnit překladač a přidávat závislosti do programu, ale také nám pomůže zajistit konzistentní překlad systému na různých platformách\todocite. Projekt CMake vznikl v roce 2001\cite{cmake-overview}, je proto dospělou a stabilní volbou, která málokoho překvapí.
+Jedním takovým nástrojem je CMake\cite{cmake}, používaný pro automatizaci překladu programu. Nejenom, že nám umožní snadno měnit překladač a přidávat závislosti do programu, ale také nám pomůže zajistit konzistentní překlad systému na různých platformách. Projekt CMake vznikl v roce 2001\cite{cmake-overview}, je proto dospělou a stabilní volbou, která málokoho překvapí.
 
 Knihoven pro práci s konzolovými argumenty existuje v ekosystému C++ hned několik. Je tomu tak pravděpodobně hlavně díky široké základně konzolových aplikací napsaných v C++. Nejjednodušší volbou je knihovna Boost.Program\_options obsažená v knihovně Boost\cite{boost-filesystem}. Existuje velká šance, že budeme knihovnu Boost používat i v jiných částech programu. Například  pokud chceme podporovat verzi C++ starší nežli C++17\cite{cpp-filesystem}, můžeme pro přístup k souborům použít Boost.Filesystem, který odpovídá stejnému rozhraní, které se v C++17 nachází\cite{boost-filesystem}.
 
 Pro syntaktický rozbor textu můžeme použít například knihovnu PEGTL\cite{github-pegtl}. Knihovna PEGTL je založena na flexibilní metodologii a umožňuje psát kód provádějící syntaktický rozklad modulárním a snadno rozšiřitelným způsobem. Mezi její výhody patří její malý rozsah, moderní rozhraní využívající funkce jazyka C++ a přehlednost výsledného kódu. Knihovna PEGTL je implementována jako hlavičkový soubor bez dalších závislostí\cite{github-pegtl}.
 
 \todoimage{Listing with code sample}
+\begin{listing}
+\begin{minted}{cpp}
+using namespace tao::pegtl;
+
+struct u8 :
+	seq< opt< one< '+', '-' > >, plus< digit > > {};
+\end{minted}
+\caption{Zdrojový kód jednoduché aplikace používající Click, převzato z \cite{website-click}}
+\label{fig:click-source}
+\end{listing}
 
 \subsection{Python}
 
-Narozdíl od předchozích dvou voleb je Python jazyk interpretovaný, nikoliv kompilovaný \todo{Citace}. Velké množství knihoven, které pro Python existují \todo{Citace}, v kombinaci s expresivní syntaxí z něj dělají dobrého kandidáta na návrh konzolové aplikace. Poskytuje jak vlastní balíčkovací systém jménem PIP\todocite, tak zabudovanou knihovnu pro psaní testů\todocite. Jeho největší nevýhodou je potom fakt, že ke spouštění programů napsaných v Pythonu je potřeba interpreter\todocite, který koncový uživatel nemusí mít na svém počítači nainstalovaný.
+Narozdíl od předchozích dvou voleb je Python jazyk interpretovaný, nikoliv kompilovaný. Velké množství knihoven, které pro Python existují, v kombinaci s expresivní syntaxí z něj dělají dobrého kandidáta na návrh konzolové aplikace. Poskytuje jak vlastní balíčkovací systém jménem PIP\cite{pip}, tak zabudovanou knihovnu pro psaní testů\cite{python-unittest}. Jeho největší nevýhodou je potom fakt, že ke spouštění programů napsaných v Pythonu je potřeba interpreter, který koncový uživatel nemusí mít na svém počítači nainstalovaný.
 
 Jednou z knihoven umožňující práci s příkazovou řádkou je knihovna Click\cite{website-click}. Využívá funkcionalitu Pythonu známou jako ``dekorátory'', díky kterým je její využití otázkou jednoduché anotace funkcí jejimi parametry. Její použití je přímo
 
@@ -54,7 +65,7 @@ if __name__ == '__main__':
 \label{fig:click-source}
 \end{listing}
 
-Pro syntaktickou analýzu programu je i v Pythonu možné použít knihovnu, která nám umožní definovat pravidla samotné analýzy jako gramatiku. Může to být například knihovna Parsimonius\todocite, jejíž použití neodbočuje výrazně od jiných knihoven podobného typu. Samotné čtení programu ze souboru je pak zajištěno funkcionalitou poskytnout přímo v jazyce.
+Pro syntaktickou analýzu programu je i v Pythonu možné použít knihovnu, která nám umožní definovat pravidla samotné analýzy jako gramatiku. Může to být například knihovna Parsimonius\cite{github-parsimonious}, jejíž použití neodbočuje výrazně od jiných knihoven podobného typu. Samotné čtení programu ze souboru je pak zajištěno funkcionalitou poskytnout přímo v jazyce.
 
 \subsection{Rust}
 \label{assembler:rust}

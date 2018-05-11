@@ -23,7 +23,7 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 \subsection{Analýza architektury AVR}
 
 \todo{AVR}
-
+ 
 \subsection{Mikroprocesor a strojový kód}
 
 První částí práce bude popis podoby virtuálního mikroprocesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD \todo{Citace}, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino \todo{Citace}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
@@ -42,8 +42,9 @@ Mikroprocesor by měl také podporovat několik vstupních a výstupních operac
 \end{itemize}
 
 \subsection{Emulátor}
+\label{sec:asm-spec}
 
-Jelikož námi navržený procesor bude pouze virtuální, nebude existovat fyzický integrovaný obvod, který by byl schopný spouštět náš strojový kód. Proto, abychom mohli strojový kód spouštět, vytvoříme emulátor \todo{vysvětlivka}, který bude emulovat běh procesoru na jiné, hostující platformě.
+Jelikož námi navržený procesor bude pouze virtuální, nebude existovat fyzický integrovaný obvod, který by byl schopný spouštět náš strojový kód. Proto, abychom mohli strojový kód spouštět, vytvoříme emulátor, který bude emulovat běh procesoru na jiné, hostující platformě.
 
 Emulátor bude koncipován formou knihovny, kterou bude možné použít při vývoji dalšího softwaru. Tím se zajistí konzistentní chování napříč více programy, ve kterých bude knihovna použita. Zároveň tak bude velmi snadné naimplementovat novou aplikaci, která je schopna spouštět strojový kód naší virtuální platformy.
 
