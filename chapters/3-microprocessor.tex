@@ -1,6 +1,6 @@
 \chapter{Mikroprocesor}
 
-První částí práce je návrh samotného mikroprocesoru. Ten je inspirován mikroprocesorem ATmega328P\todo{Odkaz}, který se pohání elektronickou prototypovací platformu Arduino Uno\todo{Citace} a příbuzné produkty\todo{Citace}. Většina rozhodnutí učiněných při návrhu platformy je převzata z návrhu platformy AVR.
+První částí práce je návrh samotného mikroprocesoru. Ten je inspirován platformou AVR, kterou jsme analyzovali v sekci \ref{sec:spec-avr}. Většina rozhodnutí učiněných při návrhu platformy je tedy inspirována přímo jí.
 
 \section{Instrukční sada}
 
@@ -14,9 +14,9 @@ Kompletní instrukční sada je popsána v příloze \ref{appendix:mcu-manual}.
 
 \section{Pamět}
 
-Podobně jako platforma AVR\todocite, i náš mikroprocesor disponuje hned třemi druhy paměti: programovou, operační a pamětí pro obsluhu vstupu a výstupu.
+Podobně jako platforma AVR\todo{citace}, i náš mikroprocesor disponuje hned třemi druhy paměti: programovou, operační a pamětí pro obsluhu vstupu a výstupu.
 
-Narozdíl od AVR jsou však tyto 3 paměti modelovány jako 3 separátní paměťové bloky, pokrývající jejich adresní prostory (16, 16 a 8 bitů respektive). V nižších částech paměti nejsou namapované registry, tak jak je tomu u AVR\todocite a paměť zodpovídající za obsluhu vstupu a výstupu má separátní prostor adres, nezávislý na programové a operační paměti.
+Narozdíl od AVR jsou však tyto 3 paměti modelovány jako 3 separátní paměťové bloky, pokrývající jejich adresní prostory (16, 16 a 8 bitů respektive). V nižších částech paměti nejsou namapované registry, tak jak je tomu u AVR\todo{citace} a paměť zodpovídající za obsluhu vstupu a výstupu má separátní prostor adres, nezávislý na programové a operační paměti.
 
 Mikroprocesor začíná spouštět program od adresy \texttt{0x0000}, na které je umístěný reset vektor. Každý vektor má 16 bytů a jsou pro ně vyhrazeny adresy \texttt{0x0000} -- \texttt{0x0100}. Přerušení jsou při startu spouštění vypnuty a musí se ručně povolit instrukcí \texttt{ei}. Díky tomu je na možné začátku výuky psát kód přímo od počáteční adresy a nestrachovat se, že přepisujeme vektory přerušení.
 

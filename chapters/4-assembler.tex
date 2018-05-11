@@ -5,7 +5,7 @@ První samostatnou programovou částí práce je překladač z jazyka symbolick
 
 \section{Možnosti řešení}
 
-Ideální formou pro překladač je konzolová aplikace, aby formou následoval věštinu ostatních jazykových překladačů, jako je GCC \todo{Citation} nebo Clang \todo{Citation}. Aplikace bude primárně řešit následující problémy:
+Ideální formou pro překladač je konzolová aplikace, aby formou následoval věštinu ostatních jazykových překladačů, jako je GCC nebo Clang. Aplikace bude primárně řešit následující problémy:
 
 \begin{itemize}
 	\item Čtení a zápis textových i binárních souborů
@@ -16,8 +16,9 @@ Ideální formou pro překladač je konzolová aplikace, aby formou následoval 
 Je proto vhodné vybrat programovací jazyk, v jehož ekosystému existuje pro každý dílčí problém knihovna, která daný problém řeší co nejlépe. Ušetříme si tak zbytečnou práci a zbytečně se nebudeme vystavovat šanci že naše řešení bude obsahovat chyby a neošetřené krajní případy. V námi implementovaném kódu se pak chybám pokusíme předejít automatizovaným testováním. Je proto vhodné, aby námi zvolený jazyk poskytoval funkcionalitu, která testování kódu udělá co nejjednoduším.
 
 \subsection{C++}
+\label{sec:asm-cpp}
 
-První volbou jazyka pro implementaci překladače je jazyk C++ -- jazyk s dlouhou historií\todocite, širokou nabídkou knihoven a rozsáhlou standardní knihovnou.
+První volbou jazyka pro implementaci překladače je jazyk C++ -- jazyk s dlouhou historií\cite{cpp-history}, širokou nabídkou knihoven a rozsáhlou standardní knihovnou.
 
 Mezi zásadní nevýhody C++ však patří absence balíčkovacího systému. Kvůli tomu se musíme buď spolehnout, že patřičné hlavičkové soubory a statické knihovny budou poskytnuty uživatelem (nejčastěji pomocí systémového balíčkovače), nebo je musíme přiložit k práci jako součást našeho kódu. Dále pak C++ postrádá standardní nástrojovou sadu pro kompilaci větších projektů, musíme proto používat externí nástroje.
 
@@ -27,16 +28,14 @@ Knihoven pro práci s konzolovými argumenty existuje v ekosystému C++ hned ně
 
 Pro syntaktický rozbor textu můžeme použít například knihovnu PEGTL\cite{github-pegtl}. Knihovna PEGTL je založena na flexibilní metodologii a umožňuje psát kód provádějící syntaktický rozklad modulárním a snadno rozšiřitelným způsobem. Mezi její výhody patří její malý rozsah, moderní rozhraní využívající funkce jazyka C++ a přehlednost výsledného kódu. Knihovna PEGTL je implementována jako hlavičkový soubor bez dalších závislostí\cite{github-pegtl}.
 
-\todoimage{Listing with code sample}
 \begin{listing}
 \begin{minted}{cpp}
 using namespace tao::pegtl;
 
-struct u8 :
-	seq< opt< one< '+', '-' > >, plus< digit > > {};
+struct comment : if_must<one<';'>, anything> { };
 \end{minted}
-\caption{Zdrojový kód jednoduché aplikace používající Click, převzato z \cite{website-click}}
-\label{fig:click-source}
+\caption{Definice jednoduchého pravidla přijímajícího komentáře}
+\label{fig:peg-example}
 \end{listing}
 
 \subsection{Python}
@@ -120,13 +119,25 @@ FLAGS:
 
 Pro samotnou implementaci programu byl nakonec zvolen jazyk Rust a knihovny rust-peg a Clap zmíněné v sekci \ref{assembler:rust}. Rust byl zvolen primárně kvůli komfortu a bezpečí, které poskytuje, dobré programové podpoře a kvalitní knihovně pro práci s konzolovými argumenty. Nedílnou součástí rozhodnutí pak byly autorovy existující zkušenosti s jazykem.
 
-\todo{krajní případy}
-
 \section{Realizace}
 
-Základním stavebním blokem programu je struktura \texttt{Compiler} popsaná v ukázce \todo{REF}. 
+Základním stavebním blokem programu je struktura \texttt{Compiler} popsaná v ukázce \ref{fig:rust-compiler}. Ukládá současný stav překladu, výslednou binární podobu souboru a struktury potřebné k správnému zpracování návěstí.
 
-\todoimage{code sample}
+\begin{listing}
+\begin{minted}{rust}
+pub struct Compiler {
+    cursor: u16,
+    output: [u8; 0x10000],
+    label_map: HashMap<Label, u16>,
+    needs_label: Vec<(u16, Label, Nibble)>,
+    last_major_label: Label,
+    enabled_instructions: Option<HashMap<Opcode, String>>,
+    file_stack: Vec<Vec<String>>,
+}
+\end{minted}
+\caption{Definice struktury \texttt{Compiler}}
+\label{fig:rust-result}
+\end{listing}
 
 Prvním problémem, který bylo při realizaci potřeba vyřešit, bylo nahrazování návěstí za jejich skutečné adresy. Vzhledem k faktu, že u některých návěstí v době jejich použití v kódu ještě neznáme jejich pozici, musíme provádět překlad ve dvou průchodech.
 
@@ -134,7 +145,32 @@ V prvním průchodu přeložíme veškeré instrukce a u instrukcí, které vyž
 
 V druhém průchodu potom pouze projdeme seznam míst, na které je potřeba doplnit adresu a nahradíme dříve zapsanou nulovou adresu za skutečnou hodnotu. Pokud se narazíme na místo, které potřebuje adresu návěstí, které v programu nebylo definováno, ukončíme překlad chybou.
 
-\todoimage{code sample}
+\begin{listing}
+\begin{minted}{rust}
+fn resolve_labels(&mut self) -> Result<(), String> {
+        for (position, label, nib) in self.needs_label.iter() {
+            let addr = self.label_map.get(label).ok_or(format!("Undefined label '{}'!", label))?;
+
+            match nib {
+                Nibble::Both => {
+                    self.output[*position as usize + 0] = ((addr & 0xff00) >> 8) as u8;
+                    self.output[*position as usize + 1] = ((addr & 0x00ff) >> 0) as u8;
+                },
+                Nibble::High => {
+                    self.output[*position as usize] = ((addr & 0xff00) >> 8) as u8;
+                },
+                Nibble::Low => {
+                    self.output[*position as usize] = ((addr & 0x00ff) >> 0) as u8;
+                },
+            }
+        }
+
+        Ok(())
+    }
+\end{minted}
+\caption{Definice struktury \texttt{Compiler}}
+\label{fig:rust-result}
+\end{listing}
 
 Implementace lokálních návěstí byla vcelku přímočará. Při překladu si pouze pamatujeme poslední návěstí, které začínalo velkým písmenem. Pokud potom narazíme na definici nebo užití návěstí začínajícího tečkou, přidáme na jeho začátek poslední ``velké'' návěstí. Zbytek problému už za nás pak vyřeší existující kód na doplňování adres. Lokální návěstí definované dříve, než jakékoliv ``velké'' návěstí se umístí do mapy bez zvláštní úpravy.
 
@@ -142,11 +178,16 @@ Kompilační direktiva \texttt{include} byla o něco těžší oříšek na rozl
 
 Poté stačí ukládat čtené soubory na zásobník, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
 
-\todoimage{code sample}
-
-\todo{immediate výrazy}
+\begin{listing}
+\begin{minted}{rust}
+// TODO
+\end{minted}
+\caption{Definice struktury \texttt{Compiler}}
+\label{fig:rust-file-stack}
+\end{listing}
 
 \section{Testování}
+\label{sec:asm-test}
 
 Jelikož chování překladače spoléhá výhradně na vstup od uživatele a to dokonce ne na jedné, ale na dvou frontách (soubor se zdrojovým kódem a konzolové argumenty), je důležité zajistit, aby každý krajní případ byl ošetřen. V případě, že takový stav nastane, by aplikace měla vypsat na standardní chybový výstup zprávu popisující ke které chybě došlo a správně se ukončit.
 

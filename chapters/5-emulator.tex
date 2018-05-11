@@ -1,4 +1,5 @@
 \chapter{Emulátor}
+\label{chap:emulator}
 
 Druhou částí práce je emulátor, který umožní spouštět strojový kód vyprodukovaný překladačem jehož implementace je popsána v sekci \ref{chap:assembler}. Návrh emulátoru je blíže popsaný v sekci \ref{sec:asm-spec}.
 
@@ -8,7 +9,7 @@ Jelikož je funkcionalita emulátoru úzce omezena na práci s binárními daty 
 
 \subsection{Rust}
 
-Stejně jako pro překladač je i pro emulátor možné použít jazyk Rust. Jeho výhody a nevýhody jsou blíže popsány v sekci \ref{assembler:rust}. Pro užití při psaní emulátoru jsou pro nás obzvláště relevantní nízkoúrovňové operace, které má Rust jako součást standardní knihovny. Jmenovitě pak detekce přetečení při sčítání a odčítání\todocite, nebo snadná konverze dat mezi jejich bytovou reprezentací a kanonickým typem\todocite.
+Stejně jako pro překladač je i pro emulátor možné použít jazyk Rust. Jeho výhody a nevýhody jsou blíže popsány v sekci \ref{assembler:rust}. Pro užití při psaní emulátoru jsou pro nás obzvláště relevantní nízkoúrovňové operace, které má Rust jako součást standardní knihovny. Jmenovitě pak detekce přetečení při sčítání a odčítání, nebo snadná konverze dat mezi jejich bytovou reprezentací a kanonickým typem.
 
 Další z výhod je opět zabudovaná funkcionalita pro testování kódu, které je v emulátoru kritické -- chyby při emulaci, při kterých se emulátor může dostat do stavu nekonzistentního s jeho specifikací, jsou obzvlášť pro začátečeníky naprosto neproniknutelné. Je proto kritické takovým chybám zamezit.
 
@@ -18,21 +19,17 @@ Zároveň by bylo možné při testování využít překladače, který je té�
 
 Druhou variantou je jazyk C++, který je na implementaci této části práce vhodnější. Hlavním důvodem je kompatibilita s aplikacemi, které budou naši knihovnu využívat. Například s grafickou ladící aplikací navrženou v kapitole \ref{chap:debugger}.
 
-K implementaci emulátoru nejsou zapotřebí téměř žádné knihovny, stávají se proto některé nevýhody jazyka C++ popsané v sekci \todo{REF} irelevantními. Vhod pak přijde extenzivní podpora jazyka C++ pro práci s bitovými poli a binárními soubory. Pro čtení souboru byla použita standardní knihovna \texttt{filesystem}, která je v jazyce dostupná od verze C++17. Náš kód tudíž není možné ve starší verzi jazyka přeložit, avšak v případě potřeby lze použít knihovnu Boost.Filesystem, jejíž rozhraní odpovídá velice blízce knihovně \texttt{filesystem}.
+K implementaci emulátoru nejsou zapotřebí téměř žádné knihovny, stávají se proto některé nevýhody jazyka C++ popsané v sekci \ref{sec:asm-cpp} irelevantními. Vhod pak přijde extenzivní podpora jazyka C++ pro práci s bitovými poli a binárními soubory. Pro čtení souboru byla použita standardní knihovna \texttt{filesystem}, která je v jazyce dostupná od verze C++17. Náš kód tudíž není možné ve starší verzi jazyka přeložit, avšak v případě potřeby lze použít knihovnu Boost.Filesystem, jejíž rozhraní odpovídá velice blízce knihovně \texttt{filesystem}.
 
-K testování v jazyce C++ můžeme použít například knihovnu Catch\todocite. Jedná se o jedinný hlavičkový soubor, který pomocí maker v jazyce C++ implementuje doménově specifický jazyk, ve kterém se testy definují. Knihovna se za nás poté postará o implementaci funkce \texttt{main}, která spustí všechny definované testy. Knihovna také podporuje výbornou integraci s vývojovým prostředím CLion\todo{cite} a výsledky testování jsou potom podrobně dostupné přímo v něm.
-
-\todoimage{screenshot testů}
-
-K samotné správě projektu a překladu poté můžeme použít nástroj CMake, popsaný v sekci\todo{REF}.
+K samotné správě projektu a překladu poté můžeme použít nástroj CMake, popsaný v sekci\ref{sec:asm-cpp}.
 
 \section{Zvolená technologie}
 
-Pro implementaci emulátoru použijeme jazyk C++. Důvodem této volby je primárně snadnější využití knihovny v jiných projektech, jako bude například ladící program popsaný blíže v sekci \todo{REF}.
+Pro implementaci emulátoru použijeme jazyk C++. Důvodem této volby je primárně snadnější využití knihovny v jiných projektech, jako bude například ladící program popsaný blíže v kapitole \ref{chap:debugger}.
 
 \section{Technické problémy}
 
-Jedním z technických problémů, které nám přineslo užití C++ je detekce přetečení při sčítání dvou bytů. Manuální detekce není nikterak složitá, avšak jak překladačová sada GCC\todocite, tak překladač Clang\todocite disponují zabudovanými funkcemi \texttt{\_\_builtin\_add\_overflow} a \texttt{\_\_builtin\_sub\_overflow}, které návratovou hodnotou indikují, zda při operaci došlo k přetečení, nebo ne.
+Jedním z technických problémů, které nám přineslo užití C++ je detekce přetečení při sčítání dvou bytů. Manuální detekce není nikterak složitá, avšak jak překladačová sada GCC\cite{gcc-overflow}, tak překladač Clang\cite{clang-overflow} disponují zabudovanými funkcemi \texttt{\_\_builtin\_add\_overflow} a \texttt{\_\_builtin\_sub\_overflow}, které návratovou hodnotou indikují, zda při operaci došlo k přetečení, nebo ne.
 
 Dalším problémem pak byla implementace obslužných funkcí pro vstup a výstup. Ve finální verzi projektu jsou realizovány jako mapa typu \mintinline{c++}{std::unordered_map<u8, IoHandler>}. Typ \mintinline{c++}{IoHandler} je potom jednoduchá struktura obsahující dvě funkce -- jednu pro čtení a druhou pro zápis. Výchozí hodnota struktury IoHandler poté splňuje chování procesoru pro nepřirazené pozice v paměti, mohou být tudíž vytvořeny výchozím konstruktorem. Definice struktury je demonstrována v ukázce \ref{fig:io-handler}.
 
@@ -53,9 +50,32 @@ struct IoHandler {
 \label{fig:io-handler}
 \end{listing}
 
-Posledním problémem byla potom samotná krokovací funkce emulátoru. V prvotním návrhu byla logika spouštění jednotlivých instrukcí řešena pomocí kolekce lambda funkcí, indexované pomocí operačního kódu instrukce. Díky využití pokročilých metaprogramovacích technik které jazyk C++ umožňuje bylo pak možné detekovat automaticky o jaký druh instrukce se jedná, přečíst automaticky její operandy a předat je přímo lambda funkci, jak je znázorněno v ukázce \todo{REF}.
+Posledním problémem byla potom samotná krokovací funkce emulátoru. V prvotním návrhu byla logika spouštění jednotlivých instrukcí řešena pomocí kolekce lambda funkcí, indexované pomocí operačního kódu instrukce. Díky využití pokročilých metaprogramovacích technik které jazyk C++ umožňuje bylo pak možné detekovat automaticky o jaký druh instrukce se jedná, přečíst automaticky její operandy a předat je přímo lambda funkci, jak je znázorněno v ukázce \ref{fig:cpp-templates}.
+
+\begin{listing}
+\begin{minted}{c++}
+this->instruction_map[CALL] = [this] (Address addr) {
+	this->push_addr(this->pc);
+	this->pc = addr;
+};
+
+...
+
+auto opcode = this->read_opcode();
+this->instruction_map[opcode].execute();
+\end{minted}
+\caption{Registrace instrukcí pomocí lambda funkcí}
+\label{fig:cpp-templates}
+\end{listing}
 
 Ačkoliv se jednalo o elegantní řešení, byl kód nakonec přepsán aby používal dlouhý blok \mintinline{c++}{switch}, jehož větve odpovídají jednotlivým instrukcím. Načítání argumentů ze strojového kódu je implementováno pomocnými funkcemi, které automaticky inkrementují registr \texttt{PC}. Toto řešení je sice méně elegantní, ale oproti originálnímu řešení produkuje podstatně jednodušší binární soubor a je tudíž rychlejší.
+
+\section{Testování}
+\label{sec:emu-test}
+
+K testování v jazyce C++ můžeme použít například knihovnu Catch\cite{github-catch}. Jedná se o jedinný hlavičkový soubor, který pomocí maker v jazyce C++ implementuje doménově specifický jazyk, ve kterém se testy definují. Knihovna se za nás poté postará o implementaci funkce \texttt{main}, která spustí všechny definované testy. Knihovna také podporuje výbornou integraci s vývojovým prostředím CLion\cite{clion-catch} a výsledky testování jsou potom podrobně dostupné přímo v něm.
+
+\todoimage{screenshot testů}
 
 \section{Závěr}
 

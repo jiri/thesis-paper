@@ -12,6 +12,7 @@
 \usepackage{dirtree}
 \usepackage{minted}
 \usepackage{pgfplots}
+\usepackage[nonumberlist]{glossaries}
 
 \setlength{\parskip}{1em}
 
@@ -42,8 +43,6 @@
 \end{figure}
 }
 
-\newcommand{\todocite}[0]{\todo{Citace}}
-
 %\renewcommand{\lstlistingname}{Ukázka}
 %\renewcommand{\lstlistlistingname}{Seznam ukázek}
 
@@ -53,6 +52,10 @@
 \abstractCS{\input{abstract_cs.tex}}
 
 \input{meta.tex}
+
+\makeglossaries
+\input{glossary.tex}
+\glsaddall
 
 \begin{document}
 
@@ -71,6 +74,8 @@
 \bibliographystyle{csn690}
 \bibliography{bibliography}
 
+\printglossary[title=Seznam použitých zkratek,type=\acronymtype]
+
 \appendix
 
 \chapter{Úlohy k testování}
@@ -80,10 +85,19 @@
 \chapter{Dokumentace mikroprocesoru a instrukční sady}
 \todo{TODO}
 
-\chapter{Seznam použitých zkratek}
-\todo{TODO}
-
 \chapter{Obsah přiložené SD karty}
-\todo{TODO}
+
+\begin{figure}
+	\dirtree{%
+		.1 readme.txt\DTcomment{stručný popis obsahu SD karty}.
+		.1 src.
+		.2 assembler\DTcomment{zdrojové kódy překladače}.
+		.2 emultor\DTcomment{zdrojové kódy emulátoru}.
+		.2 debugger\DTcomment{zdrojové kódy ladící aplikace}.
+		.2 paper\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
+		.1 text\DTcomment{text práce}.
+		.2 thesis.pdf\DTcomment{text práce ve formátu PDF}.
+	}
+\end{figure}
 
 \end{document}
