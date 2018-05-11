@@ -1,0 +1,264 @@
+\documentclass[a4,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{titling}
+\usepackage{nopageno}
+\usepackage{hyperref}
+
+\title{Dokumentace k mikrokontroleru}
+\author{Jiří Šebele}
+\date{\today}
+
+\newcommand{\instruction}[1]{\subsection{\texttt{#1}}\label{ins:#1}}
+\newcommand{\syntax}[1]{\item[Syntaxe:] \texttt{#1} }
+\newcommand{\operands}[1]{\item[Operandy:] \( #1 \) }
+\newcommand{\operation}[1]{\item[Operace:] \( #1 \) }
+\newcommand{\zflag}[1]{\item[Příznak \texttt{Z}:] #1 }
+\newcommand{\cflag}[1]{\item[Příznak \texttt{C}:] #1 }
+\newcommand{\counter}[1]{\item[Čítač:] \( PC \leftarrow PC + #1 \) }
+\newcommand{\stack}[1]{\item[Zásobník:] \( #1 \) }
+
+\newcommand{\reg}[1]{0 \leq #1 \leq 15}
+\newcommand{\addr}[1]{0 \leq #1 \leq 65535}
+\newcommand{\io}[1]{0 \leq #1 \leq 255}
+\newcommand{\byte}[1]{0 \leq #1 \leq 255}
+
+\begin{document}
+
+\maketitle
+
+\section{Instrukční sada}
+
+\instruction{nop}
+
+Neprovede žádnou operaci.
+
+\begin{description}
+	\syntax{nop}
+	\counter{1}
+\end{description}
+
+\instruction{sleep}
+
+Uvede zařízení do režimu spánku.
+
+\begin{description}
+	\syntax{sleep}
+	\counter{1}
+\end{description}
+
+\instruction{break}
+
+V ladícím režimu zastaví emulátor, jinak neprovede žádnou operaci.
+
+\begin{description}
+	\syntax{break}
+	\counter{1}
+\end{description}
+
+\instruction{ei}
+
+Povolí přerušení.
+
+\begin{description}
+	\syntax{ei}
+	\counter{1}
+\end{description}
+
+\instruction{di}
+
+Zakáže přerušení.
+
+\begin{description}
+	\syntax{di}
+	\counter{1}
+\end{description}
+
+\instruction{add}
+
+\begin{description}
+	\syntax{add Rd, Rr}
+	\operands{\reg{d}, \reg{r}}
+	\operation{Rd \leftarrow Rd + Rr}
+	\zflag{Nastaven pokud je výsledkem operace 0}
+	\cflag{Nastaven pokud došlo k přenosu do vyššího řádu}
+	\counter{2}
+\end{description}
+
+\instruction{jmp}
+
+Nepodmíněný skok na adresu.
+
+\begin{description}
+	\syntax{call A}
+	\operands{\addr{A}}
+	\item[Čítač:] \( PC \leftarrow A \)
+\end{description}
+
+\instruction{call}
+
+Skok do podprogramu. Umístí návratovou adresu na zásobník.
+
+\begin{description}
+	\syntax{call A}
+	\operands{\addr{A}}
+	\operation{STACK \leftarrow PC + 1, PC \leftarrow A}
+	\stack{SP \leftarrow SP - 2}
+	\counter{3}
+\end{description}
+
+\instruction{ret}
+
+Návrat z podprogramu. Návratová adresa je načtena ze zásobníku.
+
+\begin{description}
+	\syntax{ret}
+	\operation{PC \leftarrow STACK}
+	\stack{SP \leftarrow SP + 2}
+\end{description}
+
+\instruction{reti}
+
+Stejně jako \texttt{ret} (\ref{ins:ret}), ale nastaví příznak přerušení.
+
+\instruction{brc}
+
+Skočí na adresu, pokud je nastaven příznak \texttt{C}.
+
+\begin{description}
+	\syntax{brc A}
+	\operands{\addr{A}}
+	\item[Čítač:] Pokud \(C\): \( PC \leftarrow A \), jinak \( PC \leftarrow PC + 1 \)
+\end{description}
+
+\instruction{brnc}
+
+Skočí na adresu, pokud není nastaven příznak \texttt{C}.
+
+\begin{description}
+	\syntax{brnc A}
+	\operands{\addr{A}}
+	\item[Čítač:] Pokud \(\overline{C}\): \(PC \leftarrow A \), jinak \( PC \leftarrow PC + 1 \)
+\end{description}
+
+\instruction{brz}
+
+Skočí na adresu, pokud je nastaven příznak \texttt{Z}.
+
+\begin{description}
+	\syntax{brz A}
+	\operands{\addr{A}}
+	\item[Čítač:] Pokud \(Z\): \(PC \leftarrow A \), jinak \( PC \leftarrow PC + 1 \)
+\end{description}
+
+\instruction{brnz}
+
+Skočí na adresu, pokud není nastaven příznak \texttt{Z}.
+
+\begin{description}
+	\syntax{brnz A}
+	\operands{\addr{A}}
+	\item[Čítač:] Pokud \(\overline{Z}\): \(PC \leftarrow A \), jinak \( PC \leftarrow PC + 1 \)
+\end{description}
+
+%        /* Arithmetic */
+%        map.insert("add",   0x10);
+%        map.insert("addc",  0x11);
+%        map.insert("sub",   0x12);
+%        map.insert("subc",  0x13);
+%        map.insert("inc",   0x14);
+%        map.insert("dec",   0x15);
+%        map.insert("and",   0x16);
+%        map.insert("or",    0x17);
+%        map.insert("xor",   0x18);
+%        map.insert("cmp",   0x19);
+%        map.insert("cmpi",  0x1A);
+%
+
+\instruction{mov}
+
+Zkopíruje hodnotu z registru do registru.
+
+\begin{description}
+	\syntax{mov Rd, Rr}
+	\operands{\reg{d}, \reg{r}}
+	\operation{Rd \leftarrow Rr}
+	\counter{2}
+\end{description}
+
+\instruction{ldi}
+
+Načte do registru osmibitovou konstantu.
+
+\begin{description}
+	\syntax{ldi Rr, V}
+	\operands{\reg{r}, \byte{V}}
+	\operation{Rr \leftarrow V}
+	\counter{3}
+\end{description}
+
+\instruction{ld}
+
+\todo{Doplnit}
+
+\instruction{st}
+
+\todo{Doplnit}
+
+\instruction{push}
+
+Umístí hodnotu z registru na zásobník.
+
+\begin{description}
+	\syntax{push Rr}
+	\operands{\reg{r}}
+	\operation{STACK \leftarrow Rr}
+	\stack{SP \leftarrow SP + 1}
+	\counter{2}
+\end{description}
+
+\instruction{pop}
+
+Umístí hodnotu ze zásobníku do registru
+
+\begin{description}
+	\syntax{pop Rr}
+	\operands{\reg{r}}
+	\operation{Rr \leftarrow STACK}
+	\stack{SP \leftarrow SP + 1}
+	\counter{2}
+\end{description}
+
+\instruction{lpm}
+
+\todo{TODO}
+
+\instruction{ldd}
+\instruction{std}
+\instruction{lpmd}
+
+\instruction{in}
+
+Načte do registru hodnotu z vstupu / výstupu.
+
+\begin{description}
+	\syntax{in Rr, A}
+	\operands{\reg{r}, \byte{A}}
+	\operation{Rr \leftarrow IO[A]}
+	\counter{3}
+\end{description}
+
+\instruction{out}
+
+Zkopíruje hodnotu z registru do vstupu / výstupu.
+
+\begin{description}
+	\syntax{out Rr, A}
+	\operands{\reg{r}, \byte{A}}
+	\operation{IO[A] \leftarrow Rr}
+	\counter{3}
+\end{description}
+
+
+\end{document}
