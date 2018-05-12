@@ -25,10 +25,10 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 Nejdříve prozkoumáme architekturu procesorů z rodiny AVR. Inspirujeme se mikrokontrolerem ATtiny12, který je jeden z nejjednodušších AVR mikrokontrolerů. Z dokumentace ATtiny12 od společnosti Atmel\cite{attiny12-datasheet} zjistíme následující:
 
 \begin{itemize}
-	\item Mikroprocesor disponuje 32 víceúčelovými registry
-	\item Mikrorocesor disponuje 1KB programové paměti a 64 byty paměti EEPROM
-	\item Na procesoru se nachází 6 tzv. GPIO pinů
-	\item Procesor operuje v řádu jednotek Mhz
+	\item mikroprocesor disponuje 32 víceúčelovými, 8-bitovými registry,
+	\item mikroprocesor disponuje 1KB programové paměti a 64 byty paměti EEPROM,
+	\item na procesoru se nachází 6 tzv. GPIO pinů,
+	\item procesor operuje v řádu jednotek Mhz.
 \end{itemize}
 
 Při analýze nemusíme zabíhat do přílišných detailů -- snažíme se ji pouze aproximovat, nikoliv simulovat. Výše uvedené charakteristiky jsou pro nás tudíž směrodatné.
@@ -46,9 +46,9 @@ Samotný mikroprocesor spouští pouze strojový kód a není zatížen překlad
 Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
 
 \begin{itemize}
-	\item Grafický výstup podobou displeje namapovaného do paměti
-	\item Komunikaci po seriálové lince
-	\item Omezená sada tlačítek
+	\item grafický výstup podobou displeje namapovaného do paměti,
+	\item komunikaci po seriálové lince,
+	\item omezená sada tlačítek.
 \end{itemize}
 
 \subsection{Emulátor}
@@ -69,9 +69,9 @@ Jelikož samotný procesor rozumí pouze strojovému kódu, bude další část�
 Mezi pseudoinstrukce podporované jazykem by měli patřit alespoň následující:
 
 \begin{itemize}
-	\item Ukládání řetězců a uživatelských dat do programové paměti
-	\item Nastavování pozice v binárním souboru
-	\item Vložení obsahu z jiného souboru
+	\item ukládání řetězců a uživatelských dat do programové paměti,
+	\item nastavování pozice v binárním souboru,
+	\item vložení obsahu z jiného souboru.
 \end{itemize}
 
 \subsection{Překladač}

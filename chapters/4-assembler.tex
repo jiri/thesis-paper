@@ -8,9 +8,9 @@ První samostatnou programovou částí práce je překladač z jazyka symbolick
 Ideální formou pro překladač je konzolová aplikace, aby formou následoval věštinu ostatních jazykových překladačů, jako je GCC nebo Clang. Aplikace bude primárně řešit následující problémy:
 
 \begin{itemize}
-	\item Čtení a zápis textových i binárních souborů
-	\item Syntaktický rozbor textu podle gramatiky jazyka
-	\item Práce s konzolovými argumenty
+	\item čtení a zápis textových i binárních souborů,
+	\item syntaktický rozbor textu podle gramatiky jazyka,
+	\item práce s konzolovými argumenty.
 \end{itemize}
 
 Je proto vhodné vybrat programovací jazyk, v jehož ekosystému existuje pro každý dílčí problém knihovna, která daný problém řeší co nejlépe. Ušetříme si tak zbytečnou práci a zbytečně se nebudeme vystavovat šanci že naše řešení bude obsahovat chyby a neošetřené krajní případy. V námi implementovaném kódu se pak chybám pokusíme předejít automatizovaným testováním. Je proto vhodné, aby námi zvolený jazyk poskytoval funkcionalitu, která testování kódu udělá co nejjednoduším.
