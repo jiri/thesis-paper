@@ -42,7 +42,7 @@ struct comment : if_must<one<';'>, anything> { };
 
 Narozdíl od předchozích dvou voleb je Python jazyk interpretovaný, nikoliv kompilovaný. Velké množství knihoven, které pro Python existují, v kombinaci s expresivní syntaxí z něj dělají dobrého kandidáta na návrh konzolové aplikace. Poskytuje jak vlastní balíčkovací systém jménem PIP\cite{pip}, tak zabudovanou knihovnu pro psaní testů\cite{python-unittest}. Jeho největší nevýhodou je potom fakt, že ke spouštění programů napsaných v Pythonu je potřeba interpreter, který koncový uživatel nemusí mít na svém počítači nainstalovaný.
 
-Jednou z knihoven umožňující práci s příkazovou řádkou je knihovna Click\cite{website-click}. Využívá funkcionalitu Pythonu známou jako ``dekorátory'', díky kterým je její využití otázkou jednoduché anotace funkcí jejimi parametry. Její použití je přímo
+Jednou z knihoven umožňující práci s příkazovou řádkou je knihovna Click\cite{website-click}. Využívá funkcionalitu Pythonu známou jako \uv{dekorátory}, díky kterým je její využití otázkou jednoduché anotace funkcí jejimi parametry. Její použití je přímo
 
 \begin{listing}
 \begin{minted}{python}
@@ -75,7 +75,7 @@ Jedná se o nízkoúrovňový jazyk, navržený jako alternativa jazyků C a C++
 
 Mezi jeho nevýhody pak patří slabší, ale přesto bohatý ekosystém knihoven, menší uživatelská základna\cite{so-survey-2018} a časté změny, ke kterým v jazyce stále dochází.
 
-Stejně jako pro C++ a Python i pro Rust existuje nejedna knihovna, která pomáhá psát kód pro syntaktickou analýzu. Pro naši potřebu se zdá být nejlepší knihovna rust-peg\cite{github-rust-peg}. Oproti C++ má však výhodu v tom, že umí generovat kód přímo z jazykové gramatiky. Samotná gramatika potom není psaná přímo v kódu jazyka, který se k tomu často syntakticky nehodí. V případě knihovny rust-peg dochází ke generaci v tzv. ``build skriptu'', o jehož spouštění se stará Cargo.
+Stejně jako pro C++ a Python i pro Rust existuje nejedna knihovna, která pomáhá psát kód pro syntaktickou analýzu. Pro naši potřebu se zdá být nejlepší knihovna rust-peg\cite{github-rust-peg}. Oproti C++ má však výhodu v tom, že umí generovat kód přímo z jazykové gramatiky. Samotná gramatika potom není psaná přímo v kódu jazyka, který se k tomu často syntakticky nehodí. V případě knihovny rust-peg dochází ke generaci v tzv. \uv{build skriptu}, o jehož spouštění se stará Cargo.
 
 Pro práci s konzolovými argumenty je potom vhodné užít knihovnu Clap\cite{github-clap}. Knihovna Clap nám nejenom umožní přehledně zjistit, které argumenty s jakými hodnotami byly předány naší aplikaci, ale obstará za nás například generování informací o užití programu. Díky typovému systému pak není možné opomenout případy, že argument není definován, nebo nemá hodnotu jakou bychom očekávali.
 
@@ -172,7 +172,7 @@ fn resolve_labels(&mut self) -> Result<(), String> {
 \label{fig:rust-result}
 \end{listing}
 
-Implementace lokálních návěstí byla vcelku přímočará. Při překladu si pouze pamatujeme poslední návěstí, které začínalo velkým písmenem. Pokud potom narazíme na definici nebo užití návěstí začínajícího tečkou, přidáme na jeho začátek poslední ``velké'' návěstí. Zbytek problému už za nás pak vyřeší existující kód na doplňování adres. Lokální návěstí definované dříve, než jakékoliv ``velké'' návěstí se umístí do mapy bez zvláštní úpravy.
+Implementace lokálních návěstí byla vcelku přímočará. Při překladu si pouze pamatujeme poslední návěstí, které začínalo velkým písmenem. Pokud potom narazíme na definici nebo užití návěstí začínajícího tečkou, přidáme na jeho začátek poslední \uv{velké} návěstí. Zbytek problému už za nás pak vyřeší existující kód na doplňování adres. Lokální návěstí definované dříve, než jakékoliv \uv{velké} návěstí se umístí do mapy bez zvláštní úpravy.
 
 Kompilační direktiva \texttt{include} byla o něco těžší oříšek na rozlousknutí. První návrh aplikace s ní nepočítal, četl proto celý program najednou pomocí gramatického pravidla \texttt{program}. Bylo tedy třeba přeorganizovat aplikaci, aby dělila zdrojový kód na řádky ručně a syntaktickou analýzu prováděla řádku po řádce.
 
@@ -191,7 +191,7 @@ Poté stačí ukládat čtené soubory na zásobník, na který jsou přidány b
 
 Jelikož chování překladače spoléhá výhradně na vstup od uživatele a to dokonce ne na jedné, ale na dvou frontách (soubor se zdrojovým kódem a konzolové argumenty), je důležité zajistit, aby každý krajní případ byl ošetřen. V případě, že takový stav nastane, by aplikace měla vypsat na standardní chybový výstup zprávu popisující ke které chybě došlo a správně se ukončit.
 
-Námi zvolený programovací jazyk Rust nám poskytne veškerou pomoc, kterou k zajištění hladkého běhu aplikace budeme potřebovat. Jeho striktní typový systém nám nedovolí použít výstupní hodnotu funkcí, pokud neošetříme chyby ke kterým mohlo dojít. To je zajištěno pomocí takzvaných ``algebraických datových typů'', též známých jako ``tagged union'' nebo ``sum types'' v anglicky psané literatuře. Hlavním takovým typem je v Rustu typ \mintinline{rust}{Result<T, E>}, který k typu \mintinline{rust}{T} přidává alternativu, že typ obsahuje chybu popsanou typem \mintinline{rust}{E}. Práce s typem \mintinline{rust}{Result<T, E>} je znázorněna v ukázce \ref{fig:rust-result}.
+Námi zvolený programovací jazyk Rust nám poskytne veškerou pomoc, kterou k zajištění hladkého běhu aplikace budeme potřebovat. Jeho striktní typový systém nám nedovolí použít výstupní hodnotu funkcí, pokud neošetříme chyby ke kterým mohlo dojít. To je zajištěno pomocí takzvaných \uv{algebraických datových typů}, též známých jako \uv{tagged union} nebo \uv{sum types} v anglicky psané literatuře. Hlavním takovým typem je v Rustu typ \mintinline{rust}{Result<T, E>}, který k typu \mintinline{rust}{T} přidává alternativu, že typ obsahuje chybu popsanou typem \mintinline{rust}{E}. Práce s typem \mintinline{rust}{Result<T, E>} je znázorněna v ukázce \ref{fig:rust-result}.
 
 \begin{listing}
 \begin{minted}{rust}

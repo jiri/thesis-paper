@@ -30,7 +30,7 @@ Mezi její nevýhody patří fakt, že nabízí alternativní implementaci velk�
 
 \subsection{ImGui}
 
-Jednou ze zajímavějších voleb je knihovna Dear ImGui\cite{github-imgui} (dále jen ``ImGui''). Jedná se jednoduchou knihovnu na tvorbu uživateského rozhraní napsanou v jazyce C++. Narozdíl od knihovny Qt, která zachovává stav a rozložení rozhraní mezi snímky, knihovna ImGui skládá rozhraní v každém snímku znova. To činí výsledný kód značně jednoduchým, jak je patrné z ukázky \ref{fig:imgui-example}.
+Jednou ze zajímavějších voleb je knihovna Dear ImGui\cite{github-imgui} (dále jen \uv{ImGui}). Jedná se jednoduchou knihovnu na tvorbu uživateského rozhraní napsanou v jazyce C++. Narozdíl od knihovny Qt, která zachovává stav a rozložení rozhraní mezi snímky, knihovna ImGui skládá rozhraní v každém snímku znova. To činí výsledný kód značně jednoduchým, jak je patrné z ukázky \ref{fig:imgui-example}.
 
 \begin{listing}
 \begin{minted}{cpp}
@@ -52,7 +52,7 @@ if (window_open) {
 \label{fig:imgui-example}
 \end{listing}
 
-Jméno knihovny ImGui vychází z anglického sousloví ``Immediate GUI'', které naznačuje, že knihovna operuje v bezprostředním řežimu -- souslovím zapůjčeném z obdobného konceptu běžného při grafickém programování. Ačkoliv původního autora myšlenky bezprostředního uživatelského rozhraní není snadné dohledat, jedním z prvních zdrojů popularizující tuto myšlenku je video, které Casey Muratori zveřejnil v roce 2005\cite{casey-imgui}.
+Jméno knihovny ImGui vychází z anglického sousloví \uv{Immediate GUI}, které naznačuje, že knihovna operuje v bezprostředním řežimu -- souslovím zapůjčeném z obdobného konceptu běžného při grafickém programování. Ačkoliv původního autora myšlenky bezprostředního uživatelského rozhraní není snadné dohledat, jedním z prvních zdrojů popularizující tuto myšlenku je video, které Casey Muratori zveřejnil v roce 2005\cite{casey-imgui}.
 
 \imagefigurefull{imgui-screenshot.png}{Grafické rozhraní knihovny ImGui}{1.0}
 
@@ -68,7 +68,7 @@ Namísto standardního nástroje QMake bude ke správě projektu bude použit n�
 
 \section{Realizace}
 
-Ačkoliv Qt poskytuje způsob, jak navrhovat grafické rozhraní vizuálně pomocí aplikace Qt Designer\cite{qt-designer}, jedná se o poměrně těžkopádný způsob návrhu. Proto je v projektu použit manuální návrh pomocí manipulace rozložení (v angličtině známých jako ``layouts'') přímo v kódu.
+Ačkoliv Qt poskytuje způsob, jak navrhovat grafické rozhraní vizuálně pomocí aplikace Qt Designer\cite{qt-designer}, jedná se o poměrně těžkopádný způsob návrhu. Proto je v projektu použit manuální návrh pomocí manipulace rozložení (v angličtině známých jako \uv{layouts}) přímo v kódu.
 
 Pro samotné zobrazení většiny dat použijeme třídu \texttt{QTableView}, která poskytuje tabulkové rozhraní nad námi definovaným modelem s rozhraním \texttt{QTableModel}. Implementace samotného modelu je poté přímočará -- vydědíme třídu \texttt{QTableModel} a reimplementujeme následující metody:
 

@@ -28,7 +28,7 @@ Poslední části paměti je zásobník, který se nachází v operační pamět
 
 Rozhraní jsou na naší platformě obsluhovány pomocí instrukcí \texttt{in} a \texttt{out}. Změna v jejich stavu je indikována přerušeními, které provedou před načtením instrukce skok na patřičný vektor, kde můžeme rozhraní obsloužit a vrátit se ke spouštění zbytku programu tak kde jsme přestali pomocí instrukce \texttt{reti}.
 
-Tato část mikroprocesoru se od platformy AVR liší nejvíce. Mikroprocesor nedisponuje žádnými víceúčelovými porty (v anglické literatuře též známy jako ``GPIO pins''). Rozhraní mikroprocesoru jsou dané fixně a rozšiřitelné pouze úpravou programu implementujícího chování pomocí knihovny s emulátorem.
+Tato část mikroprocesoru se od platformy AVR liší nejvíce. Mikroprocesor nedisponuje žádnými víceúčelovými porty (v anglické literatuře též známy jako \uv{GPIO pins}). Rozhraní mikroprocesoru jsou dané fixně a rozšiřitelné pouze úpravou programu implementujícího chování pomocí knihovny s emulátorem.
 
 Mezi podporované rozhraní patří sériový port, který umožňuje textovou komunikaci s vnějším světem. Dále pak 7 tlačítek, rozložené do pozicových šipek, centrálního potvrzovacího tlačítka a dvou uživatelských tlačítek, jejichž funkce není blíže specifikována. Mikroprocesor podporuje také klávesnicový vstup, který má simulovat přítomnost portu PS/2.
 
