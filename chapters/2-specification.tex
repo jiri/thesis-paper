@@ -22,13 +22,24 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 
 \subsection{Analýza architektury AVR}
 
-\todo{AVR}
- 
+Nejdříve prozkoumáme architekturu procesorů z rodiny AVR. Inspirujeme se mikrokontrolerem ATtiny12, který je jeden z nejjednodušších AVR mikrokontrolerů. Z dokumentace ATtiny12 od společnosti Atmel\cite{attiny12-datasheet} zjistíme následující:
+
+\begin{itemize}
+	\item Mikroprocesor disponuje 32 víceúčelovými registry
+	\item Mikrorocesor disponuje 1KB programové paměti a 64 byty paměti EEPROM
+	\item Na procesoru se nachází 6 tzv. GPIO pinů
+	\item Procesor operuje v řádu jednotek Mhz
+\end{itemize}
+
+Při analýze nemusíme zabíhat do přílišných detailů -- snažíme se ji pouze aproximovat, nikoliv simulovat. Výše uvedené charakteristiky jsou pro nás tudíž směrodatné.
+
+Dále se podíváme na instrukční sadu procesorů AVR. Jedná se o instrukční sadu typu RISC, disponuje tedy méně, rychlejšími instrukcemi. Instrukce ve své strojové podobě mají délku jednoho nebo více 16-bitových slov. Některé instrukce jsou však redundantní a dají se nahradit kombinací ostatních instrukcí.
+
 \subsection{Mikroprocesor a strojový kód}
 
 První částí práce bude popis podoby virtuálního mikroprocesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino\footnote{Více na https://www.arduino.cc/}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
 
-Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. \todo{Kapitalizace a citace} Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR \todo{Citace}, nebo například rodina jednočipů Intel 8051. \todo{Citace}
+Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR\cite{attiny12-datasheet}.
 
 Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací zakódovaných instrukcí. Instrukce pro náš procesor se budou skládat z jednoho a více bytů. První byte enkóduje vždy pouze typ instrukce, o který se jedná. Následující byty enkódují parametry dané instrukce. V samotném strojovém kódu se nijak neodrážejí návěstí definované v jazyce symbolických adres.
 
@@ -38,7 +49,6 @@ Mikroprocesor by měl také podporovat několik vstupních a výstupních operac
 	\item Grafický výstup podobou displeje namapovaného do paměti
 	\item Komunikaci po seriálové lince
 	\item Omezená sada tlačítek
-	\item Nastavitelný časovač
 \end{itemize}
 
 \subsection{Emulátor}

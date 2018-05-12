@@ -19,22 +19,6 @@
 \usepackage{xcolor} 
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[[ #1 ]]}}}
 
-\usepackage{blindtext}
-\newcommand{\blind}[1][1]{\textcolor{gray}{\Blindtext[#1][1]}}
-%\renewcommand{\blind}[1][1]{#1}
-
-\setlength{\fboxsep}{0.005pt}
-\newcommand{\tmpframe}[1]{\fbox{#1}}
-%\renewcommand{\tmpframe}[1]{#1}
-
-\newcommand{\todoimage}[1]{%
-\begin{figure}%
-  \tmpframe{\includegraphics[width=\linewidth]{pdfs/TODO-image}}%
-  \caption{#1 \todo{Doplnit obrázek}}%
-  \label{fig:TODO}%
-\end{figure}%
-}
-
 \newcommand{\imagefigurefull}[3]{
 \begin{figure}[htbp]
   \centering
@@ -43,7 +27,7 @@
 \end{figure}
 }
 
-%\renewcommand{\lstlistingname}{Ukázka}
+\renewcommand\listingscaption{Ukázka}
 %\renewcommand{\lstlistlistingname}{Seznam ukázek}
 
 \acknowledgements{\input{acknowledgements.tex}}

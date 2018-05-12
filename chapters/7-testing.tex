@@ -59,10 +59,26 @@ Výsledky testování se začátečníky byli až na drobné vyjímky veskrze po
 
 \subsection{Persona Martin}
 
-\blind[2]
+Uživatelé odpovídající personě David (definované v \ref{persona:b}) se z počátku potýkali s některými principy programování v nízkoúrovňovém jazyce symbolických adres. Hledali marně koncepty z vyšších jazyků, jako jsou funkce, proměnné nebo standardní knihovna. Po překonání počáteční ``jazykové bariéry'' potom řešili úlohy samostatně.
+
+Výsledky testování se zkušenými programátory byly spíše pozitivní, omezené možnosti jazyka v nich však často vyvolávali rozpaky. Nejevili přílišný zájem o pokračování v programování, ocenili však ladící program a jeho relativní jednoduchost v porovnání s nástroji na které jsou zvyklí.
 
 \subsection{Persona David}
 
-\blind[1]
+Uživatelé odpovídající personě David (definované v \ref{persona:c}) se v programování pro mikrokontroler zorientovali velice rychle. Úlohy řešili samostatně, bez potřeby častější z naší strany. Často konzultovali dokumentaci a místy i samotný zdrojový kód emulátoru.
 
-\todo{TABULKA S TESTY}
+Největším problémem pak bylo jejich spoléhání na funkcionalitu, na kterou jsou zvyklí z pokročilejších nástrojů a v naší práci nejsou přítomny. Primárně potom jde o makra v jazyce symbolických adres, víceúčelové výstupní porty nebo například lepší nástroje pro spouštění již hotového programu, který není třeba ladit.
+
+Výsledky testování s pokročilými uživateli odhalili několik funkcionálních nedostatků v aplikaci, jako je absence pokročilých krokovacích režimů. Jedná se však povětšinou o funkcionalitu, která začátečníky příliš neovlivní. Ohlasy však byly pozitivní, uživatelé se při testování bavili a několik zaujala možnost snadno integrovat emulátor do vlastního projektu.
+
+\section{Vyhodnocení}
+
+Celkem jsme aplikaci testovali s jedenácti uživateli. Výsledky testování byli pozitivní, naprostí začátečníci reagovali na jednoduchost návrhu i jazyka velmi pozitivně. Testování s pokročilejšími uživateli odhalilo pár nedostatků v naší sadě nástrojů:
+
+\begin{itemize}
+	\item Pokročilé krokovací funkce
+	\item Makra v překladači
+	\item Chybějící knihovna standardních definic a funkcí
+\end{itemize}
+
+V budoucnu by proto bylo vhodné se pokusit tyto nedostatky vyřešit.
