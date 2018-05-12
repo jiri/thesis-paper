@@ -1,5 +1,5 @@
-main: excercises
+main: exercises
 	arara main.tex
 
 excercises:
-	pdflatex excercises.tex
+	pdflatex exercises.tex
