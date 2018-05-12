@@ -186,6 +186,8 @@ Poté stačí ukládat čtené soubory na zásobník, na který jsou přidány b
 \label{fig:rust-file-stack}
 \end{listing}
 
+Posledním problémem bylo omezování instrukční sady v souladu se zadáním. Tento problém byl vyřešen pomocí jednoduchého předání kolekce povolených instrukcí kompilátoru, který potom při zpracování nepovolené instrukce ukončí program chybovou hláškou. Předání seznamu povolených instrukcí probíhá přidáním parametru ukazujícího na soubor ve formátu JSON, obsahujícího seznam řetězců s mnemonikami povolených instrukcí.
+
 \section{Testování}
 \label{sec:asm-test}
 
