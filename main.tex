@@ -1,8 +1,8 @@
-% arara: pdflatex
+% arara: pdflatex: { shell: true }
 % arara: makeglossaries
 % arara: biber
-% arara: pdflatex
-% arara: pdflatex
+% arara: pdflatex: { shell: true }
+% arara: pdflatex: { shell: true }
 
 \documentclass[thesis=B,czech,hidelinks]{template/FITthesis}
 
@@ -13,6 +13,9 @@
 \usepackage{minted}
 \usepackage{pgfplots}
 \usepackage[nonumberlist]{glossaries}
+\usepackage[backend=biber]{biblatex}
+
+\bibliography{bibliography}
 
 \setlength{\parskip}{1em}
 
@@ -55,8 +58,8 @@
 
 \input{chapters/8-conclusion.tex}
 
-\bibliographystyle{csn690}
-\bibliography{bibliography}
+% \bibliographystyle{csn690}
+\printbibliography
 
 \printglossary[title=Seznam použitých zkratek,type=\acronymtype]
 
