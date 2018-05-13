@@ -1,12 +1,12 @@
 \chapter{Analýza problému}
 
-V této kapitole se pokusíme zjistit, s čím mají začátečníci největší potíže při práci s mikrokontrolery. Prozkoumáme názory studentů FIT ČVUT, kteří absolvovali předmět BI-SAP. Dále se pak podíváme na existující programovou podporu pro vývoj programů pro platformu AVR.
+V~této kapitole se pokusíme zjistit, s~čím mají začátečníci největší potíže při práci s~mikrokontrolery. Prozkoumáme názory studentů FIT ČVUT, kteří absolvovali předmět BI-SAP. Dále se pak podíváme na existující programovou podporu pro vývoj programů pro platformu AVR.
 
 \section{Dotazník}
 
-Na FIT ČVUT se studenti poprvé setkávají s vývojem pro mikrokontrolery nejčastěji v druhém semestru v předmětu BI-SAP. Jsou proto ideálním zdrojem informací o tom, jak začátečníci k programování mikrokontrolerů přistupují, s jakými se setkávají potížemi a co jsou pro ně nejobtížnější překážky k překonání. Prozkoumáme tudíž jejich spokojenost s průběhem výuky pomocí krátkého dotazníku.
+Na FIT ČVUT se studenti poprvé setkávají s~vývojem pro mikrokontrolery nejčastěji v~druhém semestru v~předmětu BI-SAP. Jsou proto ideálním zdrojem informací o~tom, jak začátečníci k~programování mikrokontrolerů přistupují, s~jakými se setkávají potížemi a co jsou pro ně nejobtížnější pře\-káž\-ky k~překonání. Prozkoumáme tudíž jejich spokojenost s~průběhem výuky pomocí krátkého dotazníku.
 
-Samotný dotazník je velice jednoduchý, ptá se pouze zda respondent souhlasí s následujícími tvrzeními:
+Samotný dotazník je velice jednoduchý, ptá se pouze zda respondent souhlasí s~následujícími tvrzeními:
 
 \begin{enumerate}
 	\item Assembly mi dělalo potíže.
@@ -16,7 +16,7 @@ Samotný dotazník je velice jednoduchý, ptá se pouze zda respondent souhlasí
 	\item AVR je příliš komplikovaná platforma.
 \end{enumerate}
 
-Původním plánem bylo nechat dotazník zveřejněný, dokud nenasbíráme alespoň 100 respondentů. V poměrně krátkém časovém intervalu jednoho dne jsme získali 110 odpovědí a jejich sběr jsme proto ukončili. Ručně jsme protřídili odpovědi, které nebyly validní a zůstalo nám 95 odpovědí. Výsledek dotazníku je poté uveden v grafu na obrázku \ref{fig:survey}.
+Původním plánem bylo nechat dotazník zveřejněný, dokud nenasbíráme alespoň 100 respondentů. V~poměrně krátkém časovém intervalu jednoho dne jsme získali 110 odpovědí a jejich sběr jsme proto ukončili. Ručně jsme protřídili odpovědi, které nebyly validní a zůstalo nám 95 odpovědí. Výsledek dotazníku je poté uveden v~grafu na obrázku \ref{fig:survey}.
 
 \begin{figure}
 \begin{center}
@@ -44,28 +44,28 @@ Původním plánem bylo nechat dotazník zveřejněný, dokud nenasbíráme ales
 \end{center}
 \end{figure}
 
-Z odpovědí je nejenom patrné, že je problematické samotné programování v jazyce symbolických adres, ale že jednoznačně největším problémem je závislost na fyzickém přípravku, který musí studenti mít, aby mohli plnit úlohy. Dále se pak jako problém ukázala také nízká kvalita programové podpory pro vývoj pro platformu AVR.
+Z~odpovědí je nejenom patrné, že je problematické samotné programování v~jazyce symbolických adres, ale že jednoznačně největším problémem je zá\-vis\-lost na fyzickém přípravku, který musí studenti mít, aby mohli plnit úlohy. Dále se pak jako problém ukázala také nízká kvalita programové podpory pro vývoj pro platformu AVR.
 
 \section{Současný stav řešení}
 
-Aplikací, která se v současné době na FIT ČVUT používá při výuce předmětu BI-SAP je AVR studio (konkrétně verze 4)\cite{sap-avr-studio}. Jedná se o kompletní vývojovou sadu přímo od společnosti Atmel\footnotemark. Aplikace je však kompatibilní pouze se systémem Microsoft Windows\cite{avr-studio-requirements}, je ji proto těžké nebo nemožné zprovoznit na alternativních operačních systémech. To je pro některé uživatele zásadní problém a aplikace proto není kompletním řešením.
+Aplikací, která se v~současné době na FIT ČVUT používá při výuce předmětu BI-SAP je AVR studio (konkrétně verze 4)\cite{sap-avr-studio}. Jedná se o~kompletní vývojovou sadu přímo od společnosti Atmel\footnotemark. Aplikace je však kompatibilní pouze se systémem Microsoft Windows\cite{avr-studio-requirements}, je ji proto těžké nebo nemožné zprovoznit na alternativních operačních systémech. To je pro některé uživatele zásadní problém a aplikace proto není kompletním řešením.
 
-\footnotetext{V roce 2016 došlo k odkoupení společnosti Atmel konkurenční společností Microchip. Od té doby došlo k přejmenování aplikace \textbf{AVR studio} na \textbf{Atmel studio}, avšak některé verze si stále zachovávají původní jméno.}
+\footnotetext{V~roce 2016 došlo k~odkoupení společnosti Atmel konkurenční společností Microchip. Od té doby došlo k~přejmenování aplikace \textbf{AVR studio} na \textbf{Atmel studio}, avšak některé verze si stále zachovávají původní jméno.}
 
-Nejpřímočařejším řešením vývoje pro platformu AVR je manuální překlad a nahrávání programu do zařízení. Z našeho oblíbeného jazyka vyprodukujeme patřičným překladačem binární soubor, který poté slinkujeme a nahrajeme do zařízení pomocí programátoru a aplikace. Toto řešení je pro zkušené uživatele často nejjednoduší, avšak obzvlášť pro začátečníky pracující v operačním systému, ve kterém není užití konzolových aplikací možné nebo jednoduché, je tato cesta takřka nemožná.
+Nejpřímočařejším řešením vývoje pro platformu AVR je manuální překlad a nahrávání programu do zařízení. Z~našeho oblíbeného jazyka vyprodukujeme patřičným překladačem binární soubor, který poté slinkujeme a nahrajeme do zařízení pomocí programátoru a aplikace. Toto řešení je pro zkušené uživatele často nejjednoduší, avšak obzvlášť pro začátečníky pracující v~operačním systému, ve kterém není užití konzolových aplikací možné nebo jednoduché, je tato cesta takřka nemožná.
 
-Pro platformu AVR existuje několik dalších aplikací, které usnadňují vývoj a nahrávání programu. Ukážeme si z nich dvě -- simavr\cite{github-simavr} a Arduino IDE\cite{arduino-ide}.
+Pro platformu AVR existuje několik dalších aplikací, které usnadňují vývoj a nahrávání programu. Ukážeme si z~nich dvě -- simavr\cite{github-simavr} a Arduino IDE\cite{arduino-ide}.
 
 \imagefigurefull{avr-studio.png}{AVR studio 4}{1.0}
 
-Zajímavým projektem je simavr\cite{github-simavr}. Jedná se o konzolovou aplikaci, která umožňuje emulovat běh různých mikrokontrolerů z rodiny AVR. Poskytuje výbornou integraci s ladícím programem gdb, zpětnou logickou analýzu pomocí souborů ve formátu VCD (Value change dump) a snadnou rozšiřitelnost pomocí externích vizualizačních nástrojů. Díky tomu se jedná o výborný nástroj pro lazení složitějších programů. Kvůli tomu je však aplikace nepřívětivá k uživatelům, kteří nejsou již zkušenými programátory, nebo nemají detailní přehled o platformě AVR. Zároveň není aplikací nijak zprostředkován překlad zdrojového kódu do strojového. Uživatel je tudíž nucen řešit tento problém externím překladačem, jako například AVRA\cite{avra-homepage}, nebo Avr-GCC\cite{avr-gcc}.
+Zajímavým projektem je simavr\cite{github-simavr}. Jedná se o~konzolovou aplikaci, která umožňuje emulovat běh různých mikrokontrolerů z~rodiny AVR. Poskytuje výbornou integraci s~ladícím programem gdb, zpětnou logickou analýzu pomocí souborů ve formátu VCD (Value change dump) a snadnou rozšiřitelnost pomocí externích vizualizačních ná\-stro\-jů. Díky tomu se jedná o~výborný ná\-stroj pro lazení složitějších programů. Kvůli tomu je však aplikace nepřívětivá k~uživatelům, kteří nejsou již zkušenými programátory, nebo nemají detailní přehled o~platformě AVR. Zároveň není aplikací nijak zprostředkován překlad zdrojového kódu do strojového. Uživatel je tudíž nucen řešit tento problém externím překladačem, jako například AVRA\cite{avra-homepage}, nebo Avr-GCC\cite{avr-gcc}.
 
-Jednou z aplikací cílené na naprosté začátečníky je Arduino IDE\cite{arduino-ide}. Jedná se o aplikaci usnadňující vývoj pro prototypovací platformu Arduino. Aplikace vyčnívá mezi konkurencí svým simplistickým vzhledem a jednoduchostí používání. V aplikaci se programuje v jazyce C, obohaceném o knihovnu funkcí unsadňující ovládání mikrokontroleru. Překlad a nahrání programu do mikrokontroleru proběhne stiskem tlačítka \uv{Upload}. Aplikace také usnadňuje komunikaci s externím zařízením po sériové lince pomocí zabudované konzole. Nikterak však uživateli neusnazuje lazení běžícího programu a uživatel je tak ponechán napospas chybám, které jako začátečník nevyhnutelně udělá.
+Jednou z~aplikací cílené na naprosté začátečníky je Arduino IDE\cite{arduino-ide}. Jedná se o~aplikaci usnadňující vývoj pro prototypovací platformu Arduino. Aplikace vyčnívá mezi konkurencí svým simplistickým vzhledem a jednoduchostí používání. V~aplikaci se programuje v~jazyce C, obohaceném o~knihovnu funkcí unsadňující ovládání mikrokontroleru. Překlad a nahrání programu do mikrokontroleru proběhne stiskem tlačítka \uv{Upload}. Aplikace také usnadňuje komunikaci s~externím zařízením po sériové lince pomocí zabudované konzole. Nikterak však uživateli neusnazuje lazení běžícího programu a uživatel je tak ponechán napospas chybám, které jako začátečník nevyhnutelně udělá.
 
-Mezi její nevýhody však patří, že se pokouší odstínit své uživatele od příliš mnoha aspektů programování pro mikrokontrolery. Nahrávání i překlad programu probíhá automaticky. Aplikace za uživatele doplní i hlavičkové soubory pro danou platformu. Knihovna funkcí poskytnuta uživateli, ačkoliv usnadňuje vývoj, nereprezentuje dobře operace probíhající \uv{pod kapotou}. Jedná se proto o znalosti, které jsou nepřenositelné na platformy s Arduinem nekompatibilní.
+Mezi její nevýhody však patří, že se pokouší odstínit své uživatele od příliš mnoha aspektů programování pro mikrokontrolery. Nahrávání i překlad programu probíhá automaticky. Aplikace za uživatele doplní i hlavičkové soubory pro danou platformu. Knihovna funkcí poskytnuta uživateli, ačkoliv usnadňuje vývoj, nereprezentuje dobře operace probíhající \uv{pod kapotou}. Jedná se proto o~znalosti, které jsou nepřenositelné na platformy s~Arduinem nekompatibilní.
 
 \imagefigurefull{arduino-ide.png}{Arduino IDE}{1.0}
 
 \section{Shrnutí}
 
-Z uvedených aplikací žádná není ideálním řešením pro naprosté začátečníky, pokusíme se proto navrhnout vlastní. Pokusíme se naši platformu navrhnout co uživatelksy nejpřívětivější, aby s ní mohl pracovat i naprostý začátečník. Zároveň se však pokusíme aby byla dostatečně realistická na to, aby následný přechod k platformě AVR byl co nejjednodušší.
+Z~uvedených aplikací žádná není ideálním řešením pro naprosté začátečníky, pokusíme se proto navrhnout vlastní. Pokusíme se naši platformu navrhnout co uživatelksy nejpřívětivější, aby s~ní mohl pracovat i naprostý začátečník. Zároveň se však pokusíme aby byla dostatečně realistická na to, aby následný přechod k~platformě AVR byl co nejjednodušší.

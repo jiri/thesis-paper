@@ -1,16 +1,16 @@
 \chapter{Uživatelské testování}
 
-Abychom ověřili, jak dobře se s námi navrženými nástroji funguje, podrobíme je testování s reálnými uživateli. V této kapitole budeme tedy testovat práci jako celek v ohledu používání uživatelem. Testování spolehlivosti překladače a emulátoru jsme již provedli v kapitolách \ref{sec:asm-test} a \ref{sec:emu-test} respektive.
+Abychom ověřili, jak dobře se s~námi navrženými nástroji funguje, podrobíme je testování s~reálnými uživateli. V~této kapitole budeme tedy testovat práci jako celek v~ohledu používání uživatelem. Testování spolehlivosti překladače a emulátoru jsme již provedli v~kapitolách \ref{sec:asm-test} a \ref{sec:emu-test} respektive.
 
 \section{Metodika}
 
 Testování bude probíhat ve třech krocích a bude časově omezeno na hodinu od začátku řešení úloh (tj. nevčetně přípravy).
 
-V prvním kroku obeznámíme uživatele s problematikou, návrhem a možnostmi procesoru. Provedeme ho technickou dokumentací, ve které bude moci později vyhledávat patřičné informace. Také mu poskytneme mu počítač, na kterém jsou nainstalovány všechny aplikace potřebné k začátku testu.
+V~prvním kroku obeznámíme uživatele s~problematikou, návrhem a možnostmi procesoru. Provedeme ho technickou dokumentací, ve které bude moci později vyhledávat patřičné informace. Také mu poskytneme mu počítač, na kterém jsou nainstalovány všechny aplikace potřebné k~začátku testu.
 
-V druhém kroku bude uživatel samostatně řešit několik úloh, které jsou navrženy se zvyšující se obtížností, aby uživatele seznámily s vlastnostmi a funkcemi procesoru postupně. Bude mít k dispozici plnou dokumentaci procesoru i aplikacím, které bude během řešení úloh používat. Na jeho otázky budeme odpovídat, avšak budeme se snažit aby co nejvíce problému vyřešil bez naší pomoci.
+V~druhém kroku bude uživatel samostatně řešit několik úloh, které jsou navrženy se zvyšující se obtížností, aby uživatele seznámily s~vlastnostmi a funkcemi procesoru postupně. Bude mít k~dispozici plnou dokumentaci procesoru i aplikacím, které bude během řešení úloh používat. Na jeho otázky budeme odpovídat, avšak budeme se snažit aby co nejvíce problému vyřešil bez naší pomoci.
 
-V třetím kroku provedeme s uživatelem krátkou reflexi, kde zjistíme které úlohy, funkce mikroprocesoru nebo části aplikace pro něj byly problematické. Ověříme, zda jeho řešení úloh je korektní a zda plně pochopil koncepty, které úlohy měly uživateli představit.
+V~třetím kroku provedeme s~uživatelem krátkou reflexi, kde zjistíme které úlohy, funkce mikroprocesoru nebo části aplikace pro něj byly problematické. Ověříme, zda jeho řešení úloh je korektní a zda plně pochopil koncepty, které úlohy měly uživateli představit.
 
 \section{Persony}
 
@@ -26,24 +26,24 @@ Jeho definující vlastnosti jsou neznalost základních programovacích koncept
 \subsection{Martin}
 \label{persona:b}
 
-Martin je zkušený programátor, který začal programovat webové stránky a na vysoké škole se naučil C++. Jeden z povinných předmětů na jeho škole vyučuje základy programování pro mikrokontrolery a jeho vyučující se rozhodl využít naši platformu pro domácí úkoly.
+Martin je zkušený programátor, který začal programovat webové stránky a na vysoké škole se naučil C++. Jeden z~povinných předmětů na jeho škole vyučuje základy programování pro mikrokontrolery a jeho vyučující se rozhodl využít naši platformu pro domácí úkoly.
 
 Mezi jeho definující vlastnosti patří spoléhání na komfort vysokoúrovňových jazyků a dobrá znalost programovacích konceptů.
 
 \subsection{David}
 \label{persona:c}
 
-David je zkušený programátor, který byl v mládí fascinován starými herními konzolemi. Jeho zájem v tomto oboru ho přivedl k programování pro staré počítače se kterými se setkával v dětství. Jeho koníčkem je psaní jednoduchých her pro mikroprocesory a naši virtuální platformu se rozhodl vyzkoušet pro svou novou hru.
+David je zkušený programátor, který byl v~mládí fascinován starými herními konzolemi. Jeho zájem v~tomto oboru ho přivedl k~programování pro staré počítače se kterými se setkával v~dětství. Jeho koníčkem je psaní jednoduchých her pro mikroprocesory a naši virtuální platformu se rozhodl vyzkoušet pro svou novou hru.
 
 Mezi jeho definující vlastnosti patří vysoká náročnost na funkcionalitu překladače a kvalitu ladící aplikace.
 
 \section{Úlohy}
 
-Při testování aplikace s uživateli je užitečné mít konzistentní sadu úloh, kterou budou uživatelé při testování řešit. Sada nemusí nutně pokrýt celou funkcionalitu aplikace, ale měla by pokrýt funkcionalitu relevantní pro všechny persony. Zároveň by sada měla rozsahově odpovídat délce testování, pro které je v našem případě vyhrazena jedna hodina. Samotný uživatel potom nemusí úlohy splnit všechny. Počet vyřešených úloh je sám o sobě užitečným indikátorem přívětivosti naší aplikace.
+Při testování aplikace s~uživateli je užitečné mít konzistentní sadu úloh, kterou budou uživatelé při testování řešit. Sada nemusí nutně pokrýt celou funkcionalitu aplikace, ale měla by pokrýt funkcionalitu relevantní pro všechny persony. Zároveň by sada měla rozsahově odpovídat délce testování, pro které je v~našem případě vyhrazena jedna hodina. Samotný uživatel potom nemusí úlohy splnit všechny. Počet vyřešených úloh je sám o~sobě užitečným indikátorem přívětivosti naší aplikace.
 
-Proto pro uživatelské testování aplikace bylo navrženo šest úloh. Jsou navrženy se vzrůstající obtížností a pokrývají základní operace v jazyce symbolických adres, základní stavební bloky programu a užívání rozhraní pro vstup a výstup. Některé úlohy používají možnost omezit instrukční sadu přijímanou překladačem, aby omezili prostor možných řešení pro danou úlohu.
+Proto pro uživatelské testování aplikace bylo navrženo šest úloh. Jsou navrženy se vzrůstající obtížností a pokrývají základní operace v~jazyce symbolických adres, základní stavební bloky programu a užívání rozhraní pro vstup a výstup. Některé úlohy používají možnost omezit instrukční sadu přijímanou překladačem, aby omezili prostor možných řešení pro danou úlohu.
 
-Samotné zadání úloh je možné najít v příloze \ref{chap:exercises}.
+Samotné zadání úloh je možné najít v~příloze \ref{chap:exercises}.
 
 \section{Výsledky testování}
 
@@ -51,34 +51,34 @@ Výsledky testování se výrazně lišily dle persony pod kterou uživatel nál
 
 \subsection{Persona Ondřej}
 
-Uživatelé odpovídající personě Ondřej (definované v \ref{persona:a}) se nejvíce potýkali se samotným návrhem logiky programu. Jejich prvotní návrhy byly povětšinou deklarativní a procedurální způsob myšlení nad problémy začali používat až po drobných radách. Z testování vyplynulo, že takové přemýšlení je nejefektivnější jim připodobnit k zadáváním příkazů robotovi nebo operacím na výrobní lince. Práce s pamětí a adresace byla potom nejlépe vysvětlena připodobněním k tabulkovému dokumentu.
+Uživatelé odpovídající personě Ondřej (definované v~\ref{persona:a}) se nejvíce potýkali se samotným návrhem logiky programu. Jejich prvotní návrhy byly povětšinou deklarativní a procedurální způsob myšlení nad problémy začali používat až po drobných radách. Z~testování vyplynulo, že takové přemýšlení je nejefektivnější jim připodobnit k~zadáváním příkazů robotovi nebo operacím na výrobní lince. Práce s~pamětí a adresace byla potom nejlépe vysvětlena připodobněním k~tabulkovému dokumentu.
 
-Po překonání prvotního ostychu, vysvětlení základních programovacích pojmů a nastínění způsobu, kterým je dobré problémy řešit však naprostí začátečníci řešili úlohy samostatně a bez větších nesnází. Reflexe s nimi ukazuje, že tomu tak je hlavně proto, že samotný jazyk symbolických adres je jednoduché obsáhnout jako celek. Nezkušenost, která byla na začátku testování hendikepem, je nyní osvobozovala od tápání po chybějící funkcionalitě z vysokoúrovňových jazyků a umožnila jim lépe se soustředit na řešení samotného problému. Také možnost překladače omezit přijímanou instrukční sadu pomohla rychleji navést uživatele na správnou cestu. Přesto však začátečníci splnili během vymezené hodiny menší množství úloh. Řešení úloh také kvalitativně strádalo oproti účastníkům, kteří mají s programováním předchozí zkušenosti a často se v řešení nacházely neošetřené mezní případy.
+Po překonání prvotního ostychu, vysvětlení základních programovacích pojmů a nastínění způsobu, kterým je dobré problémy řešit však naprostí začátečníci řešili úlohy samostatně a bez větších nesnází. Reflexe s~nimi ukazuje, že tomu tak je hlavně proto, že samotný jazyk symbolických adres je jednoduché obsáhnout jako celek. Nezkušenost, která byla na začátku testování hendikepem, je nyní osvobozovala od tápání po chybějící funkcionalitě z~vysokoúrovňových jazyků a umožnila jim lépe se soustředit na řešení samotného problému. Také možnost překladače omezit přijímanou instrukční sadu pomohla rychleji navést uživatele na správnou cestu. Přesto však začátečníci splnili během vymezené hodiny menší množství úloh. Řešení úloh také kvalitativně strádalo oproti účastníkům, kteří mají s~programováním předchozí zkušenosti a často se v~řešení nacházely neošetřené mezní případy.
 
-Výsledky testování se začátečníky byli až na drobné vyjímky veskrze pozitivní. Samotní uživatelé potom cítili dobrý pocit z odvedené práce a z pokroku, který během hodiny učinili. Část z nich projevila zájem věnovat se programování i po konci testu, většinou k dokončení rozpracované úlohy.
+Výsledky testování se začátečníky byly až na drobné vyjímky veskrze pozitivní. Samotní uživatelé potom cítili dobrý pocit z~odvedené práce a z~pokroku, který během hodiny učinili. Část z~nich projevila zájem věnovat se programování i po konci testu, většinou k~dokončení rozpracované úlohy.
 
 \subsection{Persona Martin}
 
-Uživatelé odpovídající personě David (definované v \ref{persona:b}) se z počátku potýkali s některými principy programování v nízkoúrovňovém jazyce symbolických adres. Hledali marně koncepty z vyšších jazyků, jako jsou funkce, proměnné nebo standardní knihovna. Po překonání počáteční \uv{jazykové bariéry} potom řešili úlohy samostatně.
+Uživatelé odpovídající personě Martin (definované v~\ref{persona:b}) se z~počátku potýkali s~některými principy programování v~nízkoúrovňovém jazyce symbolických adres. Hledali marně koncepty z~vyšších jazyků, jako jsou funkce, proměnné nebo standardní knihovna. Po překonání počáteční \uv{jazykové bariéry} potom řešili úlohy samostatně.
 
-Výsledky testování se zkušenými programátory byly spíše pozitivní, omezené možnosti jazyka v nich však často vyvolávali rozpaky. Nejevili přílišný zájem o pokračování v programování, ocenili však ladící program a jeho relativní jednoduchost v porovnání s nástroji na které jsou zvyklí.
+Výsledky testování se zkušenými programátory byly spíše pozitivní, omezené možnosti jazyka v~nich však často vyvolávali rozpaky. Nejevili přílišný zájem o~pokračování v~programování, ocenili však ladící program a jeho relativní jednoduchost v~porovnání s~nástroji na které jsou zvyklí.
 
 \subsection{Persona David}
 
-Uživatelé odpovídající personě David (definované v \ref{persona:c}) se v programování pro mikrokontroler zorientovali velice rychle. Úlohy řešili samostatně, bez potřeby častější z naší strany. Často konzultovali dokumentaci a místy i samotný zdrojový kód emulátoru.
+Uživatelé odpovídající personě David (definované v~\ref{persona:c}) se v~programování pro mikrokontroler zorientovali velice rychle. Úlohy řešili samostatně, bez potřeby častější z~naší strany. Často konzultovali dokumentaci a místy i samotný zdrojový kód emulátoru.
 
-Největším problémem pak bylo jejich spoléhání na funkcionalitu, na kterou jsou zvyklí z pokročilejších nástrojů a v naší práci nejsou přítomny. Primárně potom jde o makra v jazyce symbolických adres, víceúčelové výstupní porty nebo například lepší nástroje pro spouštění již hotového programu, který není třeba ladit.
+Největším problémem pak bylo jejich spoléhání na funkcionalitu, na kterou jsou zvyklí z~pokročilejších nástrojů a v~naší práci nejsou přítomny. Primárně potom jde o~makra v~jazyce symbolických adres, víceúčelové výstupní porty nebo například lepší nástroje pro spouštění již hotového programu, který není třeba ladit.
 
-Výsledky testování s pokročilými uživateli odhalili několik funkcionálních nedostatků v aplikaci, jako je absence pokročilých krokovacích režimů. Jedná se však povětšinou o funkcionalitu, která začátečníky příliš neovlivní. Ohlasy však byly pozitivní, uživatelé se při testování bavili a několik zaujala možnost snadno integrovat emulátor do vlastního projektu.
+Výsledky testování s~pokročilými uživateli odhalili několik funkcionálních nedostatků v~aplikaci, jako je absence pokročilých krokovacích režimů. Jedná se však povětšinou o~funkcionalitu, která začátečníky příliš neovlivní. Ohlasy však byly pozitivní, uživatelé se při testování bavili a několik zaujala možnost snadno integrovat emulátor do vlastního projektu.
 
 \section{Vyhodnocení}
 
-Celkem jsme aplikaci testovali s jedenácti uživateli. Výsledky testování byli pozitivní, naprostí začátečníci reagovali na jednoduchost návrhu i jazyka velmi pozitivně. Testování s pokročilejšími uživateli odhalilo pár nedostatků v naší sadě nástrojů:
+Celkem jsme aplikaci testovali s~jedenácti uživateli. Výsledky testování byli pozitivní, naprostí začátečníci reagovali na jednoduchost návrhu i jazyka velmi pozitivně. Testování s~pokročilejšími uživateli odhalilo pár nedostatků v~naší sadě nástrojů:
 
 \begin{itemize}
 	\item pokročilé krokovací funkce,
-	\item makra v překladači,
+	\item makra v~překladači,
 	\item chybějící knihovna standardních definic a funkcí.
 \end{itemize}
 
-V budoucnu by proto bylo vhodné se pokusit tyto nedostatky vyřešit.
+V~budoucnu by proto bylo vhodné se pokusit tyto nedostatky vyřešit.

@@ -1,20 +1,20 @@
 \begin{introduction}
 
-S postupujícím technologickým vývojem je elektronika se kterou se běžně setkáváme čím dál složitější. Instrukční sada procesorů s architekturou x86 od firmy Intel nyní obsahuje tisíce instrukcí\cite{x86-instructions}, což je oproti původnímu procesoru 8086\cite{8086-instructions} závratné číslo. Tento vývoj je ve světle čím dál větší potřeby pro výpočetní výkon nevyhnutelný, ale rostoucí komplexita hardwaru vytváří nepřátelské prostředí pro naprosté začáteníky.
+S~postupujícím technologickým vývojem je elektronika se kterou se běžně setkáváme čím dál složitější. Instrukční sada procesorů s~architekturou x86 od firmy Intel nyní obsahuje tisíce instrukcí\cite{x86-instructions}, což je oproti původnímu procesoru 8086\cite{8086-instructions} závratné číslo. Tento vývoj je ve světle čím dál větší potřeby pro výpočetní výkon nevyhnutelný, ale rostoucí komplexita hardwaru vytváří nepřátelské prostředí pro naprosté začáteníky.
 
-V dobách, kdy nejsofistikovanější domácí počítače jako Amiga nebo Commodore 64 byly poháněny osmibitovými procesory s jednoduchou instrukční sadou, bylo začít s programováním pro danou platformu často pouze otázkou přečtení manuálu, nebo pomoci od učitele ve škole. Dnes je však spouštění aplikací pod kontrolou operačního systému, zavaděč systému je v některých případech zamčený a instrukční sada tak složitá, že obsáhnout ji je pro začátečníka takřka nemožný úkol.
+V~dobách, kdy nejsofistikovanější domácí počítače jako Amiga nebo Commodore 64 byly poháněny osmibitovými procesory s~jednoduchou instrukční sadou, bylo začít s~programováním pro danou platformu často pouze otázkou přečtení manuálu, nebo pomoci od učitele ve škole. Dnes je však spouštění aplikací pod kontrolou operačního systému, zavaděč systému je v~některých případech zamčený a instrukční sada tak složitá, že obsáhnout ji je pro za\-čá\-teč\-ní\-ka takřka nemožný úkol.
 
-Přesto však existuje zjevný zájem o nízkoúrovňové programování. Populární platforma Arduino se rapidně blíží milionu aktivních uživatelů a díky dobré programové podpoře je nahrávání programů do mikroprocesorů jednodušší, než kdy dřív. Přesto však existuje bariéra, kterou představuje nutnost vlastnit fyzické zařízení schopné daný kód spouštět.
+Přesto však existuje zjevný zájem o~nízkoúrovňové programování. Populární platforma Arduino se rapidně blíží milionu aktivních uživatelů a díky dobré programové podpoře je nahrávání programů do mikroprocesorů jednodušší, než kdy dřív. Přesto však existuje bariéra, kterou představuje nutnost vlastnit fyzické zařízení schopné daný kód spouštět.
 
 \section{Cíle práce}
 
-V naší práci se pokusíme navrhnout virtuální platformu, která se pokusí být ještě jednodušší, než nejjednodušší z existujících mikroprocesorů a bude možné s ní experimentovat na kterémkoliv moderním domácím počítači.
+V~naší práci se pokusíme navrhnout virtuální platformu, která se pokusí být ještě jednodušší, než nejjednodušší z~existujících mikroprocesorů a bude možné s~ní experimentovat na kterémkoliv moderním domácím počítači.
 
 \section{Struktura práce}
 
-Tato práce je rozdělena do sedmi kapitol. V první kapitole prozkoumáme, s jakými problémy se začátečníci setkávají při programovaní pro mikrokontrolery. Dále se potom seznámíme s existující programovou podporu pro vývoj na platformě AVR. Prozkoumáme možnosti emulace běhu mikrokontrolerů z rodiny AVR na platformě x86.
+Tato práce je rozdělena do sedmi kapitol. V~první kapitole prozkoumáme, s~jakými problémy se začátečníci setkávají při programovaní pro mikrokontrolery. Dále se potom seznámíme s~existující programovou podporu pro vývoj na platformě AVR. Prozkoumáme možnosti emulace běhu mikrokontrolerů z~rodiny AVR na platformě x86.
 
-V druhé kapitole rozvedeme specifikaci aplikačního software, který v rámci práce budeme vytvářet. Stejně jako samotná práce je pak i návrh rozdělen na čtyři části:
+V~druhé kapitole rozvedeme specifikaci aplikačního software, který v~rámci práce budeme vytvářet. Stejně jako samotná práce je pak i návrh rozdělen na čtyři části:
 
 \begin{itemize}
 	\item architektura mikrokontroleru a instrukční sada,
@@ -23,8 +23,8 @@ V druhé kapitole rozvedeme specifikaci aplikačního software, který v rámci 
 	\item ladící aplikace, kterou budeme emulovat běh na platformě x86.
 \end{itemize}
 
-V následujících čtyřech kapitolách se budeme každé části věnovat detailněji. Vzhledem k tomu, že jsou na sobě jednotlivé části víceméně nezávislé, budeme se věnovat návrhu a realizaci každé z nich pohromadě. Nejdříve zvážíme dílčí technologie, které bychom při realizaci mohli použít a každou z nich detailněji prozkoumáme. Poté si přiblížíme detaily samotné realizace a popíšeme, jak byly řešeny problémy, na které při práci jistě narazíme. Na konci zhodnotíme výsledné řešení a jak se použité technologie osvědčily.
+V~následujících čtyřech kapitolách se budeme každé části věnovat detailněji. Vzhledem k~tomu, že jsou na sobě jednotlivé části víceméně nezávislé, budeme se věnovat návrhu a realizaci každé z~nich pohromadě. Nejdříve zvá\-ží\-me dílčí technologie, které bychom při realizaci mohli použít a každou z~nich detailněji prozkoumáme. Poté si přiblížíme detaily samotné realizace a po\-pí\-še\-me, jak byly řešeny problémy, na které při práci jistě narazíme. Na konci zhodnotíme výsledné řešení a jak se použité technologie osvědčily.
 
-Ve sedmé a poslední kapitole námi navržený aplikační software otestujeme s několika uživateli. Kapitola obsahuje popis metodiky testování, jeho průběh a zhodnocení výsledků. Součástí je také návrh úloh, které při testování použijeme.
+Ve sedmé a poslední kapitole námi navržený aplikační software otestujeme s~několika uživateli. Kapitola obsahuje popis metodiky testování, jeho průběh a zhodnocení výsledků. Součástí je také návrh úloh, které při testování použijeme.
 
 \end{introduction}

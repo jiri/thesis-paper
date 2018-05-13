@@ -1,20 +1,20 @@
 \chapter{Specifikace a cíle práce}
 
-Po dokončení analýzy současných řešení jsme připraveni definovat které problémy budeme v práci řešit a které problémy spadají mimo rámec práce.
+Po dokončení analýzy současných řešení jsme připraveni definovat které pro\-blé\-my budeme v~práci řešit a které problémy spadají mimo rámec práce.
 
 \section{Využití}
 
-Reálných platforem existuje na trhu hned několik a většina z nich s sebou nese i programovou podporu orientovanou na danou platformu. Každá z platforem je však omezena svým fyzickým návrhem a programová podpora je orientována primárně na profesionální vývoj, nikoliv na výuku a začátečníky. Programová podpora často není multiplatformní, postrádá simulátor nebo není simulátor orientovaný na uživatele, ale strojové testování. Velká část z nich potom spoléhá na fyzické vývojové sady, které může být pro začátečníky často obtížné vybrat nebo zakoupit.
+Reálných platforem existuje na trhu hned několik a většina z~nich s~sebou nese i programovou podporu orientovanou na danou platformu. Každá z~platforem je však omezena svým fyzickým návrhem a programová podpora je orientována primárně na profesionální vývoj, nikoliv na výuku a začátečníky. Programová podpora často není multiplatformní, postrádá simulátor nebo není simulátor orientovaný na uživatele, ale strojové testování. Velká část z~nich potom spoléhá na fyzické vývojové sady, které může být pro začátečníky často obtížné vybrat nebo zakoupit.
 
-Cílem práce bude proto navrhnout sadu nástrojů, která není omezena reálnými problémy fyzických platforem a jejíž charakteristiky jsou optimalizovány pro použití začátečníky a výuku, nikoliv profesionální užití v reálném světě. Cílem platformy je poté naučit začátečníky naprosté základy, s nimiž se jim poté bude pracovat o něco lépe. Platforma se také bude podobat reálné platformě AVR, která je v současné době velmi rozšířená v amatérské sféře, hlavně díky projektu Arduino.
+Cílem práce bude proto navrhnout sadu nástrojů, která není omezena reálnými problémy fyzických platforem a jejíž charakteristiky jsou optimalizovány pro použití začátečníky a výuku, nikoliv profesionální užití v~reálném světě. Cílem platformy je poté naučit začátečníky naprosté základy, s~nimiž se jim poté bude pracovat o~něco lépe. Platforma se také bude podobat reálné platformě AVR, která je v~současné době velmi rozšířená v~amatérské sféře, hlavně díky projektu Arduino.
 
 \subsection{Začátečníci}
 
-Naprostí začátečníci jsou hlavní cílovou skupinou projektu. Instrukční sada je navržena co nejmenší, aby ji začátečníci mohli obsáhnout co nejrychleji a mohli znát všechny nástroje, které mají k dispozici při řešení problémů. Pro začátečníka bude důležitá multiplatformnost ladící aplikace a překladače, spolu s faktem, že k vývoji není potřeba fyzická vývojová sada. Začátečníci by při používání naší platformy měli získat zevrubnou představu, co programování pro mikrokontroler obnáší, v čem se liší od systémového programování a jak se přistupuje k řešení problémů v nízkoúrovňovém jazyce.
+Naprostí začátečníci jsou hlavní cílovou skupinou projektu. Instrukční sada je navržena co nejmenší, aby ji začátečníci mohli obsáhnout co nejrychleji a mohli znát všechny nástroje, které mají k~dispozici při řešení problémů. Pro začátečníka bude důležitá multiplatformnost ladící aplikace a překladače, spolu s~faktem, že k~vývoji není potřeba fyzická vývojová sada. Začátečníci by při používání naší platformy měli získat zevrubnou představu, co programování pro mikrokontroler obnáší, v~čem se liší od systémového programování a jak se přistupuje k~řešení problémů v~nízkoúrovňovém jazyce.
 
 \subsection{Pokročilí}
 
-Ačkoliv pokročilí uživatelé nejsou cílovou skupinou našeho projektu, existuje díky modulární architektuře projektu možnost použít námi navržený překladač a emulátor ve vlastních projektech, chceme-li přidat programovatelnost pomocí nízkoúrovňového jazyka. Mezi takové případy užití může spadat například návrh alternativních aplikací pro výuku programování nebo počítačových her. V neposlední řadě pak není složité adaptovat překladač ani emulátor pro alternativní instrukční sadu.
+Ačkoliv pokročilí uživatelé nejsou cílovou skupinou našeho projektu, existuje díky modulární architektuře projektu možnost použít námi navržený překladač a emulátor ve vlastních projektech, chceme-li přidat programovatelnost pomocí nízkoúrovňového jazyka. Mezi takové případy užití může spadat například návrh alternativních aplikací pro výuku programování nebo počítačových her. V~neposlední řadě pak není složité adaptovat překladač ani emulátor pro alternativní instrukční sadu.
 
 \section{Funkcionalita}
 
@@ -23,26 +23,26 @@ Výsledkem práce by měla být sada aplikačního softwaru, knihoven a dokument
 \subsection{Analýza architektury AVR}
 \label{sec:spec-avr}
 
-Nejdříve prozkoumáme architekturu procesorů z rodiny AVR. Inspirujeme se mikrokontrolerem ATtiny12, který je jeden z nejjednodušších AVR mikrokontrolerů. Z dokumentace ATtiny12 od společnosti Atmel\cite{attiny12-datasheet} zjistíme následující:
+Nejdříve prozkoumáme architekturu procesorů z~rodiny AVR. Inspirujeme se mikrokontrolerem ATtiny12, který je jeden z~nejjednodušších AVR mikrokontrolerů. Z~dokumentace ATtiny12 od společnosti Atmel\cite{attiny12-datasheet} zjistíme následující:
 
 \begin{itemize}
 	\item mikroprocesor disponuje 32 víceúčelovými, 8-bitovými registry,
 	\item mikroprocesor disponuje 1KB programové paměti a 64 byty paměti EEPROM,
 	\item na procesoru se nachází 6 tzv. GPIO pinů,
-	\item procesor operuje v řádu jednotek Mhz.
+	\item procesor operuje v~řádu jednotek Mhz.
 \end{itemize}
 
 Při analýze nemusíme zabíhat do přílišných detailů -- snažíme se ji pouze aproximovat, nikoliv simulovat. Výše uvedené charakteristiky jsou pro nás tudíž směrodatné.
 
-Dále se podíváme na instrukční sadu procesorů AVR. Jedná se o instrukční sadu typu RISC, disponuje tedy méně, rychlejšími instrukcemi. Instrukce ve své strojové podobě mají délku jednoho nebo více 16-bitových slov. Některé instrukce jsou však redundantní a dají se nahradit kombinací ostatních instrukcí.
+Dále se podíváme na instrukční sadu procesorů AVR. Jedná se o~instrukční sadu typu RISC, disponuje tedy méně, rychlejšími instrukcemi. Instrukce ve své strojové podobě mají délku jednoho nebo více 16-bitových slov. Některé instrukce jsou však redundantní a dají se nahradit kombinací ostatních instrukcí.
 
 \subsection{Mikroprocesor a strojový kód}
 
-První částí práce bude popis podoby virtuálního mikroprocesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k jeho použití v co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD, nebo při samostatných projektech využívající širokou řadu projektů z rodiny Arduino\footnote{Více na https://www.arduino.cc/}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
+První částí práce bude popis podoby virtuálního mikroprocesoru, který naše platforma bude používat. Takový procesor by měl být co nejjednoduší, aby bylo pro naprostého začátečníka obsáhnout všechny informace potřebné k~jeho použití v~co nejmenjším čase. Měl by být podobný rodině mikroprocesorů AVR od firmy Atmel, se kterými se potom začátečník bude setkávat například na předmětech BI-SAP a BI-ARD, nebo při samostatných projektech využívající širokou řadu projektů z~rodiny Arduino\footnote{Více na https://www.arduino.cc/}. Jeho instrukční sada by měla být dostatečně kompaktní na její snadné zapamatování a navržená tak, aby bylo jednoduché kódovat a dekódovat instrukce bez použití manuálu nebo externího programu. Finálně by potom procesor měl umožňovat snadnou adaptaci pro další využití v~jiných projektech, aby nebylo nutné vyvíjet nová řešení a dále tím fragmentovat již tak široké spektrum zařízení.
 
-Mikroprocesor bude založen na modifikované harvardské architektuře, která je kombinací harvardské architektury a Von Neumannovy architektury. Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR\cite{attiny12-datasheet}.
+Mikroprocesor bude založen na modifikované harvardské architektuře, kte\-rá je kombinací harvardské architektury a Von Neumannovy architektury. Bude tedy jednu paměť na program, ze které půjde pouze číst a jednu paměť na data, ze které půjde jak číst, tak do ní zapisovat. Tohle je architektura, kterou používá rodina mikroprocesorů AVR\cite{attiny12-datasheet}.
 
-Samotný mikroprocesor spouští pouze strojový kód a není zatížen překladem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací zakódovaných instrukcí. Instrukce pro náš procesor se budou skládat z jednoho a více bytů. První byte enkóduje vždy pouze typ instrukce, o který se jedná. Následující byty enkódují parametry dané instrukce. V samotném strojovém kódu se nijak neodrážejí návěstí definované v jazyce symbolických adres.
+Samotný mikroprocesor spouští pouze strojový kód a není zatížen pře\-kla\-dem jazykem na vyšší úrovni. Strojový kód je bitovou reprezentací za\-kó\-do\-va\-ných instrukcí. Instrukce pro náš procesor se budou skládat z~jednoho a více bytů. První byte enkóduje vždy pouze typ instrukce, o~který se jedná. Následující byty enkódují parametry dané instrukce. V~samotném strojovém kódu se nijak neodrážejí návěstí definované v~jazyce symbolických adres.
 
 Mikroprocesor by měl také podporovat několik vstupních a výstupních operací, obsluhovaných pomocí oddělené paměti a přerušení:
 
@@ -59,29 +59,29 @@ Jelikož námi navržený procesor bude pouze virtuální, nebude existovat fyzi
 
 Emulátor bude koncipován formou knihovny, kterou bude možné použít při vývoji dalšího softwaru. Tím se zajistí konzistentní chování napříč více programy, ve kterých bude knihovna použita. Zároveň tak bude velmi snadné naimplementovat novou aplikaci, která je schopna spouštět strojový kód naší virtuální platformy.
 
-Z toho důvodu však musí emulátor také zprostředkovat snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny. Požadavky na formu vstupu a výstupu se mohou výrazně lišit dle užití. Například terminálová aplikace bude nejspíše mít seriálovou komunikaci zprostředkovanou pomocí standardního vstupu a výstupu. Grafická aplikace naopak bude nejspíše poskytovat vlastní seriálovou konzoli. Emulátor by také měl poskytovat možnost snadno rozšířit rozhraní procesoru o vlastní funkcionalitu.
+Z~toho důvodu však musí emulátor také zprostředkovat snadnou implementaci vstupních a výstupních rozhraní uživatelem knihovny. Požadavky na formu vstupu a výstupu se mohou výrazně lišit dle užití. Například terminálová aplikace bude nejspíše mít seriálovou komunikaci zprostředkovanou pomocí standardního vstupu a výstupu. Grafická aplikace naopak bude nej\-spí\-še poskytovat vlastní seriálovou konzoli. Emulátor by také měl poskytovat mož\-nost snadno rozšířit rozhraní procesoru o~vlastní funkcionalitu.
 
-Součástí projektu bude také rozsáhlá testovací sada , která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v kódu. Bude testovat chování každé instrukce samostatně a poté interakce instrukcí mezi sebou.
+Součástí projektu bude také rozsáhlá testovací sada , která pomůže zajistit stabilitu fungování programu a kontrolu chyb vznikajících změnami v~kódu. Bude testovat chování každé instrukce samostatně a poté interakce instrukcí mezi sebou.
 
 \subsection{Jazyk}
 
-Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní adresu v programu. Jazyk bude definován pomocí gramatiky, podle které se bude číst ze zdrojového souboru.
+Jelikož samotný procesor rozumí pouze strojovému kódu, bude další částí práce definice jazyka symbolických adres, který nám umožní zapisovat instrukce pro náš procesor ve formátu čitelném lidmi. Tento jazyk bude definovat mnemoniky k~jednotlivým instrukcím a pseudoinstrukce které nejsou reprezentovány ve strojovém kódu ale ovliňují překlad samotný. Dále pak umožní lepší organizaci programu pomocí návěstí, které umožní pojmenovat konkrétní adresu v~programu. Jazyk bude definován pomocí gramatiky, podle které se bude číst ze zdrojového souboru.
 
-Mezi pseudoinstrukce podporované jazykem by měli patřit alespoň následující:
+Mezi pseudoinstrukce podporované jazykem by měly patřit následující:
 
 \begin{itemize}
 	\item ukládání řetězců a uživatelských dat do programové paměti,
-	\item nastavování pozice v binárním souboru,
-	\item vložení obsahu z jiného souboru.
+	\item nastavování pozice v~binárním souboru,
+	\item vložení obsahu z~jiného souboru.
 \end{itemize}
 
 \subsection{Překladač}
 
-Překlad z jazyka symbolických adres do strojového kódu čitelného pro emulovaný procesor bude zprostředkován konzolovou aplikací.
+Překlad z~jazyka symbolických adres do strojového kódu čitelného pro emulovaný procesor bude zprostředkován konzolovou aplikací.
 
-Výstupem aplikace bude samotný binární soubor se strojovým kódem. Volitelně potom soubor obsahující mapu mezi návěstími a pozicemi v kódu, která pomůže zpřehlednit dekompilovanou verzi kódu v ladících nástrojích.
+Výstupem aplikace bude samotný binární soubor se strojovým kódem. Volitelně potom soubor obsahující mapu mezi návěstími a pozicemi v~kódu, která pomůže zpřehlednit dekompilovanou verzi kódu v~ladících nástrojích.
 
-Dále překladač bude umožňovat povolit pouze některé instrukce. To může být nápomocné u jednoduchých úloh, které v začátečnících často podněcují použití příliš komplikovaného řešení, nebo u úloh, kde chceme demonstrovat nějakou vlastnost programování pro mikroprocesory omezením instrukční sady, která by jinak pomohla problém vyřešit příliš jednodušše.
+Dále překladač bude umožňovat povolit pouze některé instrukce. To může být nápomocné u~jednoduchých úloh, které v~začátečnících často podněcují použití příliš komplikovaného řešení, nebo u~úloh, kde chceme demonstrovat nějakou vlastnost programování pro mikroprocesory omezením instrukční sady, která by jinak pomohla problém vyřešit příliš jednodušše.
 
 \subsection{Ladicí program}
 
@@ -89,4 +89,4 @@ Abychom usnadnili uživatelům naší platformy lazení programů a odstraňová
 
 \section{Závěr}
 
-Projekt bude sestávat celkem ze čtyř částí, z nichž jedna bude spočívat pouze v návrhu samotné platformy a zbývající tři části budou tvořit programovou podporu pro vývoj programů na námi definované platformě. Části programové podpory budou navrženy do jisté míry nezávisle, aby se v budoucnu daly snáze upravovat a integrovat s jinými projekty.
+Projekt bude sestávat celkem ze čtyř částí, z~nichž jedna bude spočívat pouze v~návrhu samotné platformy a zbývající tři části budou tvořit programovou podporu pro vývoj programů na námi definované platformě. Části programové podpory budou navrženy do jisté míry nezávisle, aby se v~budoucnu daly snáze upravovat a integrovat s~jinými projekty.
