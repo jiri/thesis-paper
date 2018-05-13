@@ -183,7 +183,7 @@ Implementace lokálních návěstí byla vcelku přímočará. Při překladu si
 
 Kompilační direktiva \texttt{include} byla o~něco těžší oříšek na rozlousknutí. První návrh aplikace s~ní nepočítal, četl proto celý program najednou pomocí gramatického pravidla \texttt{program}. Bylo tedy třeba přeorganizovat aplikaci, aby dělila zdrojový kód na řádky ručně a syntaktickou analýzu prováděla řádku po řádce.
 
-Poté stačí ukládat čtené soubory na zásobník, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u~konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v~zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
+Problém byl vyřešen strukturou \texttt{FileStack}, která simuluje zásobník ukládající informace o~překládaných souborech. Poté stačí ukládat na zásobník čtené soubory, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u~konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v~zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
 
 \todo{REWRITE}
 
