@@ -1,6 +1,6 @@
 % arara: pdflatex: { shell: true }
 % arara: makeglossaries
-% arara: biber
+% arara: bibtex
 % arara: pdflatex: { shell: true }
 % arara: pdflatex: { shell: true }
 
@@ -14,10 +14,7 @@
 \usepackage{minted}
 \usepackage{pgfplots}
 \usepackage[nonumberlist]{glossaries}
-\usepackage[backend=biber]{biblatex}
 \usepackage{multirow}
-
-\bibliography{bibliography}
 
 \setlength{\parskip}{1em}
 
@@ -63,8 +60,8 @@
 
 \input{chapters/8-conclusion.tex}
 
-% \bibliographystyle{csn690}
-\printbibliography
+\bibliographystyle{csn690}
+\bibliography{bibliography}
 
 \printglossary[title=Seznam použitých zkratek,type=\acronymtype]
 
