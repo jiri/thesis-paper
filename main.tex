@@ -73,13 +73,14 @@
 
 \chapter{Dokumentace mikroprocesoru a instrukční sady}
 \label{appendix:mcu-manual}
-\verbatiminput{documentation.md}
+\includepdf[pages={-}]{pdfs/documentation-print}
 
 \chapter{Obsah přiložené SD karty}
 
 \begin{figure}
 	\dirtree{%
 		.1 readme.txt\DTcomment{stručný popis obsahu SD karty}.
+		.1 documentation.txt\DTcomment{dokumentace procesoru v~textové podobě}.
 		.1 src.
 		.2 assembler\DTcomment{zdrojové kódy překladače}.
 		.2 emultor\DTcomment{zdrojové kódy emulátoru}.

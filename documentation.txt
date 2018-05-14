@@ -1,6 +1,6 @@
-================================================================================
+==============================================================================
   Dokumentace jednoduchého procesoru
-================================================================================
+==============================================================================
 
 Toto je dokumentace jednoduchého procesoru, jehož omezení jsou pečlivě 
 vybrána, aby pomohla začátečníkům naučit se programovat v jazyce assembly.
@@ -83,22 +83,22 @@ Procesor disponuje třemi druhy paměti. Každá paměť je adresována separát
 Adresní prostor každé paměti je popsán níže:
 
 [Programová pamět]
-0x0000-0x0010: Reset vektor
-0x0010-0x0020: VBlank vektor
-0x0020-0x0030: Tlačítkový vektor
-0x0030-0x0040: Nevyužito
-0x0040-0x0050: Sériový vektor
-0x0050-0x0100: Nevyužito
-0x0100-0xFFFF: Uživatelský program
+  0x0000 - 0x0010: Reset vektor
+  0x0010 - 0x0020: VBlank vektor
+  0x0020 - 0x0030: Tlačítkový vektor
+  0x0030 - 0x0040: Nevyužito
+  0x0040 - 0x0050: Sériový vektor
+  0x0050 - 0x0100: Nevyužito
+  0x0100 - 0xFFFF: Uživatelský program
 
 [Operační paměť]
-0x0000-0x8000: Uživatelská data
-0x8000-0xDA00: VRAM
-0xDA00-0xFFFF: Uživatelská data, zásobník
+  0x0000 - 0x8000: Uživatelská data
+  0x8000 - 0xDA00: VRAM
+  0xDA00 - 0xFFFF: Uživatelská data, zásobník
 
 [Paměť rozhraní]
-0x02: Stisknutá tlačítka / -
-0x03: Fronta sériového vstupu / sériový výstup
+  0x02: Stisknutá tlačítka / -
+  0x03: Fronta sériového vstupu / sériový výstup
 
 :: Sériová linka
 
@@ -114,6 +114,7 @@ odpovídá adresnímu prostoru operační paměti označenému jako `VRAM'. Spod
 palety s 16 barvami. Jednotlivé pixely jsou namapovány po řádkách počínaje
 levým horním rohem.
 
+
 :: Tlačítka
 
 Emulátor disponuje sedmi tlačítky. V paměti rozhraní je na patřičné adrese
@@ -128,9 +129,21 @@ binární podoby. Pro zkrácení budeme operandy instrukcí indikovat následovn
   - i8/16: 8/16-bitová hodnota
   - A: 16-bitová adresa
 
-Instrukce jsou nadepsány ve formátu [Operační znak: Mnemonika].
+:: Strojový kód
+
+Instrukce jsou reprezentovány vždy svým operačním znakem a binární podobou
+operandů, která je pro registry rozhodnuta následovně:
+
+  - Registr rX: 0x0X
+  - Registry rX, rY: 0xXY
+  
+Ostatní hodnoty a adresy jsou reprezentovány svou kanonickou binární podobou.
 
 :: Instrukce
+
+Instrukce jsou nadepsány ve formátu:
+
+  [ operační znak ] mnemonika [operandy]: <popis>
 
 [ 0x00 ] nop: Neprovede žádnou operaci.
 [ 0x02 ] sleep: Přeruší chod procesoru do dalšího přerušení.
@@ -147,6 +160,7 @@ Instrukce jsou nadepsány ve formátu [Operační znak: Mnemonika].
 [ 0x11 ] adc rA, rB: Přičte k registru A hodnotu registru B a přenos.
 [ 0x12 ] sub rA, rB: Odečte od registru A hodnotu registru B.
 [ 0x13 ] sbc rA, rB: Odečte od registru A hodnotu registru B a přenos.
+
 [ 0x14 ] inc rA: Zvýší registr A o 1.
 [ 0x15 ] dec rA: Sníží registr A o 1.
 
@@ -157,7 +171,7 @@ Instrukce jsou nadepsány ve formátu [Operační znak: Mnemonika].
 [ 0x19 ] cp  rA, rB: Nastaví C pokud rX < rY, nastaví Z pokud rX == rY.
 [ 0x1A ] cpi rA, i8: Nastaví C pokud rX < i8, nastaví Z pokud rX == i8.
 
-[ 0x20 ] jmp A: Nastaví PC na A.
+[ 0x20 ] jmp  A: Nastaví PC na A.
 [ 0x21 ] call A: Umístí PC na zásobník a nastaví PC na A.
 [ 0x22 ] ret: Načte PC ze zásobníku.
 [ 0x23 ] reti: Načte PC ze a nastaví příznak I.
@@ -177,15 +191,5 @@ Instrukce jsou nadepsány ve formátu [Operační znak: Mnemonika].
 [ 0x34 ] push rX: Umístí hodnotu rX na zásobník a inkrementuje SP.
 [ 0x35 ] pop  rX: Umístí do rX vrchol zásobníku a dekrementuje SP.
 
-[ 0x3A ] in  rA, IO: Načte do registru A z paměti rozhraní hodnotu na adrese IO.
+[ 0x3A ] in  rA, IO: Načte do registru A hodnotu z adresy IO paměti rozhraní.
 [ 0x3B ] out rA, IO: Uloží do paměti rozhraní na adresu IO hodnotu registru A.
-
-:: Strojový kód
-
-Instrukce jsou reprezentovány vždy svým operačním znakem a binární podobou
-operandů, která je pro registry rozhodnuta následovně:
-
-  - Registr rX: 0x0X
-  - Registry rX, rY: 0xXY
-  
-Ostatní hodnoty a adresy jsou reprezentovány svou kanonickou binární podobou.
