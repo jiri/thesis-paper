@@ -1,7 +1,7 @@
 \chapter{Překladač}
 \label{chap:assembler}
 
-První samostatnou programovou částí práce je překladač z~jazyka symbolických adres do strojového kódu našeho mikroprocesoru. Nemá přímou závislost na ostatních částech práce, pouze na návrhu samotné platformy. Je proto ideálním kandidátem na první část práce.
+První samostatnou programovou částí práce je překladač z~jazyka symbolických adres do strojového kódu našeho mikroprocesoru. Nemá přímou zá\-vis\-lost na ostatních částech práce, pouze na návrhu samotné platformy. Je proto ideálním kandidátem na první část práce.
 
 \section{Možnosti řešení}
 
@@ -22,15 +22,13 @@ První volbou jazyka pro implementaci překladače je jazyk C++ -- jazyk s~dlouh
 
 Mezi zásadní nevýhody C++ však patří absence balíčkovacího systému. Kvůli tomu se musíme buď spolehnout, že patřičné hlavičkové soubory a statické knihovny budou poskytnuty uživatelem (nejčastěji pomocí systémového balíčkovače), nebo je musíme přiložit k~práci jako součást našeho kódu. Dále pak C++ postrádá standardní nástrojovou sadu pro kompilaci větších projektů, musíme proto používat externí nástroje.
 
-Jedním takovým nástrojem je CMake\cite{cmake-overview}, používaný pro automatizaci překladu programu. Nejenom, že nám umožní snadno měnit překladač a přidávat závislosti do programu, ale také nám pomůže zajistit konzistentní překlad systému na různých platformách. Projekt CMake vznikl v~roce 2001\cite{cmake-overview}, je proto dospělou a stabilní volbou, která málokoho překvapí.
+Jedním takovým nástrojem je CMake\cite{cmake-overview}, používaný pro automatizaci překladu programu. Nejenom, že nám umožní snadno měnit překladač a při\-dá\-vat závislosti do programu, ale také nám pomůže zajistit konzistentní překlad systému na různých platformách. Projekt CMake vznikl v~roce 2001\cite{cmake-overview}, je proto dospělou a stabilní volbou, která málokoho překvapí.
 
 Knihoven pro práci s~konzolovými argumenty existuje v~ekosystému C++ hned několik. Je tomu tak pravděpodobně hlavně díky široké základně konzolových aplikací napsaných v~C++. Nejjednodušší volbou je knihovna Boost.Program\_options obsažená v~knihovně Boost\cite{boost-filesystem}. Existuje velká šance, že budeme knihovnu Boost používat i v~jiných částech programu. Například  pokud chceme podporovat verzi C++ starší nežli C++17\cite{cpp-filesystem}, můžeme pro přístup k~souborům použít Boost.Filesystem, který odpovídá stejnému rozhraní, které se v~C++17 nachází\cite{boost-filesystem}.
 
-Pro syntaktický rozbor textu můžeme použít například knihovnu PEGTL\cite{github-pegtl}. Knihovna PEGTL je založena na flexibilní metodologii a umožňuje psát kód provádějící syntaktický rozklad modulárním a snadno rozšiřitelným způsobem. Mezi její výhody patří její malý rozsah, moderní rozhraní využívající funkce jazyka C++ a přehlednost výsledného kódu. Knihovna PEGTL je implementována jako hlavičkový soubor bez dalších závislostí\cite{github-pegtl}.
+Pro syntaktický rozbor textu můžeme použít knihovnu PEGTL\cite{github-pegtl}. Kni\-hov\-na PEGTL je založena na flexibilní metodologii a umožňuje psát kód provádějící syntaktický rozklad modulárním a snadno rozšiřitelným způsobem. Mezi její výhody patří její malý rozsah, moderní rozhraní využívající funkce jazyka C++ a přehlednost výsledného kódu. Knihovna PEGTL je implementována jako hlavičkový soubor bez dalších závislostí\cite{github-pegtl}.
 
-\todo{floaty pro listingy}
-
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{cpp}
 using namespace tao::pegtl;
 
@@ -44,9 +42,9 @@ struct comment : if_must<one<';'>, anything> { };
 
 Narozdíl od ostatních dvou voleb je Python jazyk interpretovaný, nikoliv kompilovaný. Velké množství knihoven, které pro Python existují, v~kombinaci s~expresivní syntaxí z~něj dělají dobrého kandidáta na návrh konzolové aplikace. Poskytuje jak vlastní balíčkovací systém jménem \textbf{pip}\cite{pip}, tak zabudovanou knihovnu pro psaní testů\cite{python-unittest}. Jeho největší nevýhodou je potom fakt, že ke spouštění programů napsaných v~Pythonu je potřeba interpreter, který koncový uživatel nemusí mít na svém počítači nainstalovaný.
 
-Jednou z~knihoven umožňující práci s~příkazovou řádkou je knihovna Click\cite{website-click}. Využívá funkcionalitu Pythonu známou jako \textit{dekorátory}, díky kterým je její využití otázkou jednoduché anotace funkcí jejimi parametry. Její použití je demonstrováno v~ukázce \ref{click-source}.
+Jednou z~knihoven umožňující práci s~konzolí je knihovna Click\cite{website-click}. Využívá funkcionalitu Pythonu známou jako \textit{dekorátory}, díky kterým je její využití otázkou jednoduché anotace funkcí jejimi parametry. Její použití je demonstrováno v~ukázce \ref{fig:click-source}.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{python}
 import click
 
@@ -62,7 +60,7 @@ def hello(count, name):
 if __name__ == '__main__':
     hello()
 \end{minted}
-\caption{Zdrojový kód jednoduché aplikace používající Click, převzato z~\cite{website-click}}
+\caption{Zdrojový kód aplikace používající Click, převzato z~\cite{website-click}}
 \label{fig:click-source}
 \end{listing}
 
@@ -73,15 +71,15 @@ Pro syntaktickou analýzu programu je i v~Pythonu možné použít knihovnu, kte
 
 Rust je víceúčelový programovací jazyk financovaný a vyvinutý organizací Mozilla Research\cite{rust-faq}. Ačkoliv samotný jazyk vznikl v~roce 2006\cite{rust-faq}, první stabilní verze Rustu byla vydána teprve v~roce 2015\cite{rust-faq}. Jedná se tedy ve srovnání s~ostatními možnostmi o~poměrně nový jazyk. Přesto byl však Rust v~anketě populárního webu Stack Overflow zvolen nejmilovanějším jazykem v~letech 2016\cite{so-survey-2016}, 2017\cite{so-survey-2017} a 2018\cite{so-survey-2018}.
 
-Jedná se o~nízkoúrovňový jazyk, navržený jako alternativa jazyků C a C++. Rust je kompilovaný, staticky typovaný a funkcionální\cite{rust-faq}. Mezi jeho hlavní výhody v~porovnání s~C a C++ patří výborný systém na správu závislostí Cargo, bohatší standardní knihovna a příslib větší paměťové bezpečnosti. Dále mezi výhody patří snadná spolupráce s~jazyky C a C++, nebo výborná podpora pro paralelismus a vícevláknové programování. Ani jedna z~uvedených vlastností se však na našem programu vzhledem k~jeho jednoduchosti neprojeví. Zabezpečení přístupu do paměti a validita programu je kontrolována při kompilaci\cite{rust-faq}, přináší tudíž minimální zatížení při samotném běhu. Silný typový systém napomáhá ke zlepšení optimalizace kódu. Rychlostně je proto Rust srovnatelný s~C++\cite{rust-vs-cpp}.
+Jedná se o~nízkoúrovňový jazyk, navržený jako alternativa jazyků C a C++. Rust je kompilovaný, staticky typovaný a funkcionální\cite{rust-faq}. Mezi jeho hlavní výhody v~porovnání s~C a C++ patří výborný systém na správu závislostí Cargo, bohatší standardní knihovna a příslib větší paměťové bez\-peč\-nos\-ti. Dále mezi výhody patří snadná spolupráce s~jazyky C a C++, nebo výborná podpora pro paralelismus a vícevláknové programování. Ani jedna z~uvedených vlastností se však na našem programu vzhledem k~jeho jednoduchosti neprojeví. Zabezpečení přístupu do paměti a validita programu je kontrolována při kompilaci\cite{rust-faq}, přináší tudíž minimální zatížení při samotném běhu. Silný typový systém napomáhá ke zlepšení optimalizace kódu. Rychlostně je proto Rust srovnatelný s~C++\cite{rust-vs-cpp}.
 
 Mezi jeho nevýhody pak patří slabší, ale přesto bohatý ekosystém knihoven, menší uživatelská základna\cite{so-survey-2018} a časté změny, ke kterým v~jazyce stále dochází.
 
 Stejně jako pro C++ a Python i pro Rust existuje nejedna knihovna, která pomáhá psát kód pro syntaktickou analýzu. Pro naši potřebu se zdá být nejlepší knihovna rust-peg\cite{github-rust-peg}. Oproti C++ má však výhodu v~tom, že umí generovat kód přímo z~jazykové gramatiky. Samotná gramatika potom není psaná přímo v~kódu jazyka, který se k~tomu často syntakticky nehodí. V~případě knihovny rust-peg dochází ke generaci v~tzv. \uv{build skriptu}, o~jehož spouštění se stará Cargo.
 
-Pro práci s~konzolovými argumenty je potom vhodné užít knihovnu Clap\cite{github-clap}. Knihovna Clap nám nejenom umožní přehledně zjistit, které argumenty s~jakými hodnotami byly předány naší aplikaci, ale obstará za nás například generování informací o~užití programu. Díky typovému systému pak není možné opomenout případy, že argument není definován, nebo nemá hodnotu jakou bychom očekávali.
+Pro práci s~konzolovými argumenty je potom vhodné užít knihovnu Clap\cite{github-clap}. Knihovna Clap nám nejenom umožní přehledně zjistit, které argumenty s~ja\-ký\-mi hodnotami byly předány naší aplikaci, ale obstará za nás například generování informací o~užití programu. Díky typovému systému pak není možné opomenout případy, že argument není definován, nebo nemá hodnotu jakou bychom očekávali.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{rust}
 extern crate clap;
 use clap::App;
@@ -95,11 +93,11 @@ fn main() {
   }
 }
 \end{minted}
-\caption{Zdrojový kód jednoduché aplikace používající Clap}
+\caption{Zdrojový kód aplikace používající Clap}
 \label{fig:clap-source}
 \end{listing}
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{console}
 $ assembler --help
 assembler 1.0.0
@@ -119,35 +117,35 @@ FLAGS:
 
 \section{Zvolená technologie}
 
-Pro samotnou implementaci programu byl nakonec zvolen jazyk Rust a knihovny rust-peg a Clap zmíněné v~sekci \ref{assembler:rust}. Rust byl zvolen primárně kvůli komfortu a bezpečí, které poskytuje, dobré programové podpoře a kvalitní knihovně pro práci s~konzolovými argumenty. Nedílnou součástí rozhodnutí pak byly autorovy existující zkušenosti s~jazykem.
+Pro samotnou implementaci programu byl nakonec zvolen jazyk Rust a kni\-hov\-ny rust-peg a Clap zmíněné v~sekci \ref{assembler:rust}. Rust byl zvolen primárně kvůli komfortu a bezpečí, které poskytuje, dobré programové podpoře a kvalitní knihovně pro práci s~konzolovými argumenty. Nedílnou součástí rozhodnutí pak byly autorovy existující zkušenosti s~jazykem.
 
 \section{Realizace}
 
-Základním stavebním blokem programu je struktura \texttt{Compiler} popsaná v~ukázce \ref{fig:rust-compiler}. Ukládá současný stav překladu, výslednou binární podobu souboru a struktury potřebné k~správnému zpracování návěstí.
+Základním stavebním blokem programu je struktura \texttt{Compiler} popsaná v~u\-káz\-ce \ref{fig:rust-compiler}. Ukládá současný stav překladu, výslednou binární podobu souboru a struktury potřebné k~správnému zpracování návěstí.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{rust}
 pub struct Compiler {
-    cursor: u16,
-    output: [u8; 0x10000],
-    label_map: HashMap<Label, u16>,
-    needs_label: Vec<(u16, Label, Nibble)>,
-    last_major_label: Label,
-    enabled_instructions: Option<HashMap<Opcode, String>>,
-    file_stack: FileStack,
+  cursor: u16,
+  output: [u8; 0x10000],
+  label_map: HashMap<Label, u16>,
+  needs_label: Vec<(u16, Label, Nibble)>,
+  last_major_label: Label,
+  enabled_instructions: Option<HashMap<Opcode, String>>,
+  file_stack: FileStack,
 }
 \end{minted}
 \caption{Definice struktury \texttt{Compiler}}
-\label{fig:rust-result}
+\label{fig:rust-compiler}
 \end{listing}
 
 Prvním problémem, který bylo při realizaci potřeba vyřešit, bylo nahrazování návěstí za jejich skutečné adresy. Vzhledem k~faktu, že u~některých návěstí v~době jejich použití v~kódu ještě neznáme jejich pozici, musíme provádět překlad ve dvou průchodech.
 
-V~prvním průchodu přeložíme veškeré instrukce a u~instrukcí, které vyžadují adresu definovanou návěstím zapíšeme pouze nulovou adresu a uložíme si pozici v~programu spolu s~adresou, kterou na ni budeme doplňovat. Zároveň si v~prvním průchodu zapamatujeme pozici každého návěstí, které potkáme.
+V~prvním průchodu přeložíme veškeré instrukce a u~instrukcí, které vy\-ža\-du\-jí adresu definovanou návěstím zapíšeme pouze nulovou adresu a uložíme si pozici v~programu spolu s~adresou, kterou na ni budeme doplňovat. Zároveň si v~prvním průchodu zapamatujeme pozici každého návěstí, které potkáme.
 
-V~druhém průchodu potom pouze projdeme seznam míst, na které je potřeba doplnit adresu a nahradíme dříve zapsanou nulovou adresu za skutečnou hodnotu. Pokud se narazíme na místo, které potřebuje adresu návěstí, které v~programu nebylo definováno, ukončíme překlad chybou.
+V~druhém průchodu potom pouze projdeme seznam míst, na které je potřeba doplnit adresu a nahradíme dříve zapsanou nulovou adresu za sku\-teč\-nou hodnotu. Pokud se narazíme na místo, které potřebuje adresu návěstí, které v~programu nebylo definováno, ukončíme překlad chybou.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{rust}
 fn resolve_labels(&mut self) -> Result<(), String> {
   for (position, label, nib) in self.needs_label.iter() {
@@ -176,35 +174,55 @@ fn resolve_labels(&mut self) -> Result<(), String> {
 }
 \end{minted}
 \caption{Funkce doplňující adresy návěstí v~druhém průchodu}
-\label{fig:rust-result}
+\label{fig:rust-second-pass}
 \end{listing}
 
 Implementace lokálních návěstí byla vcelku přímočará. Při překladu si pouze pamatujeme poslední návěstí, které začínalo velkým písmenem. Pokud potom narazíme na definici nebo užití návěstí začínajícího tečkou, přidáme na jeho začátek poslední \uv{velké} návěstí. Zbytek problému už za nás pak vyřeší existující kód na doplňování adres. Lokální návěstí definované dříve, než jakékoliv \uv{velké} návěstí se umístí do mapy bez zvláštní úpravy.
 
 Kompilační direktiva \texttt{include} byla o~něco těžší oříšek na rozlousknutí. První návrh aplikace s~ní nepočítal, četl proto celý program najednou pomocí gramatického pravidla \texttt{program}. Bylo tedy třeba přeorganizovat aplikaci, aby dělila zdrojový kód na řádky ručně a syntaktickou analýzu prováděla řádku po řádce.
 
-Problém byl vyřešen strukturou \texttt{FileStack}, která simuluje zásobník ukládající informace o~překládaných souborech. Poté stačí ukládat na zásobník čtené soubory, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u~konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v~zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
+Problém byl vyřešen strukturou \texttt{FileStack}, která simuluje zásobník u\-klá\-da\-jí\-cí informace o~překládaných souborech. Poté stačí ukládat na zásobník čtené soubory, na který jsou přidány buď začátkem překladu, nebo direktivou \texttt{include} a odebrány když je čtení souboru u~konce. Ve chvíli kdy je zásobník se soubory prázdný je překlad dokončen. Před přidáním souboru na zásobník také zkontrolujeme, jestli se již v~zásobníku nenachází, abychom předešli cyklické závislosti mezi soubory.
 
-\todo{REWRITE}
-
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{rust}
-// TODO
+struct FileStack {
+  filenames: Vec<String>,
+  lines: Vec<Vec<(usize, String)>>,
+}
+
+impl FileStack {
+ fn pop(&mut self) -> Option<(String, (usize, String))> {
+    if self.filenames.is_empty() {
+      None
+    }
+    else if let Some(line) = self.lines.last_mut()
+        .and_then(|x| x.pop()) {
+      let filename = self.filenames.last_mut()
+          .expect("Inconsistent state in FileStack");
+      Some((filename.clone(), line))
+    }
+    else {
+      self.filenames.pop();
+      self.lines.pop();
+      self.pop()
+    }
+  }
+}
 \end{minted}
-\caption{Definice struktury \texttt{Compiler}}
+\caption{Definice struktury \texttt{FileStack} a funkce \texttt{pop}.}
 \label{fig:rust-file-stack}
 \end{listing}
 
-Posledním problémem bylo omezování instrukční sady v~souladu se zadáním. Tento problém byl vyřešen pomocí jednoduchého předání kolekce povolených instrukcí kompilátoru, který potom při zpracování nepovolené instrukce ukončí program chybovou hláškou. Předání seznamu povolených instrukcí probíhá přidáním parametru ukazujícího na soubor ve formátu JSON, obsahujícího seznam řetězců s~mnemonikami povolených instrukcí.
+Posledním problémem bylo omezování instrukční sady v~souladu se za\-dá\-ním. Tento problém byl vyřešen pomocí jednoduchého předání kolekce povolených instrukcí kompilátoru, který potom při zpracování nepovolené instrukce ukončí program chybovou hláškou. Předání seznamu povolených instrukcí probíhá přidáním parametru ukazujícího na soubor ve formátu JSON, obsahujícího seznam řetězců s~mnemonikami povolených instrukcí.
 
 \section{Testování}
 \label{sec:asm-test}
 
 Jelikož chování překladače spoléhá výhradně na vstup od uživatele a to dokonce ne na jedné, ale na dvou frontách (soubor se zdrojovým kódem a konzolové argumenty), je důležité zajistit, aby každý krajní případ byl ošetřen. V~případě, že takový stav nastane, by aplikace měla vypsat na standardní chybový výstup zprávu popisující ke které chybě došlo a správně se ukončit.
 
-Námi zvolený programovací jazyk Rust nám poskytne veškerou pomoc, kterou k~zajištění hladkého běhu aplikace budeme potřebovat. Jeho striktní typový systém nám nedovolí použít výstupní hodnotu funkcí, pokud neošetříme chyby ke kterým mohlo dojít. To je zajištěno pomocí takzvaných \uv{algebraických datových typů}, též známých jako \uv{tagged union} nebo \uv{sum types} v~anglicky psané literatuře. Hlavním takovým typem je v~Rustu typ \mintinline{rust}{Result<T, E>}, který k~typu \mintinline{rust}{T} přidává alternativu, že typ obsahuje chybu popsanou typem \mintinline{rust}{E}. Práce s~typem \mintinline{rust}{Result<T, E>} je znázorněna v~ukázce \ref{fig:rust-result}.
+Námi zvolený programovací jazyk Rust nám poskytne veškerou pomoc, kterou k~zajištění hladkého běhu aplikace budeme potřebovat. Jeho striktní typový systém nám nedovolí použít výstupní hodnotu funkcí, pokud neošetříme chyby ke kterým mohlo dojít. To je zajištěno pomocí takzvaných \uv{al\-ge\-bra\-ic\-kých datových typů}, též známých jako \uv{tagged union} nebo \uv{sum types} v~anglicky psané literatuře. Hlavním takovým typem je v~Rustu typ \mintinline{rust}{Result<T, E>}, který k~typu \mintinline{rust}{T} přidává alternativu, že typ obsahuje chybu popsanou typem \mintinline{rust}{E}. Práce s~typem \mintinline{rust}{Result<T, E>} je znázorněna v~ukázce \ref{fig:rust-result}.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{rust}
 fn operace_ktera_muze_selhat() -> Result<u32, String> {
   // ...
@@ -213,12 +231,12 @@ fn operace_ktera_muze_selhat() -> Result<u32, String> {
 fn main() {
   let vysledek = operace_ktera_muze_selhat();
   
-  // Následující by byla chyba, protože `vysledek' nemá typ u32
+  // Následující by byla chyba, `vysledek' nemá typ u32
   // let chyba: u32 = vysledek + 1
   
   match vysledek {
     Ok(hodnota) => {
-      println!("Operace uspěla s~hodnotou {}.", hodnota);
+      println!("Operace uspěla, hodnotou je {}.", hodnota);
     },
     Err(chyba) => {
       println!("Při operaci nastala chyba '{}'.", chyba);
@@ -226,13 +244,13 @@ fn main() {
   }
 }
 \end{minted}
-\caption{Zdrojový kód jednoduché aplikace používající Clap}
+\caption{Ukázka struktury \mintinline{rust}{Result}}
 \label{fig:rust-result}
 \end{listing}
 
 Překladač pro Rust potom disponuje zabudovanou možností testování kódu. Vše co je třeba udělat je přidat do modulu s~naším kódem submodul \mintinline{rust}{test}. Všechny funkce, které jsou v~něm definované a anotované direktivou \mintinline{rust}{#[test]} se zkompilují a spustí pouze při spuštění projektu v~testovacím režimu. Každá funkce je potom samostatně spouštěna a její výsledek je přehledně vypsán na standardní výstup.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{console}
 $ cargo test
     Finished dev target(s) in 0.0 secs
@@ -254,4 +272,4 @@ test result: ok. 6 passed; 0 failed; 0 ignored;
 
 \section{Závěr}
 
-Díky Rustu a jeho ekosystému byla implementace překladače velmi snadná. Kód je přehledný, krátký a díky typovému systému jsou explicitně pokryty všechny cesty programem. Gramatika je snadno upravitelná a adaptovatelná pro případné změny v~jazyce a instrukční sadě. Kód je rozdělen do funkcionálních celků, které jsou samostatně testovány zabudovanou testovací funkcionalitou jazyka. Rust samotný se ukázal jako dobrá volba, při použití knihovny rust-peg se však vyskytly menší problémy způsobené jejím návrhem. Vyžaduje, aby typ chybových hlášek vzniklých při kompilaci byl \mintinline{rust}{&'static str}, tj. retězec jehož životnost je statická. Nelze tedy jednoduše vracet formátováné zprávy.
+Díky Rustu a jeho ekosystému byla implementace překladače velmi snadná. Kód je přehledný, krátký a díky typovému systému jsou explicitně pokryty všechny cesty programem. Gramatika je snadno upravitelná a adaptovatelná pro případné změny v~jazyce a instrukční sadě. Kód je rozdělen do funkcionálních celků, které jsou samostatně testovány zabudovanou testovací funkcionalitou jazyka. Rust samotný se ukázal jako dobrá volba, při použití kni\-hov\-ny rust-peg se však vyskytly menší problémy způsobené jejím návrhem. Vyžaduje, aby typ chybových hlášek vzniklých při kompilaci byl \mintinline{rust}{&'static str}, tj. retězec jehož životnost je statická. Nelze tedy jednoduše vracet formátováné zprávy.

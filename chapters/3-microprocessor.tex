@@ -1,10 +1,10 @@
 \chapter{Mikroprocesor}
 
-První částí práce je návrh samotného mikroprocesoru. Ten je inspirován platformou AVR, kterou jsme analyzovali v~sekci \ref{sec:spec-avr}. Většina rozhodnutí učiněných při návrhu platformy je tedy inspirována přímo jí.
+První částí práce je návrh samotného mikroprocesoru. Ten je inspirován platformou AVR, kterou jsme analyzovali v~sekci \ref{sec:spec-avr}. Většina rozhodnutí u\-či\-ně\-ných při návrhu platformy je tedy inspirována přímo jí.
 
 \section{Instrukční sada}
 
-Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu. Byla odstraněna většina instrukcí, které nejsou kritické pro řešení problémů, nebo jejichž funkcionalita se dá nahradit vícero jinými instrukcemi. Tedy například většina variant instrukcí s~okamžitou hodnotou místo druhého parametru, jako \texttt{addi}, \texttt{andi} nebo \texttt{subi}. Zároveň každý operační znak má pouze jedinou mnemoniku a naopak -- nedochází ke změně operačního znaku podle parametrů, se kterými je daná mnemonika zkombinována. Tím se předejde zbytečným chybám způsobeným překlepy nebo přehlédnutím se při čtení instrukčního manuálu.
+Instrukční sada je modelována jako podmnožina instrukční sady AVR, avšak upravená pro jednoduchost a větší edukativní hodnotu. Byla odstraněna vět\-ši\-na instrukcí, které nejsou kritické pro řešení problémů, nebo jejichž funkcionalita se dá nahradit vícero jinými instrukcemi. Tedy například většina variant instrukcí s~okamžitou hodnotou místo druhého parametru, jako \texttt{addi}, \texttt{andi} nebo \texttt{subi}. Zároveň každý operační znak má pouze jedinou mnemoniku a naopak -- nedochází ke změně operačního znaku podle parametrů, se kterými je daná mnemonika zkombinována. Tím se předejde zbytečným chybám způsobeným překlepy nebo přehlédnutím se při čtení instrukčního manuálu.
 
 Dalším z~hlavních rozdílů je odstranění instrukcí provádějících skoky podle výsledku srovnávacích operací. Instrukce \texttt{cmp} je často vnitřně implementována jako aritmetické odčítání bez zápisu zpět, je proto užitečné chápat, jak porovnání dvou čísel ovlivní příznaky v~procesoru. V~naší instrukční sadě jsou proto podmíněné skoky možné jen podle příznaků. Díky tomu jsou uživatelé nuceni pochopit jak funguje porovnávací instrukce interně a zároveň je díky tomu instrukční sada jednodušší.
 
@@ -16,45 +16,45 @@ Naše platforma též neklade důraz na znaménka čísel uložených v~paměti 
 \hline
 \textbf{Skupina} & \textbf{Operační znak} & \textbf{Mnemonika} \\
 \hline
-\multirow{9}{*}{Pomocné} & \texttt{0x00} & \texttt{nop} \\ \hline
-                         & \texttt{0x02} & \texttt{sleep} \\ \hline
-                         & \texttt{0x03} & \texttt{break} \\ \hline
-                         & \texttt{0x04} & \texttt{sei} \\ \hline
-                         & \texttt{0x05} & \texttt{sec} \\ \hline
-                         & \texttt{0x06} & \texttt{sez} \\ \hline
-                         & \texttt{0x07} & \texttt{cli} \\ \hline
-                         & \texttt{0x08} & \texttt{clc} \\ \hline
+\multirow{9}{*}{Pomocné} & \texttt{0x00} & \texttt{nop} \\
+                         & \texttt{0x02} & \texttt{sleep} \\
+                         & \texttt{0x03} & \texttt{break} \\
+                         & \texttt{0x04} & \texttt{sei} \\
+                         & \texttt{0x05} & \texttt{sec} \\
+                         & \texttt{0x06} & \texttt{sez} \\
+                         & \texttt{0x07} & \texttt{cli} \\
+                         & \texttt{0x08} & \texttt{clc} \\
                          & \texttt{0x09} & \texttt{clz} \\
 \hline
-\multirow{11}{*}{Aritmetika} & \texttt{0x10} & \texttt{add} \\ \hline
-                             & \texttt{0x11} & \texttt{adc} \\ \hline
-                             & \texttt{0x12} & \texttt{sub} \\ \hline
-                             & \texttt{0x13} & \texttt{sbc} \\ \hline
-                             & \texttt{0x14} & \texttt{inc} \\ \hline
-                             & \texttt{0x15} & \texttt{dec} \\ \hline
-                             & \texttt{0x16} & \texttt{and} \\ \hline
-                             & \texttt{0x17} & \texttt{or} \\ \hline
-                             & \texttt{0x18} & \texttt{xor} \\ \hline
-                             & \texttt{0x19} & \texttt{cp} \\ \hline
-                             & \texttt{0x1A} & \texttt{cpi} \\ \hline
+\multirow{11}{*}{Aritmetika} & \texttt{0x10} & \texttt{add} \\
+                             & \texttt{0x11} & \texttt{adc} \\
+                             & \texttt{0x12} & \texttt{sub} \\
+                             & \texttt{0x13} & \texttt{sbc} \\
+                             & \texttt{0x14} & \texttt{inc} \\
+                             & \texttt{0x15} & \texttt{dec} \\
+                             & \texttt{0x16} & \texttt{and} \\
+                             & \texttt{0x17} & \texttt{or} \\
+                             & \texttt{0x18} & \texttt{xor} \\
+                             & \texttt{0x19} & \texttt{cp} \\
+                             & \texttt{0x1A} & \texttt{cpi} \\
 \hline
-\multirow{8}{*}{Větvení} & \texttt{0x20} & \texttt{jmp} \\ \hline
-                         & \texttt{0x21} & \texttt{call} \\ \hline
-                         & \texttt{0x22} & \texttt{ret} \\ \hline
-                         & \texttt{0x23} & \texttt{reti} \\ \hline
-                         & \texttt{0x24} & \texttt{brc} \\ \hline
-                         & \texttt{0x25} & \texttt{brnc} \\ \hline
-                         & \texttt{0x26} & \texttt{brz} \\ \hline
+\multirow{8}{*}{Větvení} & \texttt{0x20} & \texttt{jmp} \\
+                         & \texttt{0x21} & \texttt{call} \\
+                         & \texttt{0x22} & \texttt{ret} \\
+                         & \texttt{0x23} & \texttt{reti} \\
+                         & \texttt{0x24} & \texttt{brc} \\
+                         & \texttt{0x25} & \texttt{brnc} \\
+                         & \texttt{0x26} & \texttt{brz} \\
                          & \texttt{0x27} & \texttt{brnz} \\
 \hline
-\multirow{9}{*}{Manipulace s~daty} & \texttt{0x30} & \texttt{mov} \\ \hline
-                                   & \texttt{0x31} & \texttt{ldi} \\ \hline
-                                   & \texttt{0x32} & \texttt{ld} \\ \hline
-                                   & \texttt{0x33} & \texttt{st} \\ \hline
-                                   & \texttt{0x34} & \texttt{push} \\ \hline
-                                   & \texttt{0x35} & \texttt{pop} \\ \hline
-                                   & \texttt{0x36} & \texttt{lpm} \\ \hline
-                                   & \texttt{0x3A} & \texttt{in} \\ \hline
+\multirow{9}{*}{Manipulace s~daty} & \texttt{0x30} & \texttt{mov} \\
+                                   & \texttt{0x31} & \texttt{ldi} \\
+                                   & \texttt{0x32} & \texttt{ld} \\
+                                   & \texttt{0x33} & \texttt{st} \\
+                                   & \texttt{0x34} & \texttt{push} \\
+                                   & \texttt{0x35} & \texttt{pop} \\
+                                   & \texttt{0x36} & \texttt{lpm} \\
+                                   & \texttt{0x3A} & \texttt{in} \\
                                    & \texttt{0x3B} & \texttt{out} \\
 \hline
 \end{tabular}
@@ -79,15 +79,13 @@ Zásobník reprezentovaný registrem $SP$ začíná ve výchozím stavu na adres
 
 Podobně jako platforma AVR\cite{attiny12-datasheet}, i náš mikroprocesor disponuje hned třemi druhy paměti: programovou, operační a pamětí pro obsluhu vstupu a výstupu.
 
-Tyto tři paměti jsou modelovány jako tři separátní paměťové bloky, a pokrývají své adresní prostory (16, 16 a 8 bitů respektive). V~nižších částech paměti však nejsou namapované registry, tak jak je tomu u~AVR\cite{attiny12-datasheet} a paměť zodpovídající za obsluhu vstupu a výstupu má separátní prostor adres, nezávislý na programové a operační paměti.
+Tyto tři paměti jsou modelovány jako tři separátní paměťové bloky, a pokrývají své adresní prostory (16, 16 a 8 bitů respektive). V~nižších částech paměti však nejsou namapované registry, tak jak je tomu u~AVR\cite{attiny12-datasheet} a paměť zodpovídající za obsluhu vstupu a výstupu má separátní prostor adres, ne\-zá\-vis\-lý na programové a operační paměti.
 
 Paměť pro obsluhu vstupu a výstupu není fyzickou pamětí, nýbrž adresním prostorem na jehož pozicích jsou namapované obsluhy jednotlivých rozhraní. To je odraženo i v~samotném emulátoru, který ukládá pro každou pozici dvě obslužné funkce. Ty potom obsluhují chování instrukcí \texttt{in} a \texttt{out} pro patřičnou adresu. V~nevyužitém stavu pak zápis do této paměti hodnotu zahazuje a čtení vždy vrací nulovou hodnotu.
 
 \section{Instrukční cyklus}
 
-Mikroprocesor začíná spouštět program od adresy \texttt{0x0000}, na které je umístěný reset vektor. Ještě před načtením adresy dojde k~obsluze přerušení, pokud jsou zapnuta (tj. příznak přerušení je nastaven). Pokud nastalo přerušení, dojde k~zavolání příslušného vektoru přerušení a zakázání přerušení odnastavením jejich příznaku. 
-
-Všechny instrukce probíhají v~jednom cyklu a jsou tedy stejně složité.
+Mikroprocesor začíná spouštět program od adresy \texttt{0x0000}, na které je umístěný reset vektor. Ještě před načtením adresy dojde k~obsluze přerušení, pokud jsou zapnuta (tj. příznak přerušení je nastaven). Pokud nastalo přerušení, dojde k~zavolání příslušného vektoru přerušení a zakázání přerušení odnastavením jejich příznaku. Všechny instrukce probíhají v~jednom cyklu a jsou tedy stejně složité.
 
 \section{Přerušení}
 
@@ -100,7 +98,6 @@ Přerušení jsou při startu spouštění vypnuty a musí se ručně povolit in
 0x0000 & Reset    & Počáteční bod spouštění \\ \hline
 0x0010 & VBlank	  & Indikuje obnovovací frekvenci displeje \\ \hline
 0x0020 & Button   & Indikuje, že bylo stisknuto tlačítko \\ \hline
-0x0030 & Keyboard & Indikuje, že byl přijat znak z~klávesnice \\ \hline
 0x0040 & Serial   & Indikuje, že na sériový port přišla nová data \\
 \hline
 \end{tabular}
@@ -115,7 +112,7 @@ Rozhraní jsou na naší platformě obsluhovány pomocí instrukcí \texttt{in} 
 
 Tato část mikroprocesoru se od platformy AVR liší nejvíce. Mikroprocesor nedisponuje žádnými víceúčelovými porty (v~anglické literatuře též známy jako \uv{GPIO pins}). Rozhraní mikroprocesoru jsou dané fixně a rozšiřitelné pouze úpravou programu implementujícího chování pomocí knihovny s~emulátorem.
 
-Mezi podporované rozhraní patří sériový port, který umožňuje textovou komunikaci s~vnějším světem. Dále pak 7 tlačítek, rozložené do pozicových šipek, centrálního potvrzovacího tlačítka a dvou uživatelských tlačítek, jejichž funkce není blíže specifikována. Mikroprocesor podporuje také klávesnicový vstup, který má simulovat přítomnost portu PS/2.
+Mezi podporované rozhraní patří sériový port, který umožňuje textovou komunikaci s~vnějším světem. Dále pak 7 tlačítek, rozložené do pozicových šipek, centrálního potvrzovacího tlačítka a dvou uživatelských tlačítek, jejichž funkce není mají reprezentovat směrová tlačítka, tlačítko pro potvrzení a víceúčelová tlačítka A~a B.
 
 Konečně potom platforma disponuje malým displejem s~osmibitovou paletou a rozměry 160 pixelů na šířku a 144 pixelů na výšku. Displej má obnovovací frekvenci 60Hz a jeho obsah odpovídá jednomu bytu na pixel, počínajíc adresou \texttt{0x8000} v~operační paměti.
 

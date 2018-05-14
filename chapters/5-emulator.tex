@@ -31,9 +31,9 @@ Pro implementaci emulátoru použijeme jazyk C++. Důvodem této volby je primá
 
 Jedním z~technických problémů, které nám přineslo užití C++ je detekce přetečení při sčítání dvou bytů. Manuální detekce není nikterak složitá, avšak jak překladačová sada GCC\cite{gcc-overflow}, tak překladač Clang\cite{clang-overflow} disponují zabudovanými funkcemi \texttt{\_\_builtin\_add\_overflow} a \texttt{\_\_builtin\_sub\_overflow}, které návratovou hodnotou indikují, zda při operaci došlo k~přetečení, nebo ne.
 
-Dalším problémem pak byla implementace obslužných funkcí pro vstup a výstup. Ve finální verzi projektu jsou realizovány jako mapa typu \mintinline{c++}{std::unordered_map<u8, IoHandler>}. Typ \mintinline{c++}{IoHandler} je potom jednoduchá struktura obsahující dvě funkce -- jednu pro čtení a druhou pro zápis. Výchozí hodnota struktury IoHandler poté splňuje chování procesoru pro nepřirazené pozice v~paměti, mohou být tudíž vytvořeny výchozím konstruktorem. Definice struktury je demonstrována v~ukázce \ref{fig:io-handler}.
+Dalším problémem pak byla implementace obslužných funkcí pro vstup a výstup. Ve finální verzi projektu jsou realizovány jako mapa mezi typy \mintinline{c++}{u8} a \mintinline{c++}{IoHandler}. Typ \mintinline{c++}{IoHandler} je potom jednoduchá struktura obsahující dvě funkce -- jednu pro čtení a druhou pro zápis. Výchozí hodnota struktury IoHandler poté splňuje chování procesoru pro nepřirazené pozice v~paměti, mohou být tudíž vytvořeny výchozím konstruktorem. Definice struktury je demonstrována v~ukázce \ref{fig:io-handler}.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{c++}
 #include <functional>
 
@@ -46,13 +46,13 @@ struct IoHandler {
     };
 };
 \end{minted}
-\caption{Definice struktury IoHandler}
+\caption{Definice struktury \texttt{IoHandler}}
 \label{fig:io-handler}
 \end{listing}
 
 Posledním problémem byla potom samotná krokovací funkce emulátoru. V~prvotním návrhu byla logika spouštění jednotlivých instrukcí řešena pomocí kolekce lambda funkcí, indexované pomocí operačního kódu instrukce. Díky využití pokročilých metaprogramovacích technik které jazyk C++ umožňuje bylo pak možné detekovat automaticky o~jaký druh instrukce se jedná, přečíst automaticky její operandy a předat je přímo lambda funkci, jak je znázorněno v~ukázce \ref{fig:cpp-templates}.
 
-\begin{listing}
+\begin{listing}[htbp]
 \begin{minted}{c++}
 this->instruction_map[CALL] = [this] (Address addr) {
 	this->push_addr(this->pc);
@@ -77,6 +77,6 @@ K~testování v~jazyce C++ můžeme použít například knihovnu Catch\cite{git
 
 \section{Závěr}
 
-Přestože jsme první část práce implementovali v~Rustu, zvolili jsme pro emulátor jazyk C++. Tato volba se ukázala jako správná, protože usnadnila integraci do ladícího programu.
+Přestože jsme první část práce implementovali v~Rustu, zvolili jsme pro e\-mu\-lá\-tor jazyk C++. Tato volba se ukázala jako správná, protože usnadnila integraci do ladícího programu.
 
 Utrpělo však testování. Ačkoliv knihovna Catch usnadnila samotné psaní testů, jejich spouštění spoléhá na existenci cesty ke spustitelnému programu překladače v~proměnné prostředí \texttt{ASSEMBLER}. Je tomu tak hlavně proto, aby testy mohly obsahovat zrojový kód, který se později přeloží do strojového kódu a načte překladačem.
