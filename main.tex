@@ -15,6 +15,7 @@
 \usepackage{pgfplots}
 \usepackage[nonumberlist]{glossaries}
 \usepackage{multirow}
+\usepackage{verbatim}
 
 \setlength{\parskip}{1em}
 
@@ -30,7 +31,7 @@
 }
 
 \renewcommand\listingscaption{Ukázka}
-%\renewcommand{\lstlistlistingname}{Seznam ukázek}
+\renewcommand{\listlistingname}{Seznam ukázek kódu}
 
 \acknowledgements{\input{acknowledgements.tex}}
 
@@ -43,7 +44,6 @@
 \input{glossary.tex}
 \glsaddall
 
-%* 5.3 Technické problémy - přetéká
 %* 6.3 Realizace - chybějící citace [gof]
 
 \begin{document}
@@ -72,7 +72,8 @@
 \includepdf[pages={1}]{exercises}
 
 \chapter{Dokumentace mikroprocesoru a instrukční sady}
-\todo{TODO}
+\label{appendix:mcu-manual}
+\verbatiminput{documentation.md}
 
 \chapter{Obsah přiložené SD karty}
 
