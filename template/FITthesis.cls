@@ -42,6 +42,7 @@
 
 \RequirePackage{babel}[2008/07/06]
 \RequirePackage[unicode,pdfusetitle]{hyperref}
+\RequirePackage{listing}
 
 \RequirePackage{chngcntr}
 \counterwithout*{footnote}{chapter}
@@ -532,6 +533,9 @@ sp\^ osobom, ktor\'y nezni\v zuje hodnotu Diela (vr\'atane komer\v cn\'eho vyu\v
 
 	\cleardoublepage
 	\listoftablescond
+	
+	\cleardoublepage
+	\listoflistings
 
 	\pagestyle{ruled}
 	\mainmatter
